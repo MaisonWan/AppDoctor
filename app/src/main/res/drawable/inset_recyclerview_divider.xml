@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetLeft="16dp"
+    android:insetRight="16dp"
+    android:shape="rectangle">
+    <shape xmlns:android="http://schemas.android.com/apk/res/android"
+        android:shape="rectangle">
+        <!--RecyclerView分割线-->
+        <!--此处可以制成渐变色，我就只用一个色代替了-->
+        <gradient
+            android:centerColor="#eff3ff"
+            android:endColor="#eff3ff"
+            android:startColor="#eff3ff" />
+        <size android:height="1dp" />
+    </shape>
+</inset>

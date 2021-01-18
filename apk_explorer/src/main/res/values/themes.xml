@@ -1,0 +1,6 @@
+<resources>
+
+    <style name="Theme.AppChecker.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.AppChecker.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.domker.app.doctor.explorer">
+
+    <application>
+        <activity android:name=".json.JsonViewerActivity" />
+        <activity
+            android:name="com.domker.app.doctor.explorer.resource.ResourceExplorerActivity"
+            android:label="@string/title_activity_resource_explorer"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ApkExplorerActivity"
+            android:label="@string/title_activity_apk_explorer"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.domker.doctor.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepath" />
+        </provider>
+    </application>
+
+</manifest>

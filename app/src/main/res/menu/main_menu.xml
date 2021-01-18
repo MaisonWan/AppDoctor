@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+    <item
+        android:id="@+id/menu_dashboard"
+        android:icon="@drawable/ic_outline_insert_chart_outlined_24"
+        android:title="@string/menu_chart"
+        app:showAsAction="ifRoom|withText" />
+    <item
+        android:id="@+id/menu_show_app"
+        android:icon="@drawable/ic_outline_border_all_24"
+        android:title="@string/menu_all_app"
+        app:showAsAction="ifRoom|withText" />
+</menu>

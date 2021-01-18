@@ -1,0 +1,11 @@
+<resources>
+    <string name="title_activity_apk_explorer">ApkExplorerActivity</string>
+    <string name="tab_text_apk">安装包</string>
+    <string name="tab_text_sec">收藏</string>
+    <string name="menu_open_with_text">使用文本方式打开</string>
+    <string name="menu_open_with_image">使用图片方式打开</string>
+    <string name="menu_open_with_media">使用媒体方式打开</string>
+    <string name="title_activity_resource_explorer">ResourceExplorerActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+</resources>

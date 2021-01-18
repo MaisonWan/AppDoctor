@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.home.HomeFragment">
+
+    <TextView
+        android:id="@+id/app_name"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:textAlignment="viewStart"
+        android:textIsSelectable="true"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/app_icon"
+        app:layout_constraintTop_toTopOf="@+id/app_icon" />
+
+    <ImageView
+        android:id="@+id/app_icon"
+        android:layout_width="@dimen/app_detail_icon_size"
+        android:layout_height="@dimen/app_detail_icon_size"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/app_package"
+        android:layout_width="0dp"
+        android:layout_height="23dp"
+        android:layout_marginTop="8dp"
+        android:textAlignment="viewStart"
+        android:textIsSelectable="true"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@+id/app_name"
+        app:layout_constraintStart_toStartOf="@+id/app_name"
+        app:layout_constraintTop_toBottomOf="@+id/app_name" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewAppInfo"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonStart" />
+
+    <Button
+        android:id="@+id/buttonStart"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_button_blue_state"
+        android:text="@string/launch"
+        android:textColor="@android:color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_icon" />
+
+    <Button
+        android:id="@+id/buttonUninstall"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/bg_button_red_state"
+        android:text="@string/uninstall"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonStart"
+        app:layout_constraintEnd_toStartOf="@+id/buttonApkExplorer"
+        app:layout_constraintStart_toEndOf="@+id/buttonStart"
+        app:layout_constraintTop_toTopOf="@+id/buttonStart" />
+
+    <Button
+        android:id="@+id/buttonApkExplorer"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_button_blue_state"
+        android:text="@string/apk_explorer"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonStart"
+        app:layout_constraintEnd_toEndOf="@+id/app_package"
+        app:layout_constraintTop_toTopOf="@+id/buttonStart" />
+</androidx.constraintlayout.widget.ConstraintLayout>
