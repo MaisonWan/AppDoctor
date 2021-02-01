@@ -3,13 +3,13 @@ package com.domker.app.doctor.data
 import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
-import com.domker.app.doctor.ui.component.ComponentInfo
-import com.domker.app.doctor.ui.component.ComponentInfo.Companion.TYPE_ACTIVITY
-import com.domker.app.doctor.ui.component.ComponentInfo.Companion.TYPE_PROVIDER
-import com.domker.app.doctor.ui.component.ComponentInfo.Companion.TYPE_RECEIVER
-import com.domker.app.doctor.ui.component.ComponentInfo.Companion.TYPE_SERVICE
-import com.domker.app.doctor.ui.component.componentOfType
-import com.domker.app.doctor.ui.component.parseFrom
+import com.domker.app.doctor.detail.component.ComponentInfo
+import com.domker.app.doctor.detail.component.ComponentInfo.Companion.TYPE_ACTIVITY
+import com.domker.app.doctor.detail.component.ComponentInfo.Companion.TYPE_PROVIDER
+import com.domker.app.doctor.detail.component.ComponentInfo.Companion.TYPE_RECEIVER
+import com.domker.app.doctor.detail.component.ComponentInfo.Companion.TYPE_SERVICE
+import com.domker.app.doctor.detail.component.componentOfType
+import com.domker.app.doctor.detail.component.parseFrom
 
 
 /**

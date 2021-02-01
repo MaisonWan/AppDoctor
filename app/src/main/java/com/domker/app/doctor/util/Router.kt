@@ -7,7 +7,6 @@ package com.domker.app.doctor.util
 object Router {
     const val MAIN_ACTIVITY = "/main/activity"
     const val DETAIL_ACTIVITY = "/detail/activity"
-    const val ANALYZE_ACTIVITY = "/analyze/activity"
     const val DASHBOARD_ACTIVITY = "/dashboard/activity"
     const val EXPLORER_ACTIVITY = "/apk_explorer/activity"
 }
