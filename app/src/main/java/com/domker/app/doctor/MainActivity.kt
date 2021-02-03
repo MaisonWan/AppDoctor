@@ -44,12 +44,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onPostCreate(savedInstanceState: Bundle?) {
-        super.onPostCreate(savedInstanceState)
-        // 为了展示左上交菜单图片的正常展示
-        toolbar.setNavigationIcon(R.drawable.ic_baseline_menu_open_24)
-    }
-
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()

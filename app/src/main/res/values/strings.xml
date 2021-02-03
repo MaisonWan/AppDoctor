@@ -43,4 +43,9 @@
     <string name="menu_app_list">应用列表</string>
     <string name="menu_system_info">本机信息</string>
     <string name="menu_dashboard">数据统计</string>
+    <string name="menu_sort_size">按大小排序</string>
+    <string name="menu_sort_time">按时间排序</string>
+    <string name="menu_sort_name">按名字排序</string>
+
+    <string name="system_app">系统应用</string>
 </resources>

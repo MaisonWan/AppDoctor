@@ -46,7 +46,7 @@ class AppListPageAdapter(private val context: Context,
 
     override fun onBindViewHolder(holder: PageViewHolder, position: Int) {
         when (position) {
-            0 -> {
+            0, 1 -> {
                 initAppList(holder.binding.recyclerView)
                 fetchAppList()
             }

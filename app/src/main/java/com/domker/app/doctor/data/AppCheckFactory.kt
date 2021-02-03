@@ -48,7 +48,7 @@ class AppCheckFactory private constructor(private val context: Context) {
             return appList!!
         }
         return appList!!.filter {
-            !(it.isSystemApp ?: true)
+            !it.isSystemApp
         }
     }
 
