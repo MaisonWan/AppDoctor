@@ -7,6 +7,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
@@ -17,6 +18,8 @@ import com.domker.app.doctor.databinding.PagerAppListItemBinding
 import com.domker.app.doctor.util.Router
 import com.domker.app.doctor.widget.AppDiffCallBack
 import com.domker.app.doctor.widget.AppListAdapter
+import com.domker.app.doctor.widget.LAYOUT_TYPE_GRID
+import com.domker.app.doctor.widget.LAYOUT_TYPE_LIST
 import com.domker.base.addItemDecoration
 import com.domker.base.thread.AppExecutors
 
@@ -46,8 +49,12 @@ class AppListPageAdapter(private val context: Context,
 
     override fun onBindViewHolder(holder: PageViewHolder, position: Int) {
         when (position) {
-            0, 1 -> {
-                initAppList(holder.binding.recyclerView)
+            0 -> {
+                initAppList(holder.binding.recyclerView, LAYOUT_TYPE_LIST)
+                fetchAppList()
+            }
+            1 -> {
+                initAppList(holder.binding.recyclerView, LAYOUT_TYPE_GRID)
                 fetchAppList()
             }
         }
@@ -63,10 +70,14 @@ class AppListPageAdapter(private val context: Context,
     /**
      * 初始化app列表
      */
-    private fun initAppList(recyclerView: RecyclerView) {
-        recyclerView.layoutManager = LinearLayoutManager(context)
-        recyclerView.addItemDecoration(context, R.drawable.inset_recyclerview_divider)
-        adapter = AppListAdapter(context)
+    private fun initAppList(recyclerView: RecyclerView, layoutType: Int) {
+        if (layoutType == LAYOUT_TYPE_LIST) {
+            recyclerView.layoutManager = LinearLayoutManager(context)
+            recyclerView.addItemDecoration(context, R.drawable.inset_recyclerview_divider)
+        } else if (layoutType == LAYOUT_TYPE_GRID) {
+            recyclerView.layoutManager = GridLayoutManager(context, 4)
+        }
+        adapter = AppListAdapter(context, layoutType)
         recyclerView.adapter = adapter
         adapter.setOnItemClickListener { _, packageName ->
             ARouter.getInstance()

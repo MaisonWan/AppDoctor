@@ -83,5 +83,6 @@ dependencies {
     kapt 'com.alibaba:arouter-compiler:1.2.2'
 
     implementation project(':apk_explorer')
+    implementation project(':imageviewer')
     implementation project(':base')
 }

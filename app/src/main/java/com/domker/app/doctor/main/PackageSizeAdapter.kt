@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.domker.app.doctor.R
 import com.domker.app.doctor.data.AppEntity
 import com.domker.app.doctor.main.PackageSizeAdapter.PackageSizeViewHolder
+import com.domker.app.doctor.util.DateUtil
 import com.domker.base.file.FileUtils
 import kotlinx.coroutines.flow.combineTransform
 import kotlinx.coroutines.launch
@@ -28,6 +29,7 @@ class PackageSizeAdapter(private val dashboardContext: DashboardContext) :
     private var appList: List<AppEntity> = dashboardContext.appList
     private val inflater = LayoutInflater.from(dashboardContext.context)
     private var maxSize: Long = 0
+
     // 当前排序的类型
     private var currentSortType = SORT_SIZE
     private var currentSortDesc = true
@@ -37,7 +39,7 @@ class PackageSizeAdapter(private val dashboardContext: DashboardContext) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PackageSizeViewHolder {
-        val root = inflater.inflate(R.layout.item_package_size, null)
+        val root = inflater.inflate(R.layout.item_package_size, parent, false)
         return PackageSizeViewHolder(root)
     }
 
@@ -63,6 +65,7 @@ class PackageSizeAdapter(private val dashboardContext: DashboardContext) :
         holder.appName?.text = "${appEntity.appName}（${appEntity.versionName}）"
         holder.packageSize?.text = FileUtils.formatFileSize(appEntity.sourceApkSize!!)
         holder.systemApp?.visibility = if (appEntity.isSystemApp) View.VISIBLE else View.INVISIBLE
+        holder.installTime?.text = DateUtil.getDataFromTimestamp(appEntity.updateTime)
     }
 
     /**
@@ -113,7 +116,7 @@ class PackageSizeAdapter(private val dashboardContext: DashboardContext) :
         val packageSize: TextView? = itemView.findViewById(R.id.textViewSize)
         val icon: ImageView? = itemView.findViewById(R.id.imageViewIcon)
         val systemApp: TextView? = itemView.findViewById(R.id.imageViewSystemFlag)
+        val installTime: TextView? = itemView.findViewById(R.id.textViewInstallTime)
     }
-
 
 }

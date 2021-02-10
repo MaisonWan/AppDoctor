@@ -2,7 +2,6 @@ package com.domker.app.doctor.main
 
 import android.os.Bundle
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.alibaba.android.arouter.launcher.ARouter
@@ -30,15 +29,18 @@ class AppListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         val binding = FragmentAppListBinding.inflate(inflater, container, false)
-        initViews(binding.viewpager)
+        initViews(binding)
         return binding.root
     }
 
-    private fun initViews(viewPager: ViewPager2) {
+    private fun initViews(binding: FragmentAppListBinding) {
+        val viewPager = binding.viewpager
         adapter = AppListPageAdapter(requireContext(), this, this)
         adapter.includeSystemApp = isShowAllApp
         viewPager.adapter = adapter
         viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+
+        binding.circlePageIndicator.setViewPager(viewPager)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
