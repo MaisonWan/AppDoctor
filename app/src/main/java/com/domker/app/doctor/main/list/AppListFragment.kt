@@ -1,4 +1,4 @@
-package com.domker.app.doctor.main
+package com.domker.app.doctor.main.list
 
 import android.os.Bundle
 import android.view.*

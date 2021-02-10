@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.domker.app.doctor.databinding.FragmentPermissionDetailBinding
+import com.domker.app.doctor.databinding.FragmentDetailPermissionInfoBinding
 
 const val PERMISSION_NAME = "name"
 const val DESCRIPTION = "description"
@@ -20,7 +20,7 @@ class PermissionDetailFragment : Fragment() {
     private var description: String? = null
     private var detail: String? = null
     private var groupName: String? = null
-    private lateinit var binding: FragmentPermissionDetailBinding
+    private lateinit var binding: FragmentDetailPermissionInfoBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +33,8 @@ class PermissionDetailFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        binding = FragmentPermissionDetailBinding.inflate(layoutInflater, container, false)
+                              savedInstanceState: Bundle?): View {
+        binding = FragmentDetailPermissionInfoBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 

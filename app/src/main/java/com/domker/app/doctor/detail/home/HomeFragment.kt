@@ -49,7 +49,7 @@ class HomeFragment : Fragment() {
         homeViewModel = AppDetailActivity.homeViewModel
                 ?: ViewModelProvider(this).get(HomeViewModel::class.java)
 
-        val root = inflater.inflate(R.layout.fragment_main, container, false)
+        val root = inflater.inflate(R.layout.fragment_detail_main, container, false)
         initButtonListener(root)
         initView(root)
         initObserver(root)

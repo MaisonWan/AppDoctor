@@ -5,17 +5,18 @@ import android.os.Handler
 import android.os.HandlerThread
 import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.launcher.ARouter
-import com.domker.app.doctor.databinding.SplashLayoutBinding
 import com.domker.app.doctor.data.AppCheckFactory
+import com.domker.app.doctor.databinding.SplashLayoutBinding
 import com.domker.app.doctor.util.Router
 import com.domker.app.doctor.util.log
+
+private const val ACTION_ANIMATION_BEGIN = 0
+private const val ACTION_ANIMATION_END = 1
 
 /**
  * Created by wanlipeng on 2018/3/5.
  */
 class SplashActivity : AppCompatActivity() {
-    private val ACTION_ANIMATION_BEGIN = 0
-    private val ACTION_ANIMATION_END = 1
 
     private lateinit var mHandler: Handler
     private lateinit var handlerThread: HandlerThread
@@ -28,7 +29,7 @@ class SplashActivity : AppCompatActivity() {
 
         handlerThread = HandlerThread("initThread")
         handlerThread.start()
-        mHandler = Handler(handlerThread.looper, Handler.Callback { msg ->
+        mHandler = Handler(handlerThread.looper) { msg ->
             when (msg.what) {
                 ACTION_ANIMATION_BEGIN -> {
                     log("SplashActivityTag", "before updateAppList")
@@ -53,24 +54,27 @@ class SplashActivity : AppCompatActivity() {
                     false
                 }
             }
-        })
+        }
         binding.animationView.speed = 1f
-        log("SplashActivityTag", "onCreate...")
     }
 
     override fun onResume() {
         super.onResume()
-        log("SplashActivityTag", "onAnimationStart sendEmptyMessageDelayed")
         binding.animationView.playAnimation()
         mHandler.sendEmptyMessage(ACTION_ANIMATION_BEGIN)
         mHandler.sendEmptyMessageDelayed(ACTION_ANIMATION_END, 3000)
+    }
+
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(0, 0)
     }
 
     private fun openMainActivity() {
         ARouter.getInstance()
                 .build(Router.MAIN_ACTIVITY)
                 .navigation()
+        this.overridePendingTransition(0, 0)
         finish()
-        log("SplashActivityTag", "openMainActivity")
     }
 }

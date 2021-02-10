@@ -7,14 +7,14 @@
 
     <fragment
         android:id="@+id/nav_app_list"
-        android:name="com.domker.app.doctor.main.AppListFragment"
+        android:name="com.domker.app.doctor.main.list.AppListFragment"
         android:label="@string/menu_app_list"
         tools:layout="@layout/fragment_app_list" />
     <fragment
         android:id="@+id/nav_system_info"
-        android:name="com.domker.app.doctor.main.SystemInfoFragment"
+        android:name="com.domker.app.doctor.main.device.DeviceInfoFragment"
         android:label="@string/menu_system_info"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_main_device" />
     <fragment
         android:id="@+id/nav_dashboard"
         android:name="com.domker.app.doctor.main.DashboardFragment"

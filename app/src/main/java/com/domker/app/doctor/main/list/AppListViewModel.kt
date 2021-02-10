@@ -1,4 +1,4 @@
-package com.domker.app.doctor.main
+package com.domker.app.doctor.main.list
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

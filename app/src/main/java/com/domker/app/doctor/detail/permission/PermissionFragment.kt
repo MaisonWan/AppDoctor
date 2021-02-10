@@ -7,17 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.domker.app.doctor.detail.AppDetailActivity
 import com.domker.app.doctor.R
-import com.domker.app.doctor.databinding.FragmentPermissionBinding
+import com.domker.app.doctor.databinding.FragmentDetailPermissionBinding
+import com.domker.app.doctor.detail.AppDetailActivity
 import com.domker.base.addItemDecoration
 
 class PermissionFragment : Fragment() {
-    private lateinit var binding: FragmentPermissionBinding
+    private lateinit var binding: FragmentDetailPermissionBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        binding = FragmentPermissionBinding.inflate(layoutInflater, container, false)
+        binding = FragmentDetailPermissionBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 

@@ -21,7 +21,7 @@ class ComponentFragment : Fragment() {
     private val tabTitleRes = intArrayOf(R.string.item_activity, R.string.item_service, R.string.item_provider, R.string.item_receiver)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_component, container, false)
+        return inflater.inflate(R.layout.fragment_detail_component, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

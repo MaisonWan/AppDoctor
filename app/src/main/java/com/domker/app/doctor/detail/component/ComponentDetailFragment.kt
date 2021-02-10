@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.domker.app.doctor.R
 import com.domker.app.doctor.data.AppCheckFactory
-import com.domker.app.doctor.databinding.FragmentComponentDetailBinding
+import com.domker.app.doctor.databinding.FragmentDetailComponentInfoBinding
 import com.domker.app.doctor.entiy.AppItemInfo
 import com.domker.app.doctor.util.ManifestLabel
 import com.domker.app.doctor.widget.AppDetailAdapter
@@ -28,11 +28,11 @@ class ComponentDetailFragment : Fragment() {
     private val detailList: MutableList<AppItemInfo> = mutableListOf()
     private lateinit var componentDetailViewModel: ComponentDetailViewModel
     private lateinit var adapter: AppDetailAdapter
-    private lateinit var binding: FragmentComponentDetailBinding
+    private lateinit var binding: FragmentDetailComponentInfoBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         componentDetailViewModel = ViewModelProvider(this).get(ComponentDetailViewModel::class.java)
-        binding = FragmentComponentDetailBinding.inflate(layoutInflater, container, false)
+        binding = FragmentDetailComponentInfoBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 

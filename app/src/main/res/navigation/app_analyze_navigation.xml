@@ -9,7 +9,7 @@
         android:id="@+id/navigation_main"
         android:name="com.domker.app.doctor.detail.home.HomeFragment"
         android:label="@string/title_main"
-        tools:layout="@layout/fragment_main">
+        tools:layout="@layout/fragment_detail_main">
         <action
             android:id="@+id/action_navigation_main_to_navigation_component"
             app:destination="@id/navigation_component" />
@@ -25,7 +25,7 @@
         android:id="@+id/navigation_component"
         android:name="com.domker.app.doctor.detail.component.ComponentFragment"
         android:label="@string/title_component"
-        tools:layout="@layout/fragment_component">
+        tools:layout="@layout/fragment_detail_component">
         <action
             android:id="@+id/action_navigation_component_to_navigation_component_detail"
             app:destination="@id/navigation_component_detail" />
@@ -38,7 +38,7 @@
         android:id="@+id/navigation_component_detail"
         android:label="@string/title_component_detail"
         android:name="com.domker.app.doctor.detail.component.ComponentDetailFragment"
-        tools:layout="@layout/fragment_component_detail" />
+        tools:layout="@layout/fragment_detail_component_info" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
@@ -50,7 +50,7 @@
         android:id="@+id/navigation_permission"
         android:name="com.domker.app.doctor.detail.permission.PermissionFragment"
         android:label="@string/title_permission"
-        tools:layout="@layout/fragment_permission" >
+        tools:layout="@layout/fragment_detail_permission" >
         <action
             android:id="@+id/action_navigation_permission_to_permissionDetailFragment"
             app:destination="@id/navigation_permission_detail" />
@@ -59,6 +59,6 @@
         android:id="@+id/navigation_permission_detail"
         android:name="com.domker.app.doctor.detail.permission.PermissionDetailFragment"
         android:label="@string/title_permission_detail"
-        tools:layout="@layout/fragment_permission_detail" />
+        tools:layout="@layout/fragment_detail_permission_info" />
 
 </navigation>
