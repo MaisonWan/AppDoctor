@@ -35,7 +35,7 @@ class DeviceInfoFragment : Fragment() {
     private fun init(root: View) {
         val navView: BottomNavigationView = root.findViewById(R.id.device_nav_view)
         // 一直显示图标和文字
-        navView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
+        navView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_UNLABELED
 
 //        val navController = Navigation.findNavController(root)
         val navController = findLocalNavController()

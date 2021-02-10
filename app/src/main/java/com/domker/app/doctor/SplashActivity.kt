@@ -21,6 +21,7 @@ class SplashActivity : AppCompatActivity() {
     private lateinit var mHandler: Handler
     private lateinit var handlerThread: HandlerThread
     private lateinit var binding: SplashLayoutBinding
+    private var startTimeStamp = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +40,11 @@ class SplashActivity : AppCompatActivity() {
                     }
                     log("SplashActivityTag", "after updateAppList")
                     mHandler.removeMessages(ACTION_ANIMATION_END)
-                    mHandler.sendEmptyMessage(ACTION_ANIMATION_END)
+                    if (System.currentTimeMillis() - startTimeStamp > 500) {
+                        mHandler.sendEmptyMessage(ACTION_ANIMATION_END)
+                    } else {
+                        mHandler.sendEmptyMessageDelayed(ACTION_ANIMATION_END, 500)
+                    }
                     true
                 }
                 ACTION_ANIMATION_END -> {
@@ -61,6 +66,7 @@ class SplashActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         binding.animationView.playAnimation()
+        startTimeStamp = System.currentTimeMillis()
         mHandler.sendEmptyMessage(ACTION_ANIMATION_BEGIN)
         mHandler.sendEmptyMessageDelayed(ACTION_ANIMATION_END, 3000)
     }
