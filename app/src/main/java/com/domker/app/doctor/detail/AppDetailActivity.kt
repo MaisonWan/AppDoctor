@@ -1,8 +1,6 @@
 package com.domker.app.doctor.detail
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -16,12 +14,13 @@ import com.domker.app.doctor.detail.component.ComponentViewModel
 import com.domker.app.doctor.detail.home.HomeViewModel
 import com.domker.app.doctor.util.IntentUtil
 import com.domker.app.doctor.util.Router
+import com.domker.app.doctor.widget.BaseAppCompatActivity
 import com.domker.base.thread.AppExecutors
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 
 @Route(path = Router.DETAIL_ACTIVITY)
-class AppDetailActivity : AppCompatActivity() {
+class AppDetailActivity : BaseAppCompatActivity() {
     private lateinit var appChecker: AppChecker
     private lateinit var appPackageName: String
 
@@ -42,22 +41,14 @@ class AppDetailActivity : AppCompatActivity() {
 
         val navController = findNavController()
 //        val graph = navController.graph
-
 //        graph.addArgument("homeViewModel", NavArgument.Builder().setDefaultValue(homeViewModel).build())
 
         val appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.navigation_main, R.id.navigation_permission, R.id.navigation_component, R.id.navigation_dashboard))
+                R.id.navigation_main, R.id.navigation_permission,
+                R.id.navigation_component, R.id.navigation_dashboard))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         updateAppInfo()
-    }
-
-    private fun initToolbar() {
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        toolbar.setNavigationOnClickListener {
-            finish()
-        }
     }
 
     private fun findNavController(): NavController {

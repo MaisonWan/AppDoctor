@@ -31,11 +31,12 @@ class AppListPageAdapter(private val context: Context,
                          private val lifecycleOwner: LifecycleOwner,
                          private val viewModelStoreOwner: ViewModelStoreOwner) :
         RecyclerView.Adapter<AppListPageAdapter.PageViewHolder>() {
-    private lateinit var adapter: AppListAdapter
+    private var adapters: Array<AppListAdapter?> = arrayOfNulls(2)
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private val app = AppCheckFactory.getInstance(context)
     private lateinit var viewModel: AppListViewModel
     var includeSystemApp = false
+    var currentPosition = 0
 
     class PageViewHolder(val binding: PagerAppListItemBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -50,14 +51,15 @@ class AppListPageAdapter(private val context: Context,
     override fun onBindViewHolder(holder: PageViewHolder, position: Int) {
         when (position) {
             0 -> {
-                initAppList(holder.binding.recyclerView, LAYOUT_TYPE_LIST)
+                initAppList(position, holder.binding.recyclerView, LAYOUT_TYPE_LIST)
                 fetchAppList()
             }
             1 -> {
-                initAppList(holder.binding.recyclerView, LAYOUT_TYPE_GRID)
+                initAppList(position, holder.binding.recyclerView, LAYOUT_TYPE_GRID)
                 fetchAppList()
             }
         }
+        currentPosition = position
     }
 
     private fun initViewModel() {
@@ -70,16 +72,16 @@ class AppListPageAdapter(private val context: Context,
     /**
      * 初始化app列表
      */
-    private fun initAppList(recyclerView: RecyclerView, layoutType: Int) {
+    private fun initAppList(index: Int, recyclerView: RecyclerView, layoutType: Int) {
         if (layoutType == LAYOUT_TYPE_LIST) {
             recyclerView.layoutManager = LinearLayoutManager(context)
             recyclerView.addItemDecoration(context, R.drawable.inset_recyclerview_divider)
         } else if (layoutType == LAYOUT_TYPE_GRID) {
             recyclerView.layoutManager = GridLayoutManager(context, 4)
         }
-        adapter = AppListAdapter(context, layoutType)
-        recyclerView.adapter = adapter
-        adapter.setOnItemClickListener { _, packageName ->
+        adapters[index] = AppListAdapter(context, layoutType)
+        recyclerView.adapter = adapters[index]
+        adapters[index]?.setOnItemClickListener { _, packageName ->
             ARouter.getInstance()
                     .build(Router.DETAIL_ACTIVITY)
                     .withString("package_name", packageName)
@@ -91,10 +93,12 @@ class AppListPageAdapter(private val context: Context,
      * 刷新app列表
      */
     private fun updateAppList(newAppList: List<AppEntity>) {
-        val oldAppList = adapter.getAppList()
-        val diffResult = DiffUtil.calculateDiff(AppDiffCallBack(oldAppList, newAppList))
-        adapter.setAppList(newAppList)
-        diffResult.dispatchUpdatesTo(adapter)
+        adapters[currentPosition]?.let {
+            val oldAppList = it.getAppList()
+            val diffResult = DiffUtil.calculateDiff(AppDiffCallBack(oldAppList, newAppList))
+            it.setAppList(newAppList)
+            diffResult.dispatchUpdatesTo(it)
+        }
 
         // 更新一下最新信息到数据库
         AppExecutors.executor.execute {

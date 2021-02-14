@@ -1,7 +1,6 @@
 package com.domker.app.doctor.main.device
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -9,16 +8,18 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.domker.app.doctor.R
 import com.domker.app.doctor.databinding.ActivityDeviceBinding
+import com.domker.app.doctor.widget.BaseAppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 
-class DeviceActivity : AppCompatActivity() {
+class DeviceActivity : BaseAppCompatActivity() {
     private lateinit var binding: ActivityDeviceBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDeviceBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        initToolbar()
         initViews()
     }
 

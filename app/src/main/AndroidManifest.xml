@@ -13,7 +13,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".main.device.DeviceActivity"></activity>
+        <activity
+            android:name=".main.device.DeviceActivity"
+            android:exported="false"
+            android:label="@string/menu_system_info"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:exported="false"
@@ -23,11 +27,6 @@
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".AppDashboardActivity"
-            android:exported="false"
-            android:label="@string/title_activity_app_dashboard"
-            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".detail.AppDetailActivity"
             android:exported="false"
@@ -43,10 +42,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".AppDetailActivity"
-            android:label="@string/title_activity_app_detail"
-            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
