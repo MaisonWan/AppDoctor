@@ -27,7 +27,7 @@ class AppDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_app_analyze)
+        setContentView(R.layout.activity_app_detail)
         initToolbar()
 
         appChecker = AppChecker(this)
