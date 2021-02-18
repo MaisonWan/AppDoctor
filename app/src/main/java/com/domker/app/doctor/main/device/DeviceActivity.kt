@@ -12,6 +12,9 @@ import com.domker.app.doctor.widget.BaseAppCompatActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 
+/**
+ * 设备信息管理，查看系统的属性已经存储等
+ */
 class DeviceActivity : BaseAppCompatActivity() {
     private lateinit var binding: ActivityDeviceBinding
 
@@ -30,7 +33,7 @@ class DeviceActivity : BaseAppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.device_nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.findNavController()
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.navigation_system, R.id.navigation_store))
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.navigation_system, R.id.navigation_store, R.id.navigation_properties))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }

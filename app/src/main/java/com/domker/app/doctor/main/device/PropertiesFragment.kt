@@ -7,16 +7,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.domker.app.doctor.R
-import com.domker.app.doctor.databinding.FragmentDeviceSystemBinding
+import com.domker.app.doctor.databinding.FragmentDevicePropertiesBinding
 import com.domker.app.doctor.util.DeviceScanner
 import com.domker.base.addItemDecoration
 
-
 /**
- * 系统信息
+ * 系统属性展示，数量比较多，增加搜索
  */
-class SystemFragment : Fragment() {
-    private lateinit var binding: FragmentDeviceSystemBinding
+class PropertiesFragment : Fragment() {
+
+    private lateinit var binding: FragmentDevicePropertiesBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +24,7 @@ class SystemFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
-        binding = FragmentDeviceSystemBinding.inflate(layoutInflater, container, false)
+        binding = FragmentDevicePropertiesBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -36,21 +36,18 @@ class SystemFragment : Fragment() {
         binding.recyclerViewInfo.layoutManager = LinearLayoutManager(context)
         binding.recyclerViewInfo.addItemDecoration(requireContext(), R.drawable.inset_recyclerview_divider)
         adapter.notifyDataSetChanged()
+
+        val downData = data.map { PropertiesAdapter.unpackKeyValue(it)[0] }
+        val downAdapter = PropertyAutoCompleteAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, downData)
+        binding.autoCompleteTextView.setAdapter(downAdapter)
+//        binding.autoCompleteTextView.set
     }
 
+
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SystemFragment.
-         */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-                SystemFragment().apply {
+                PropertiesFragment().apply {
 //                    arguments = Bundle().apply {
 //                        putString(ARG_PARAM1, param1)
 //                        putString(ARG_PARAM2, param2)

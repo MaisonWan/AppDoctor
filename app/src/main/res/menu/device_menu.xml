@@ -10,5 +10,8 @@
         android:id="@+id/navigation_store"
         android:icon="@drawable/ic_outline_security_24"
         android:title="@string/title_store" />
-
+    <item
+        android:id="@+id/navigation_properties"
+        android:icon="@drawable/ic_baseline_description_24"
+        android:title="@string/title_properties" />
 </menu>
