@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.domker.app.doctor.R
-import java.util.regex.Pattern
 
 /**
  * 属性适配器
@@ -17,6 +16,7 @@ class PropertiesAdapter(private val context: Context,
                         private val data: List<String>) :
         RecyclerView.Adapter<PropertiesAdapter.PropertiesViewHolder>() {
     private val inflater = LayoutInflater.from(context)
+    private var showData = data
 //    private val pattern: Pattern = Pattern.compile("\\[.+\\]")
 
     class PropertiesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -30,14 +30,25 @@ class PropertiesAdapter(private val context: Context,
     }
 
     override fun onBindViewHolder(holder: PropertiesViewHolder, position: Int) {
-        val line = data[position]
+        val line = showData[position]
         val kv = unpackKeyValue(line)
 
         holder.textViewKey.text = kv[0]
         holder.textViewValue.text = kv[1]
     }
 
-    override fun getItemCount(): Int = data.size
+    override fun getItemCount(): Int = showData.size
+
+    /**
+     * 根据关键词搜索
+     */
+    fun search(keyWords: String?) {
+        showData = if (keyWords.isNullOrBlank()) {
+            data
+        } else {
+            data.filter { it.contains(keyWords) }
+        }
+    }
 
     companion object {
 
