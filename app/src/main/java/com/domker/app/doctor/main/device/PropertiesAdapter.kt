@@ -13,11 +13,10 @@ import com.domker.app.doctor.R
  * Created by wanlipeng on 2/15/21 1:59 AM
  */
 class PropertiesAdapter(private val context: Context,
-                        private val data: List<String>) :
+                        private val data: List<Pair<String, String>>) :
         RecyclerView.Adapter<PropertiesAdapter.PropertiesViewHolder>() {
     private val inflater = LayoutInflater.from(context)
     private var showData = data
-//    private val pattern: Pattern = Pattern.compile("\\[.+\\]")
 
     class PropertiesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textViewKey: TextView = itemView.findViewById(R.id.textViewKey)
@@ -30,11 +29,10 @@ class PropertiesAdapter(private val context: Context,
     }
 
     override fun onBindViewHolder(holder: PropertiesViewHolder, position: Int) {
-        val line = showData[position]
-        val kv = unpackKeyValue(line)
+        val property = showData[position]
 
-        holder.textViewKey.text = kv[0]
-        holder.textViewValue.text = kv[1]
+        holder.textViewKey.text = property.first
+        holder.textViewValue.text = property.second
     }
 
     override fun getItemCount(): Int = showData.size
@@ -46,26 +44,7 @@ class PropertiesAdapter(private val context: Context,
         showData = if (keyWords.isNullOrBlank()) {
             data
         } else {
-            data.filter { it.contains(keyWords) }
-        }
-    }
-
-    companion object {
-
-        /**
-         * 解码每行的数据
-         */
-        @JvmStatic
-        fun unpackKeyValue(line: String): Array<String> {
-            var left = line.indexOfFirst { it == '[' } + 1
-            var right = line.indexOfFirst { it == ']' }
-            val key = line.substring(left, right)
-
-            var value = line.substring(right + 1)
-            left = value.indexOfFirst { it == '[' } + 1
-            right = value.indexOfFirst { it == ']' }
-            value = value.substring(left, right)
-            return arrayOf(key, value)
+            data.filter { it.first.contains(keyWords) }
         }
     }
 }

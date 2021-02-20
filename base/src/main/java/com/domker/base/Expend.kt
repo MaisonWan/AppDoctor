@@ -37,3 +37,10 @@ fun RecyclerView.addItemDecoration(context: Context, @DrawableRes drawableId: In
 fun Intent.startActivity(context: Context) {
     context.startActivity(this)
 }
+
+/**
+ * 一次添加一对数据
+ */
+fun <K, V> MutableList<Pair<K, V>>.addPair(key: K, value: V) {
+    this.add(Pair(key, value))
+}

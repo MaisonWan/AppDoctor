@@ -12,6 +12,7 @@
     <string name="title_system">系统</string>
     <string name="title_store">存储</string>
     <string name="title_properties">属性</string>
+    <string name="title_system_properties">属性</string>
     <string name="title_main">简介</string>
     <string name="title_permission">权限</string>
     <string name="title_permission_detail">权限详情</string>
@@ -52,4 +53,8 @@
 
     <string name="system_app">系统应用</string>
     <string name="property_name_hint">属性名称</string>
+
+    <string name="system_about">关于本机</string>
+    <string name="system_state">状态信息</string>
+    <string name="system_parameter">运行参数</string>
 </resources>

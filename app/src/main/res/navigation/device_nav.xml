@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@+id/navigation_properties">
+    app:startDestination="@+id/navigation_system">
 
     <fragment
         android:id="@+id/navigation_system"
@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/navigation_properties"
         android:name="com.domker.app.doctor.main.device.PropertiesFragment"
-        android:label="@string/title_properties"
+        android:label="@string/title_system_properties"
         tools:layout="@layout/fragment_device_properties" />
 
 </navigation>
