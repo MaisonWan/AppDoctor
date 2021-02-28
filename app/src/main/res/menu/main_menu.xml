@@ -6,6 +6,7 @@
         android:id="@+id/menu_dashboard"
         android:icon="@drawable/ic_outline_insert_chart_outlined_24"
         android:title="@string/menu_chart"
+        android:visible="false"
         app:showAsAction="ifRoom|withText" />
     <item
         android:id="@+id/menu_show_app"

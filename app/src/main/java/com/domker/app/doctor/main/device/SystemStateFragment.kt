@@ -36,7 +36,7 @@ class SystemStateFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         deviceManager = DeviceManager(requireContext()).also {
             if (it.checkPermission()) {
-                val state = it.getDeviceState(requireActivity())
+                val state = it.getDeviceState()
                 initDataShow(state)
             } else {
 //                it.getPermissions().forEach { p ->
@@ -67,7 +67,7 @@ class SystemStateFragment : Fragment() {
                     return
                 }
             }
-            initDataShow(deviceManager.getDeviceState(requireActivity()))
+            initDataShow(deviceManager.getDeviceState())
         }
     }
 

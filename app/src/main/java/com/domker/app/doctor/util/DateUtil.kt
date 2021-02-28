@@ -12,4 +12,12 @@ object DateUtil {
     fun getDate(date: Date): String = dateFormat.format(date)
 
     fun getDataFromTimestamp(timestamp: Long): String = getDate(Date(timestamp))
+
+    fun getAppInstallTime(timestamp: Long): String {
+        return if (timestamp == 0L) {
+            "系统预装"
+        } else {
+            getDataFromTimestamp(timestamp)
+        }
+    }
 }

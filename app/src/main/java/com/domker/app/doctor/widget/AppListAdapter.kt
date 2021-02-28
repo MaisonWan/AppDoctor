@@ -32,7 +32,7 @@ class AppListAdapter(private val context: Context, private val gridType: Int) :
         } else {
             R.layout.app_item_grid_layout
         }
-        val view: View = inflater.inflate(layoutResId, null)
+        val view: View = inflater.inflate(layoutResId, parent, false)
         return AppInfoViewHolder(view)
     }
 

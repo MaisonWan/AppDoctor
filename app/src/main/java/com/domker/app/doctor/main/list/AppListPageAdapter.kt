@@ -36,7 +36,6 @@ class AppListPageAdapter(private val context: Context,
     private val app = AppCheckFactory.getInstance(context)
     private lateinit var viewModel: AppListViewModel
     var includeSystemApp = false
-    var currentPosition = 0
 
     class PageViewHolder(val binding: PagerAppListItemBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -59,14 +58,15 @@ class AppListPageAdapter(private val context: Context,
                 fetchAppList()
             }
         }
-        currentPosition = position
     }
+
 
     private fun initViewModel() {
         viewModel = ViewModelProvider(viewModelStoreOwner).get(AppListViewModel::class.java)
         viewModel.appListData.observe(lifecycleOwner, {
             updateAppList(it)
         })
+
     }
 
     /**
@@ -93,11 +93,13 @@ class AppListPageAdapter(private val context: Context,
      * 刷新app列表
      */
     private fun updateAppList(newAppList: List<AppEntity>) {
-        adapters[currentPosition]?.let {
-            val oldAppList = it.getAppList()
-            val diffResult = DiffUtil.calculateDiff(AppDiffCallBack(oldAppList, newAppList))
-            it.setAppList(newAppList)
-            diffResult.dispatchUpdatesTo(it)
+        repeat(itemCount) { index ->
+            adapters[index]?.let {
+                val oldAppList = it.getAppList()
+                val diffResult = DiffUtil.calculateDiff(AppDiffCallBack(oldAppList, newAppList))
+                it.setAppList(newAppList)
+                diffResult.dispatchUpdatesTo(it)
+            }
         }
 
         // 更新一下最新信息到数据库

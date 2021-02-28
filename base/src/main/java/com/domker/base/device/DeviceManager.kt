@@ -2,7 +2,6 @@ package com.domker.base.device
 
 import android.Manifest.permission.READ_PHONE_STATE
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
 import android.content.pm.PackageManager
@@ -12,14 +11,18 @@ import android.os.Environment
 import android.provider.Settings
 import android.telephony.TelephonyManager
 import android.text.format.Formatter
+import android.util.DisplayMetrics
+import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.core.content.PermissionChecker
+import com.domker.base.SystemVersion
 import com.domker.base.addPair
 import java.io.BufferedReader
 import java.io.FileReader
 import java.io.IOException
 import java.util.*
 import java.util.regex.Pattern
+
 
 private const val NOT_AVAILABLE = "not available"
 
@@ -33,34 +36,20 @@ class DeviceManager(private val context: Context) {
     private val mTelephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
 
     /**
-     * 获取当年设备的状态信息汇总
+     * 获取关于本机的信息
      */
-    fun getDeviceState(activity: Activity): List<Pair<String, String>> {
+    fun getDeviceAbout(): List<Pair<String, String>> {
         val list = mutableListOf<Pair<String, String>>()
-
-        list.addPair("Total Memory", totalMemory)
-        list.addPair("Avail Memory", availMemory)
-        appMaxHeapSize.apply {
-            list.addPair("Max Heap Size", "${this}KB(${Formatter.formatFileSize(context, this * 1024)})")
-        }
-        appFreeHeapSize.apply {
-            list.addPair("Free Heap Size", "${this}KB(${Formatter.formatFileSize(context, this * 1024)})")
-        }
-        appTotalHeapSize.apply {
-            list.addPair("Total Heap Size", "${this}KB(${Formatter.formatFileSize(context, this * 1024)})")
-        }
-
-        list.addPair("SDK Version", sdkVersion)
-
+        list.addPair("系统版本", systemVersion)
         list.addPair("Android ID", androidID)
-        list.addPair("WiFi Mac Address", macAddress)
+        list.addPair("WLAN Mac地址", macAddress)
 
-        getScreenSize(activity).apply {
-            list.addPair("Screen Size", "${this.first} * ${this.second}")
+        getScreenSize().apply {
+            list.addPair("屏幕尺寸", "${this.first} * ${this.second}")
         }
 
         list.addPair("Scaled Density", dpiDensity)
-        list.addPair("Density DPI", densityDpi.toString())
+        list.addPair("像素密度DPI", densityDpi.toString())
         list.addPair("Density", density.toString())
 
         list.addAll(osBuildInfo)
@@ -138,20 +127,19 @@ class DeviceManager(private val context: Context) {
      *
      * @return String
      */
-    val sdkVersion: String
-        get() = Build.VERSION.SDK_INT.toString()
+    private val systemVersion: String
+        get() = SystemVersion.getShowLabel(SystemVersion.getVersion(Build.VERSION.SDK_INT))
 
-    val osBuildInfo: List<Pair<String, String>>
+    private val osBuildInfo: List<Pair<String, String>>
         get() {
             val data: MutableList<Pair<String, String>> = ArrayList()
-            data.addPair("SERIAL: ", Build.SERIAL)
-            data.addPair("Product: ", Build.PRODUCT)
-            data.addPair("Bootloader", Build.BOOTLOADER)
-            data.addPair("CPU_ABI", cpuABI)
+            data.addPair("设备型号", Build.PRODUCT)
+            data.addPair("CPU架构", cpuABI)
+            data.addPair("处理器", Build.HARDWARE)
+            data.addPair("BOOTLOADER", Build.BOOTLOADER)
             data.addPair("TAGS", Build.TAGS)
             data.addPair("VERSION_CODES.BASE", Build.VERSION_CODES.BASE.toString())
             data.addPair("MODEL", Build.MODEL)
-            data.addPair("SDK", Build.VERSION.SDK)
             data.addPair("VERSION.RELEASE", Build.VERSION.RELEASE)
             data.addPair("DEVICE", Build.DEVICE)
             data.addPair("DISPLAY", Build.DISPLAY)
@@ -177,10 +165,16 @@ class DeviceManager(private val context: Context) {
      * @param activity
      * @return String
      */
-    fun getScreenSize(activity: Activity): Pair<Int, Int> {
-        val width = activity.windowManager.defaultDisplay.width
-        val height = activity.windowManager.defaultDisplay.height
-        return Pair(width, height)
+    fun getScreenSize(): Pair<Int, Int> {
+        val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val dm = wm.currentWindowMetrics.bounds
+            Pair(dm.width(), dm.height())
+        } else {
+            val dm = DisplayMetrics()
+            wm.defaultDisplay.getRealMetrics(dm)
+            Pair(dm.widthPixels, dm.heightPixels)
+        }
     }
 
     val densityDpi: Int
@@ -200,6 +194,27 @@ class DeviceManager(private val context: Context) {
             val dm = context.resources.displayMetrics
             return String.format("%f * %f", dm.xdpi, dm.ydpi)
         }
+
+
+    /**
+     * 获取当年设备的状态信息汇总
+     */
+    fun getDeviceState(): List<Pair<String, String>> {
+        val list = mutableListOf<Pair<String, String>>()
+
+        list.addPair("Total Memory", totalMemory)
+        list.addPair("Avail Memory", availMemory)
+        appMaxHeapSize.apply {
+            list.addPair("Max Heap Size", "${this}KB(${Formatter.formatFileSize(context, this * 1024)})")
+        }
+        appFreeHeapSize.apply {
+            list.addPair("Free Heap Size", "${this}KB(${Formatter.formatFileSize(context, this * 1024)})")
+        }
+        appTotalHeapSize.apply {
+            list.addPair("Total Heap Size", "${this}KB(${Formatter.formatFileSize(context, this * 1024)})")
+        }
+        return list
+    }
 
     val sDCardPath: String?
         get() = if (Environment.getExternalStorageState() == Environment.MEDIA_MOUNTED) {
@@ -229,21 +244,25 @@ class DeviceManager(private val context: Context) {
         get() {
             val str1 = "/proc/meminfo" // 系统内存信息文件
             val str2: String
-            var arrayOfString: String? = null
+            var arrayOfString = ""
             var initialMemory: Long = 0
             try {
                 val localFileReader = FileReader(str1)
-                val localBufferedReader = BufferedReader(
-                        localFileReader, 8192)
+                val localBufferedReader = BufferedReader(localFileReader, 8192)
+                localBufferedReader.readLines().forEach {
+                    println(it)
+                }
                 str2 = localBufferedReader.readLine() // 读取meminfo第一行，系统总内存大小
                 val matcher = Pattern.compile("\\d+").matcher(str2)
                 if (matcher.find()) {
                     arrayOfString = matcher.group()
                 }
-                initialMemory = java.lang.Long.valueOf(arrayOfString).toLong() * 1024 // 获得系统总内存，单位是KB，乘以1024转换为Byte
+
+                initialMemory = arrayOfString.toLong() * 1024 // 获得系统总内存，单位是KB，乘以1024转换为Byte
                 localBufferedReader.close()
             } catch (e: IOException) {
             }
             return Formatter.formatFileSize(context, initialMemory) // Byte转换为KB或者MB，内存大小规格化
         }
+
 }

@@ -34,13 +34,14 @@ class AppListFragment : Fragment() {
     }
 
     private fun initViews(binding: FragmentAppListBinding) {
-        val viewPager = binding.viewpager
         adapter = AppListPageAdapter(requireContext(), this, this)
         adapter.includeSystemApp = isShowAllApp
-        viewPager.adapter = adapter
-        viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-
-        binding.circlePageIndicator.setViewPager(viewPager)
+        binding.viewpager.also { v ->
+            v.adapter = adapter
+            v.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+            binding.circlePageIndicator.setViewPager(v)
+//            v.offscreenPageLimit = 1
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

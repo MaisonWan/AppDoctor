@@ -24,20 +24,13 @@ class AppDetailAdapter(context: Context, diffCallback: DiffUtil.ItemCallback<App
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppDetailViewHolder {
         log("onCreateViewHolder $viewType")
-        return when (viewType) {
-            AppItemInfo.TYPE_SUBJECT_LABEL -> {
-                val view: View = inflater.inflate(R.layout.detail_subject_layout, null)
-                AppDetailViewHolder(view)
-            }
-            AppItemInfo.TYPE_SUBJECT -> {
-                val view = inflater.inflate(R.layout.detail_item_subject_layout, null)
-                AppDetailViewHolder(view)
-            }
-            else -> {
-                val view: View = inflater.inflate(R.layout.detail_label_layout, null)
-                AppDetailViewHolder(view)
-            }
+        val layoutResId = when (viewType) {
+            AppItemInfo.TYPE_SUBJECT_LABEL -> R.layout.detail_subject_layout
+            AppItemInfo.TYPE_SUBJECT -> R.layout.detail_item_subject_layout
+            else -> R.layout.detail_label_layout
         }
+        val view: View = inflater.inflate(layoutResId, null, false)
+        return AppDetailViewHolder(view)
     }
 
     override fun getItemCount(): Int = mDetailItemList?.size ?: 0

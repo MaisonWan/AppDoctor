@@ -133,7 +133,7 @@ class HomeFragment : Fragment() {
             val v = SystemVersion.getVersion(it.minSdkVersion)
             detailList.add(AppItemInfo("最低支持系统版本", SystemVersion.getShowLabel(v)))
             detailList.add(AppItemInfo("系统应用", it.isSystemApp.toChinese()))
-            detailList.add(AppItemInfo("首次安装时间", DateUtil.getDataFromTimestamp(it.installTime)))
+            detailList.add(AppItemInfo("首次安装时间", DateUtil.getAppInstallTime(it.installTime)))
             detailList.add(AppItemInfo("最近更新时间", DateUtil.getDataFromTimestamp(it.updateTime)))
             detailList.add(AppItemInfo("Application名称", it.applicationName!!))
             detailList.add(AppItemInfo("源文件路径", it.sourceDir!!))
