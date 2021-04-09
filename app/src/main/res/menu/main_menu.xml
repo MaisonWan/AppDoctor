@@ -9,8 +9,16 @@
         android:visible="false"
         app:showAsAction="ifRoom|withText" />
     <item
-        android:id="@+id/menu_show_app"
-        android:icon="@drawable/ic_outline_border_all_24"
-        android:title="@string/menu_all_app"
-        app:showAsAction="ifRoom|withText" />
+        android:id="@+id/menu_sort_name"
+        android:icon="@drawable/ic_baseline_menu_open_24"
+        android:title="@string/menu_sort_name"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_sort_size"
+        android:title="@string/menu_sort_size"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_sort_time"
+        android:title="@string/menu_sort_time"
+        app:showAsAction="never" />
 </menu>

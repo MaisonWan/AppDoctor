@@ -3,11 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
     <item
-        android:id="@+id/menu_show_app"
-        android:icon="@drawable/ic_outline_border_all_24"
-        android:title="@string/menu_all_app"
-        app:showAsAction="ifRoom|withText" />
-    <item
         android:id="@+id/menu_sort_name"
         android:icon="@drawable/ic_baseline_menu_open_24"
         android:title="@string/menu_sort_name"

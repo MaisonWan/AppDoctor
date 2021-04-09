@@ -6,8 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.domker.base.file.FileUtils
 import com.domker.app.doctor.explorer.databinding.ActivityJsonViewerBinding
+import com.domker.base.file.FileUtils
+import java.io.File
 
 
 @Route(path = "/json_viewer/activity")
@@ -45,6 +46,8 @@ class JsonViewerActivity : AppCompatActivity() {
     private fun initJsonFile() {
         val jsonFilePath = intent.getStringExtra("json_file_path")
         jsonFilePath?.apply {
+            // 显示文件名到标题
+            title = File(jsonFilePath).name
             val content = FileUtils.readFile(jsonFilePath)
             binding.jsonRecyclerView.bindJson(content)
         }

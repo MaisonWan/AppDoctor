@@ -23,7 +23,7 @@ class PermissionListAdapter(private val context: Context,
     private val permissions = HashMap<String, PermissionDescription>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PermissionDetailViewHolder {
-        val root = inflater.inflate(R.layout.detail_subject_layout, null)
+        val root = inflater.inflate(R.layout.item_detail_subject, null)
         return PermissionDetailViewHolder(root)
     }
 

@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -25,11 +26,12 @@ class AppDetailAdapter(context: Context, diffCallback: DiffUtil.ItemCallback<App
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AppDetailViewHolder {
         log("onCreateViewHolder $viewType")
         val layoutResId = when (viewType) {
-            AppItemInfo.TYPE_SUBJECT_LABEL -> R.layout.detail_subject_layout
+            AppItemInfo.TYPE_SUBJECT_LABEL -> R.layout.item_detail_subject
             AppItemInfo.TYPE_SUBJECT -> R.layout.detail_item_subject_layout
+            AppItemInfo.TYPE_PACKAGE -> R.layout.item_detail_package
             else -> R.layout.detail_label_layout
         }
-        val view: View = inflater.inflate(layoutResId, null, false)
+        val view: View = inflater.inflate(layoutResId, parent, false)
         return AppDetailViewHolder(view)
     }
 
@@ -39,9 +41,16 @@ class AppDetailAdapter(context: Context, diffCallback: DiffUtil.ItemCallback<App
         val item = mDetailItemList!![position]
         holder.labelTv?.text = item.showLabel
         holder.subjectTv?.text = item.subject
-        if (getItemViewType(position) == AppItemInfo.TYPE_LABEL) {
-            holder.itemView.setOnClickListener {
-                mListener?.invoke(it, position)
+        when (getItemViewType(position)) {
+            AppItemInfo.TYPE_LABEL -> {
+                holder.itemView.setOnClickListener {
+                    mListener?.invoke(it, position)
+                }
+            }
+            AppItemInfo.TYPE_PACKAGE -> {
+                holder.itemView.findViewById<Button>(R.id.buttonPackage).setOnClickListener {
+                    mListener?.invoke(it, position)
+                }
             }
         }
         if (item.switchShowLabel.isNotBlank()) {

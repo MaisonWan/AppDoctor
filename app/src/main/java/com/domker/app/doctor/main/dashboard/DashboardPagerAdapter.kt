@@ -1,4 +1,4 @@
-package com.domker.app.doctor.main
+package com.domker.app.doctor.main.dashboard
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.domker.app.doctor.R
+import com.domker.app.doctor.data.AppDataProcessor
+import com.domker.app.doctor.data.DataProcessor
 import com.domker.base.addItemDecoration
 
 
@@ -14,7 +16,8 @@ import com.domker.base.addItemDecoration
  */
 class DashboardPagerAdapter(private val dashboardContext: DashboardContext,
                             private val tabTitleRes: IntArray) :
-        RecyclerView.Adapter<DashboardPagerAdapter.PageViewHolder>() {
+        RecyclerView.Adapter<DashboardPagerAdapter.PageViewHolder>(),
+        DataProcessor {
     private val context = dashboardContext.context
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var packageSizeAdapter = PackageSizeAdapter(dashboardContext)
@@ -48,20 +51,9 @@ class DashboardPagerAdapter(private val dashboardContext: DashboardContext,
         }
     }
 
-    /**
-     * 按照指定类型排序
-     *
-     * @param type
-     */
-    fun sortBy(type: Int) {
-        packageSizeAdapter.sortBy(type)
-    }
-
-    fun showAllApp(show: Boolean) {
-        packageSizeAdapter.showAllApp(show)
-    }
-
     class PageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val recyclerView: RecyclerView? = view.findViewById(R.id.recyclerViewPackageSize)
     }
+
+    override fun getDataProcessor(): AppDataProcessor = packageSizeAdapter.getDataProcessor()
 }

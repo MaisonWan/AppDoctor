@@ -12,10 +12,10 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.domker.app.doctor.explorer.R
 import com.domker.base.addItemDecoration
 import com.domker.base.readZipFileList
 import com.domker.base.thread.AppExecutors
-import com.domker.app.doctor.explorer.R
 import java.io.File
 
 /**
@@ -25,7 +25,8 @@ class ExplorerPagerAdapter(private val context: Context,
                            private val owner: FragmentActivity,
                            private val apkSourcePath: String,
                            private val appPackageName: String,
-                           private val pageTitleRes: IntArray) :
+                           private val pageTitleRes: IntArray,
+                           private val onLoadCompleteListener: () -> Unit) :
         RecyclerView.Adapter<ExplorerPagerAdapter.ExplorerViewHolder>() {
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private val viewModel = ViewModelProvider(owner).get(ApkExplorerViewModel::class.java)
@@ -72,6 +73,7 @@ class ExplorerPagerAdapter(private val context: Context,
         viewModel.appInfo.observe(owner, {
             adapter.loadItems(it)
             adapter.notifyDataSetChanged()
+            onLoadCompleteListener()
         })
         // 异步获取apk内部结构完全的数据
         AppExecutors.executor.execute {

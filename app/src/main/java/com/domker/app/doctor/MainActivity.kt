@@ -2,6 +2,7 @@ package com.domker.app.doctor
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.navigation.findNavController
@@ -11,6 +12,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.domker.app.doctor.data.AppState
 import com.domker.app.doctor.databinding.ActivityMainDrawerBinding
 import com.domker.app.doctor.util.Router
 
@@ -23,19 +25,27 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppState.init(this)
         binding = ActivityMainDrawerBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initToolbar()
+        initHeaderView()
+        initNavigation()
+    }
 
+    private fun initNavigation() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.nav_app_list, R.id.nav_system_info, R.id.nav_dashboard), binding.drawerLayout)
+        val ids = setOf(R.id.nav_app_list, R.id.nav_system_info, R.id.nav_dashboard)
+        appBarConfiguration = AppBarConfiguration(ids, binding.drawerLayout)
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navView.setupWithNavController(navController)
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            println(destination.label)
+            println(destination.id)
+        }
     }
 
     private fun initToolbar() {
@@ -43,6 +53,19 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         toolbar.setNavigationOnClickListener {
             binding.drawerLayout.openDrawer(GravityCompat.START)
+        }
+    }
+
+    private fun initHeaderView() {
+        val headerView = binding.navView.getHeaderView(0)
+        val switchAppInclude = headerView.findViewById<SwitchCompat>(R.id.switchAppInclude)
+        switchAppInclude.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                buttonView.setText(R.string.nav_header_switch_all)
+            } else {
+                buttonView.setText(R.string.nav_header_switch_install)
+            }
+            AppState.appViewModel.includeAllApp.postValue(isChecked)
         }
     }
 

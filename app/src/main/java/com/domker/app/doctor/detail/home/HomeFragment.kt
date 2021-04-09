@@ -19,6 +19,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.domker.app.doctor.R
 import com.domker.app.doctor.detail.AppDetailActivity
 import com.domker.app.doctor.entiy.AppItemInfo
+import com.domker.app.doctor.entiy.AppItemInfo.Companion.TYPE_PACKAGE
 import com.domker.app.doctor.util.DateUtil
 import com.domker.app.doctor.util.IntentUtil
 import com.domker.app.doctor.util.Router
@@ -48,12 +49,14 @@ class HomeFragment : Fragment() {
     ): View? {
         homeViewModel = AppDetailActivity.homeViewModel
                 ?: ViewModelProvider(this).get(HomeViewModel::class.java)
+        return inflater.inflate(R.layout.fragment_detail_main, container, false)
+    }
 
-        val root = inflater.inflate(R.layout.fragment_detail_main, container, false)
-        initButtonListener(root)
-        initView(root)
-        initObserver(root)
-        return root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initButtonListener(view)
+        initView(view)
+        initObserver(view)
     }
 
     private fun initView(root: View) {
@@ -65,6 +68,11 @@ class HomeFragment : Fragment() {
         recyclerViewAppInfo.addItemDecoration(context, R.drawable.inset_recyclerview_divider)
         recyclerViewAppInfo.setItemViewCacheSize(100)
         adapter = AppDetailAdapter(context, AppDetailItemDiffCallBack())
+        adapter.setOnItemClickListener { view, position ->
+            if (adapter.getItemViewType(position) == TYPE_PACKAGE) {
+                openPackageExplorer()
+            }
+        }
         recyclerViewAppInfo.adapter = adapter
     }
 
@@ -80,14 +88,8 @@ class HomeFragment : Fragment() {
                     }.show()
         }
 
-        root.findViewById<Button>(R.id.buttonApkExplorer).setOnClickListener { _ ->
-            apkSourcePath?.apply {
-                ARouter.getInstance()
-                        .build(Router.EXPLORER_ACTIVITY)
-                        .withString("apk_source_path", this)
-                        .withString("package_name", appPackageName)
-                        .navigation()
-            }
+        root.findViewById<Button>(R.id.buttonApkExplorer).setOnClickListener {
+            openPackageExplorer()
         }
 
         root.findViewById<Button>(R.id.buttonUninstall).setOnClickListener {
@@ -99,6 +101,16 @@ class HomeFragment : Fragment() {
                             startActivity(intent)
                         }
                     }.show()
+        }
+    }
+
+    private fun openPackageExplorer() {
+        apkSourcePath?.apply {
+            ARouter.getInstance()
+                    .build(Router.EXPLORER_ACTIVITY)
+                    .withString("apk_source_path", this)
+                    .withString("package_name", appPackageName)
+                    .navigation()
         }
     }
 
@@ -136,7 +148,7 @@ class HomeFragment : Fragment() {
             detailList.add(AppItemInfo("首次安装时间", DateUtil.getAppInstallTime(it.installTime)))
             detailList.add(AppItemInfo("最近更新时间", DateUtil.getDataFromTimestamp(it.updateTime)))
             detailList.add(AppItemInfo("Application名称", it.applicationName!!))
-            detailList.add(AppItemInfo("源文件路径", it.sourceDir!!))
+            detailList.add(AppItemInfo("源文件路径", it.sourceDir!!, type = TYPE_PACKAGE))
             detailList.add(AppItemInfo("源文件大小", FileUtils.formatFileSize(it.sourceApkSize!!)))
             detailList.add(AppItemInfo("Native库路径", it.nativeLibraryDir!!))
             detailList.add(AppItemInfo("主要CPU架构", it.primaryCpuAbi ?: ""))

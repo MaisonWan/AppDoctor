@@ -8,5 +8,6 @@ data class AppItemInfo(val subject: String?, val showLabel: String, val switchSh
         const val TYPE_SUBJECT_LABEL = 1
         const val TYPE_SUBJECT = 2
         const val TYPE_LABEL = 3
+        const val TYPE_PACKAGE = 4
     }
 }

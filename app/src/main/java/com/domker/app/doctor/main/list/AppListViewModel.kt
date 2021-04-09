@@ -9,7 +9,7 @@ import com.domker.app.doctor.data.AppEntity
  * Created by wanlipeng on 1/29/21 3:52 PM
  */
 class AppListViewModel : ViewModel() {
-    private val _appList = MutableLiveData<List<AppEntity>>()
+    private val _appList = MutableLiveData<Pair<Int, List<AppEntity>>>()
 
     val appListData = _appList
 }

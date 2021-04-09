@@ -1,20 +1,22 @@
-package com.domker.app.doctor.main
+package com.domker.app.doctor.main.dashboard
 
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.domker.app.doctor.R
+import com.domker.app.doctor.data.SORT_NAME
+import com.domker.app.doctor.data.SORT_SIZE
+import com.domker.app.doctor.data.SORT_TIME
+import com.domker.app.doctor.widget.BaseAppFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 /**
  * 数据看板
  */
-class DashboardFragment : Fragment() {
+class DashboardFragment : BaseAppFragment() {
 
-    private var isShowAllApp: Boolean = false
     private lateinit var sectionsPagerAdapter: DashboardPagerAdapter
     private lateinit var slideshowViewModel: DashboardViewModel
 
@@ -53,28 +55,25 @@ class DashboardFragment : Fragment() {
         inflater.inflate(R.menu.dashboard_menu, menu)
     }
 
+    override fun onAppIncludeChanged(includeAll: Boolean) {
+        super.onAppIncludeChanged(includeAll)
+        val list = dashboardContext.reloadAppList(includeAll)
+        sectionsPagerAdapter.getDataProcessor().resetData(list)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val p = sectionsPagerAdapter.getDataProcessor()
         return when (item.itemId) {
             R.id.menu_sort_time -> {
-                sectionsPagerAdapter.sortBy(SORT_TIME)
+                p.sortBy(SORT_TIME)
                 true
             }
             R.id.menu_sort_name -> {
-                sectionsPagerAdapter.sortBy(SORT_NAME)
+                p.sortBy(SORT_NAME)
                 true
             }
             R.id.menu_sort_size -> {
-                sectionsPagerAdapter.sortBy(SORT_SIZE)
-                true
-            }
-            R.id.menu_show_app -> {
-                isShowAllApp = !isShowAllApp
-                if (isShowAllApp) {
-                    item.setIcon(R.drawable.ic_baseline_border_clear_24)
-                } else {
-                    item.setIcon(R.drawable.ic_outline_border_all_24)
-                }
-                sectionsPagerAdapter.showAllApp(isShowAllApp)
+                p.sortBy(SORT_SIZE)
                 true
             }
             else -> {

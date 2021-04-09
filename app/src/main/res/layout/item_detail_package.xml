@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@drawable/item_selector">
 
     <TextView
@@ -18,29 +18,16 @@
         android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/textViewLabel"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewType"
+        app:layout_constraintEnd_toStartOf="@+id/buttonPackage"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@tools:sample/first_names" />
-
-    <ImageView
-        android:id="@+id/imageViewType"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="373dp"
-        android:layout_marginEnd="8dp"
-        android:src="@drawable/ic_outline_keyboard_arrow_right_24"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewLabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:gravity="center_vertical"
         android:paddingStart="16dp"
         android:paddingTop="5dp"
@@ -50,7 +37,21 @@
         android:textIsSelectable="true"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageViewType"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="@tools:sample/full_names" />
+
+    <Button
+        android:id="@+id/buttonPackage"
+        android:layout_width="0dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="@drawable/bg_button_blue_state"
+        android:text="@string/apk_explorer"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/textViewLabel"
+        app:layout_constraintEnd_toEndOf="@+id/textViewLabel"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

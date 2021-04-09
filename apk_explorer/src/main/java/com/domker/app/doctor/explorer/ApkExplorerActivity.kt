@@ -27,7 +27,9 @@ class ApkExplorerActivity : AppCompatActivity() {
         appPackageName = intent.getStringExtra("package_name") ?: ""
 
         binding.viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        pageAdapter = ExplorerPagerAdapter(this, this, apkSourcePath, appPackageName, tabTitleRes)
+        pageAdapter = ExplorerPagerAdapter(this, this, apkSourcePath, appPackageName, tabTitleRes) {
+            binding.loading.hide()
+        }
         binding.viewPager.adapter = pageAdapter
 
         val tabLayout: TabLayout = binding.tabs

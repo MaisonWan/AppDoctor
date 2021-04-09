@@ -29,19 +29,23 @@ import com.domker.base.thread.AppExecutors
  */
 class AppListPageAdapter(private val context: Context,
                          private val lifecycleOwner: LifecycleOwner,
-                         private val viewModelStoreOwner: ViewModelStoreOwner) :
+                         viewModelStoreOwner: ViewModelStoreOwner) :
         RecyclerView.Adapter<AppListPageAdapter.PageViewHolder>() {
     private var adapters: Array<AppListAdapter?> = arrayOfNulls(2)
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private val app = AppCheckFactory.getInstance(context)
-    private lateinit var viewModel: AppListViewModel
+    private val viewModel = ViewModelProvider(viewModelStoreOwner).get(AppListViewModel::class.java)
+
     var includeSystemApp = false
 
     class PageViewHolder(val binding: PagerAppListItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PageViewHolder {
+        val begin = System.currentTimeMillis()
         val binding: PagerAppListItemBinding = PagerAppListItemBinding.inflate(inflater, parent, false)
         initViewModel()
+        val end = System.currentTimeMillis()
+        println("onCreateViewHolder type=$viewType time=${end - begin}")
         return PageViewHolder(binding)
     }
 
@@ -49,24 +53,28 @@ class AppListPageAdapter(private val context: Context,
 
     override fun onBindViewHolder(holder: PageViewHolder, position: Int) {
         when (position) {
-            0 -> {
+            LAYOUT_TYPE_LIST -> {
+                val begin = System.currentTimeMillis()
                 initAppList(position, holder.binding.recyclerView, LAYOUT_TYPE_LIST)
-                fetchAppList()
+                fetchAppList(position)
+                val end = System.currentTimeMillis()
+                println("onCreateViewHolder position=$position time=${end - begin}")
             }
-            1 -> {
+            LAYOUT_TYPE_GRID -> {
+                val begin = System.currentTimeMillis()
                 initAppList(position, holder.binding.recyclerView, LAYOUT_TYPE_GRID)
-                fetchAppList()
+                fetchAppList(position)
+                val end = System.currentTimeMillis()
+                println("onCreateViewHolder position=$position time=${end - begin}")
             }
         }
     }
 
 
     private fun initViewModel() {
-        viewModel = ViewModelProvider(viewModelStoreOwner).get(AppListViewModel::class.java)
         viewModel.appListData.observe(lifecycleOwner, {
-            updateAppList(it)
+            updateAppList(it.first, it.second)
         })
-
     }
 
     /**
@@ -92,13 +100,15 @@ class AppListPageAdapter(private val context: Context,
     /**
      * 刷新app列表
      */
-    private fun updateAppList(newAppList: List<AppEntity>) {
-        repeat(itemCount) { index ->
-            adapters[index]?.let {
+    private fun updateAppList(index: Int, newAppList: List<AppEntity>) {
+        repeat(2) { pageIndex ->
+            adapters[pageIndex]?.let {
                 val oldAppList = it.getAppList()
                 val diffResult = DiffUtil.calculateDiff(AppDiffCallBack(oldAppList, newAppList))
                 it.setAppList(newAppList)
-                diffResult.dispatchUpdatesTo(it)
+//                if (pageIndex == index) {
+                    diffResult.dispatchUpdatesTo(it)
+//                }
             }
         }
 
@@ -111,15 +121,20 @@ class AppListPageAdapter(private val context: Context,
     /**
      * 获取最新的信息，是否包含系统应用
      */
-    private fun fetchAppList() {
+    private fun fetchAppList(index: Int) {
         AppExecutors.executor.execute {
             val newAppList = app.getAppList(includeSystemApp)
-            viewModel.appListData.postValue(newAppList)
+            viewModel.appListData.postValue(Pair(index, newAppList))
         }
     }
 
-    fun fetchAppList(include: Boolean) {
-        includeSystemApp = include
-        fetchAppList()
+    /**
+     * @param index 当前界面的index
+     * @param includeAll 是否包含所有app
+     */
+    fun fetchAppList(index: Int, includeAll: Boolean) {
+        includeSystemApp = includeAll
+        fetchAppList(index)
     }
+
 }

@@ -29,7 +29,7 @@ class ComponentAdapter(private val context: Context,
                 ComponentViewHolder(view)
             }
             else -> {
-                val view: View = inflater.inflate(R.layout.detail_subject_layout, null)
+                val view: View = inflater.inflate(R.layout.item_detail_subject, null)
                 ComponentViewHolder(view)
             }
         }
