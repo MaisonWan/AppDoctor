@@ -43,12 +43,12 @@ class HomeFragment : Fragment() {
     private var detailList = mutableListOf<AppItemInfo>()
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         homeViewModel = AppDetailActivity.homeViewModel
-                ?: ViewModelProvider(this).get(HomeViewModel::class.java)
+            ?: ViewModelProvider(this).get(HomeViewModel::class.java)
         return inflater.inflate(R.layout.fragment_detail_main, container, false)
     }
 
@@ -80,12 +80,12 @@ class HomeFragment : Fragment() {
         val context = requireContext()
         root.findViewById<Button>(R.id.buttonStart).setOnClickListener {
             Snackbar.make(it, R.string.action_launch_app, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.launch) {
-                        appPackageName?.apply {
-                            val intent = IntentUtil.createLaunchIntent(context, this)
-                            startActivity(intent)
-                        }
-                    }.show()
+                .setAction(R.string.launch) {
+                    appPackageName?.apply {
+                        val intent = IntentUtil.createLaunchIntent(context, this)
+                        startActivity(intent)
+                    }
+                }.show()
         }
 
         root.findViewById<Button>(R.id.buttonApkExplorer).setOnClickListener {
@@ -94,23 +94,23 @@ class HomeFragment : Fragment() {
 
         root.findViewById<Button>(R.id.buttonUninstall).setOnClickListener {
             Snackbar.make(it, R.string.action_uninstall_app, Snackbar.LENGTH_LONG)
-                    .setAction(R.string.uninstall) {
-                        appPackageName?.apply {
-                            val uri: Uri = Uri.parse("package:$this")
-                            val intent = Intent(Intent.ACTION_DELETE, uri)
-                            startActivity(intent)
-                        }
-                    }.show()
+                .setAction(R.string.uninstall) {
+                    appPackageName?.apply {
+                        val uri: Uri = Uri.parse("package:$this")
+                        val intent = Intent(Intent.ACTION_DELETE, uri)
+                        startActivity(intent)
+                    }
+                }.show()
         }
     }
 
     private fun openPackageExplorer() {
         apkSourcePath?.apply {
             ARouter.getInstance()
-                    .build(Router.EXPLORER_ACTIVITY)
-                    .withString("apk_source_path", this)
-                    .withString("package_name", appPackageName)
-                    .navigation()
+                .build(Router.EXPLORER_ACTIVITY)
+                .withString("apk_source_path", this)
+                .withString("package_name", appPackageName)
+                .navigation()
         }
     }
 
@@ -131,11 +131,11 @@ class HomeFragment : Fragment() {
                 ImageViewer.load(it.iconDrawable!!) //要加载的图片数据，单张或多张
 //                        .selection(position) //当前选中位置
 //                        .indicator(true) //是否显示指示器，默认不显示
-                        .imageLoader(GlideImageLoader()) //加载器，*必须配置，目前内置的有GlideImageLoader或PicassoImageLoader，也可以自己实现
-                        //                      .imageLoader(new PicassoImageLoader())
-                        .theme(R.style.ImageViewerTheme) //设置主题风格，默认：R.style.ImageViewerTheme
-                        .orientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) //设置屏幕方向,默认：ActivityInfo.SCREEN_ORIENTATION_BEHIND
-                        .start(this, v)
+                    .imageLoader(GlideImageLoader()) //加载器，*必须配置，目前内置的有GlideImageLoader或PicassoImageLoader，也可以自己实现
+                    //                      .imageLoader(new PicassoImageLoader())
+                    .theme(R.style.ImageViewerTheme) //设置主题风格，默认：R.style.ImageViewerTheme
+                    .orientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) //设置屏幕方向,默认：ActivityInfo.SCREEN_ORIENTATION_BEHIND
+                    .start(this, v)
             }
 
             detailList.add(AppItemInfo("版本名", it.versionName))
@@ -154,6 +154,7 @@ class HomeFragment : Fragment() {
             detailList.add(AppItemInfo("主要CPU架构", it.primaryCpuAbi ?: ""))
             detailList.add(AppItemInfo("Data路径", it.dataDir!!))
             detailList.add(AppItemInfo("主进程名", it.processName!!))
+            detailList.add(AppItemInfo("SHA256签名", it.signature ?: ""))
             detailList.add(AppItemInfo("User ID", it.uid.toString()))
             detailList.add(AppItemInfo("Flag", it.flag ?: "Unknown"))
 

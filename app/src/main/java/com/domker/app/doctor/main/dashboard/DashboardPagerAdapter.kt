@@ -23,7 +23,7 @@ class DashboardPagerAdapter(private val dashboardContext: DashboardContext,
     private var packageSizeAdapter = PackageSizeAdapter(dashboardContext)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PageViewHolder {
-        val root = inflater.inflate(R.layout.fragment_app_dashboard, parent, false)
+        val root = inflater.inflate(R.layout.fragment_main_page_dashboard, parent, false)
         return PageViewHolder(root)
     }
 

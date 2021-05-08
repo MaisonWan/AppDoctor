@@ -16,15 +16,16 @@ class PermissionFragment : Fragment() {
     private lateinit var binding: FragmentDetailPermissionBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         binding = FragmentDetailPermissionBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        println("PermissionFragment onActivityCreated")
 
-        AppDetailActivity.componentViewModel?.permissionInfo?.observe(viewLifecycleOwner, Observer {
+        AppDetailActivity.componentViewModel?.permissionInfo?.observe(viewLifecycleOwner, {
             binding.pathTitle.text = "共${it.size}条"
             binding.recyclerView.adapter = PermissionListAdapter(requireContext(), it.sortedBy { info -> info.name })
             binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())

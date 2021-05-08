@@ -8,7 +8,7 @@ const val SORT_SIZE = 3
  * 数据处理器，主要处理排序，大小，过滤
  * Created by wanlipeng on 3/5/21 5:40 PM
  */
-class AppDataProcessor(dataResource: List<AppEntity>) {
+class AppDataProcessor(dataResource: List<AppEntity>? = null) {
     private val mainData = mutableListOf<AppEntity>()
     private var sortedCallback: ((Int, Boolean) -> Unit)? = null
 
@@ -16,12 +16,16 @@ class AppDataProcessor(dataResource: List<AppEntity>) {
     var sortDesc = false
 
     init {
-        resetData(dataResource)
+        dataResource?.apply {
+            resetData(this)
+        }
     }
 
     fun size() = mainData.size
 
     fun data() = mainData
+
+    fun cloneData() = ArrayList<AppEntity>(mainData)
 
     operator fun get(index: Int): AppEntity {
         return mainData[index]

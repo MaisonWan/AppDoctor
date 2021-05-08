@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.domker.app.doctor.detail.AppDetailActivity
 import com.domker.app.doctor.R
+import com.domker.app.doctor.detail.AppDetailActivity
 import com.domker.base.addItemDecoration
 
 /**
@@ -45,7 +44,7 @@ class ComponentPageAdapter(private val context: Context,
     override fun onBindViewHolder(holder: PageViewHolder, position: Int) {
         if (position in pageTitleRes.indices) {
             // 四个类型的形式一样，所以用数组存储在一起，便于代码操作
-            liveData[position]?.observe(lifecycleOwner, Observer {
+            liveData[position]?.observe(lifecycleOwner, {
                 data[position].clear()
                 data[position].addAll(it.sortedBy { c -> c.shortName })
                 adapter[position]?.notifyDataSetChanged()

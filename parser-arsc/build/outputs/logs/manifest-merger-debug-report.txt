@@ -3,21 +3,9 @@ manifest
 ADDED from /Users/wanlipeng/Code/github/AppDoctor/parser-arsc/src/main/AndroidManifest.xml:2:1-5:12
 INJECTED from /Users/wanlipeng/Code/github/AppDoctor/parser-arsc/src/main/AndroidManifest.xml:2:1-5:12
 INJECTED from /Users/wanlipeng/Code/github/AppDoctor/parser-arsc/src/main/AndroidManifest.xml:2:1-5:12
-INJECTED from /Users/wanlipeng/Code/github/AppDoctor/parser-arsc/src/main/AndroidManifest.xml:2:1-5:12
-INJECTED from /Users/wanlipeng/Code/github/AppDoctor/parser-arsc/src/main/AndroidManifest.xml:2:1-5:12
-INJECTED from /Users/wanlipeng/Code/github/AppDoctor/parser-arsc/src/main/AndroidManifest.xml:2:1-5:12
-INJECTED from /Users/wanlipeng/Code/github/AppDoctor/parser-arsc/src/main/AndroidManifest.xml:2:1-5:12
 	package
 		ADDED from /Users/wanlipeng/Code/github/AppDoctor/parser-arsc/src/main/AndroidManifest.xml:3:5-32
 		INJECTED from /Users/wanlipeng/Code/github/AppDoctor/parser-arsc/src/main/AndroidManifest.xml
-		INJECTED from /Users/wanlipeng/Code/github/AppDoctor/parser-arsc/src/main/AndroidManifest.xml
-	android:versionName
-		INJECTED from /Users/wanlipeng/Code/github/AppDoctor/parser-arsc/src/main/AndroidManifest.xml
-		ADDED from /Users/wanlipeng/Code/github/AppDoctor/parser-arsc/src/main/AndroidManifest.xml:2:1-5:12
-		INJECTED from /Users/wanlipeng/Code/github/AppDoctor/parser-arsc/src/main/AndroidManifest.xml
-	android:versionCode
-		INJECTED from /Users/wanlipeng/Code/github/AppDoctor/parser-arsc/src/main/AndroidManifest.xml
-		ADDED from /Users/wanlipeng/Code/github/AppDoctor/parser-arsc/src/main/AndroidManifest.xml:2:1-5:12
 		INJECTED from /Users/wanlipeng/Code/github/AppDoctor/parser-arsc/src/main/AndroidManifest.xml
 	xmlns:android
 		ADDED from /Users/wanlipeng/Code/github/AppDoctor/parser-arsc/src/main/AndroidManifest.xml:2:11-69

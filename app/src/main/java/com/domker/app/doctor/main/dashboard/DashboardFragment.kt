@@ -29,7 +29,7 @@ class DashboardFragment : BaseAppFragment() {
     ): View? {
         slideshowViewModel =
                 ViewModelProvider(this).get(DashboardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
+        val root = inflater.inflate(R.layout.fragment_main_dashboard, container, false)
         dashboardContext = DashboardContext(this)
         initViews(root)
         return root

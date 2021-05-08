@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.room.Room
 import com.alibaba.android.arouter.launcher.ARouter
 import com.domker.app.doctor.data.AppDatabase
+import com.domker.app.doctor.view.TypeFacePool
 import com.domker.base.thread.AppExecutors
 
 /**
@@ -25,6 +26,7 @@ class CheckerApplication : Application() {
             ARouter.openDebug()
         }
         ARouter.init(this)
+        TypeFacePool.init(this)
 
         appDatabase = Room.databaseBuilder(this, AppDatabase::class.java, "app_list.db")
                 .allowMainThreadQueries()

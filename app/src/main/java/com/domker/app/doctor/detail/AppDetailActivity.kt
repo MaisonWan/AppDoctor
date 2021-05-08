@@ -59,6 +59,7 @@ class AppDetailActivity : BaseAppCompatActivity() {
     private fun updateAppInfo() {
         AppExecutors.executor.execute {
             appChecker.getAppEntity(appPackageName)?.let {
+                it.signature = getShowSignature(appChecker.getAppSignature(appPackageName))
                 homeViewModel?.appInfo?.postValue(it)
             }
             componentViewModel?.activityInfo?.postValue(appChecker.getActivityListInfo(appPackageName))
@@ -67,6 +68,17 @@ class AppDetailActivity : BaseAppCompatActivity() {
             componentViewModel?.receiverInfo?.postValue(appChecker.getReceiversListInfo(appPackageName))
             componentViewModel?.permissionInfo?.postValue(appChecker.getPermissions(appPackageName))
         }
+    }
+
+    private fun getShowSignature(array: Array<String>) :String {
+        val ans = StringBuffer()
+        for (i in array.indices) {
+            ans.append(array[i])
+            if (i != array.size - 1) {
+                ans.append("\n")
+            }
+        }
+        return ans.toString()
     }
 
     override fun onDestroy() {

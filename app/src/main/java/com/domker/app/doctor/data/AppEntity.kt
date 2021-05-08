@@ -9,8 +9,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.domker.base.file.FileUtils
 import com.domker.base.RefInvoke
+import com.domker.base.file.FileUtils
 import org.jetbrains.annotations.NotNull
 
 /**
@@ -58,6 +58,9 @@ class AppEntity {
     @ColumnInfo(name = "source_apk_size")
     var sourceApkSize: Long? = 0
 
+    @ColumnInfo(name = "signature")
+    var signature: String? = null
+
     @ColumnInfo(name = "native_lib_dir")
     var nativeLibraryDir: String? = null
 
@@ -81,12 +84,17 @@ class AppEntity {
 }
 
 
-fun AppEntity.parseFrom(packageManager: PackageManager, packageInfo: PackageInfo, allInfo: Boolean = false): AppEntity? {
+fun AppEntity.parseFrom(
+    packageManager: PackageManager,
+    packageInfo: PackageInfo,
+    allInfo: Boolean = false
+): AppEntity? {
     try {
         this.appName = packageInfo.applicationInfo.loadLabel(packageManager).toString()
         this.packageName = packageInfo.packageName
         this.versionName = packageInfo.versionName
-        this.versionCode = if (Build.VERSION.SDK_INT >= 28) packageInfo.longVersionCode else packageInfo.versionCode.toLong()
+        this.versionCode =
+            if (Build.VERSION.SDK_INT >= 28) packageInfo.longVersionCode else packageInfo.versionCode.toLong()
         this.iconDrawable = packageInfo.applicationInfo.loadIcon(packageManager)
         this.isSystemApp = (packageInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0
         this.updateTime = packageInfo.lastUpdateTime

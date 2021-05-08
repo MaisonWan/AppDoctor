@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
 import com.domker.app.doctor.R
 import com.domker.app.doctor.data.AppCheckFactory
+import com.domker.app.doctor.data.AppDataProcessor
 import com.domker.app.doctor.data.AppEntity
+import com.domker.app.doctor.data.DataProcessor
 import com.domker.app.doctor.databinding.PagerAppListItemBinding
 import com.domker.app.doctor.util.Router
 import com.domker.app.doctor.widget.AppDiffCallBack
@@ -30,13 +32,23 @@ import com.domker.base.thread.AppExecutors
 class AppListPageAdapter(private val context: Context,
                          private val lifecycleOwner: LifecycleOwner,
                          viewModelStoreOwner: ViewModelStoreOwner) :
-        RecyclerView.Adapter<AppListPageAdapter.PageViewHolder>() {
+        RecyclerView.Adapter<AppListPageAdapter.PageViewHolder>(),
+        DataProcessor {
     private var adapters: Array<AppListAdapter?> = arrayOfNulls(2)
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private val app = AppCheckFactory.getInstance(context)
+    private val dataProcessor = AppDataProcessor()
     private val viewModel = ViewModelProvider(viewModelStoreOwner).get(AppListViewModel::class.java)
 
     var includeSystemApp = false
+
+    init {
+        dataProcessor.setOnSortedCallback { type, desc ->
+            repeat(2) {
+                notifyData(it)
+            }
+        }
+    }
 
     class PageViewHolder(val binding: PagerAppListItemBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -101,20 +113,24 @@ class AppListPageAdapter(private val context: Context,
      * 刷新app列表
      */
     private fun updateAppList(index: Int, newAppList: List<AppEntity>) {
+        dataProcessor.resetData(newAppList)
         repeat(2) { pageIndex ->
-            adapters[pageIndex]?.let {
-                val oldAppList = it.getAppList()
-                val diffResult = DiffUtil.calculateDiff(AppDiffCallBack(oldAppList, newAppList))
-                it.setAppList(newAppList)
-//                if (pageIndex == index) {
-                    diffResult.dispatchUpdatesTo(it)
-//                }
-            }
+            notifyData(pageIndex)
         }
 
         // 更新一下最新信息到数据库
         AppExecutors.executor.execute {
             AppCheckFactory.getInstance(context).updateInfoToDatabase()
+        }
+    }
+
+    private fun notifyData(pageIndex: Int) {
+        adapters[pageIndex]?.let {
+            val oldAppList = it.getAppList()
+            val list = dataProcessor.cloneData()
+            val diffResult = DiffUtil.calculateDiff(AppDiffCallBack(oldAppList, list))
+            it.setAppList(list)
+            diffResult.dispatchUpdatesTo(it)
         }
     }
 
@@ -137,4 +153,5 @@ class AppListPageAdapter(private val context: Context,
         fetchAppList(index)
     }
 
+    override fun getDataProcessor(): AppDataProcessor = dataProcessor
 }

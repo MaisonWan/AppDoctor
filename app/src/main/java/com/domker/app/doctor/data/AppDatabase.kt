@@ -8,7 +8,7 @@ import androidx.room.TypeConverters
  * 数据库存储等操作
  * Created by wanlipeng on 2020/6/12 10:09 AM
  */
-@Database(entities = [AppEntity::class], version = 2, exportSchema = false)
+@Database(entities = [AppEntity::class], version = 3, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
 

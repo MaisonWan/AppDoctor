@@ -3,6 +3,7 @@ package com.domker.app.doctor.data
 import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
+import android.os.Build
 import com.domker.app.doctor.detail.component.ComponentInfo
 import com.domker.app.doctor.detail.component.ComponentInfo.Companion.TYPE_ACTIVITY
 import com.domker.app.doctor.detail.component.ComponentInfo.Companion.TYPE_PROVIDER
@@ -10,6 +11,7 @@ import com.domker.app.doctor.detail.component.ComponentInfo.Companion.TYPE_RECEI
 import com.domker.app.doctor.detail.component.ComponentInfo.Companion.TYPE_SERVICE
 import com.domker.app.doctor.detail.component.componentOfType
 import com.domker.app.doctor.detail.component.parseFrom
+import java.security.MessageDigest
 
 
 /**
@@ -54,6 +56,50 @@ class AppChecker(private val context: Context) {
     }
 
     /**
+     * 获取应用的签名
+     */
+    fun getAppSignature(packageName: String): Array<String> {
+        try {
+            val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                PackageManager.GET_SIGNING_CERTIFICATES
+            } else {
+                PackageManager.GET_SIGNATURES
+            }
+            val info = context.packageManager.getPackageInfo(packageName, flag)
+            val cert = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                info.signingInfo.apkContentsSigners
+            } else {
+                info.signatures
+            }
+
+            // 创建结果
+            val signatures = Array(cert.size) { "" }
+            val md: MessageDigest = MessageDigest.getInstance("SHA256")
+
+            cert.forEachIndexed { index, signature ->
+                val publicKey: ByteArray = md.digest(signature.toByteArray())
+                val hexString = StringBuilder()
+                for (i in publicKey.indices) {
+                    val appendString =
+                        Integer.toHexString(publicKey[i].toInt().and(0xFF)).uppercase()
+                    if (appendString.length == 1) {
+                        hexString.append("0")
+                    }
+                    hexString.append(appendString)
+                    if (i != publicKey.size - 1) {
+                        hexString.append(":")
+                    }
+                }
+                signatures[index] = hexString.toString()
+            }
+            return signatures
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+        return emptyArray()
+    }
+
+    /**
      * 获取Activity的信息，时间比较长，单独抽象方法
      */
     fun getActivityListInfo(packageName: String): List<ComponentInfo> {
@@ -61,11 +107,11 @@ class AppChecker(private val context: Context) {
         try {
             // activity list
             context.packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
-                    .activities?.forEach {
-                        val componentInfo = ComponentInfo()
-                        componentInfo.type = ComponentInfo.TYPE_ACTIVITY
-                        list.add(componentInfo.parseFrom(it))
-                    }
+                .activities?.forEach {
+                    val componentInfo = ComponentInfo()
+                    componentInfo.type = ComponentInfo.TYPE_ACTIVITY
+                    list.add(componentInfo.parseFrom(it))
+                }
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -99,11 +145,11 @@ class AppChecker(private val context: Context) {
         try {
             // service list
             context.packageManager.getPackageInfo(packageName, PackageManager.GET_SERVICES)
-                    .services?.forEach {
-                        val componentInfo = ComponentInfo()
-                        componentInfo.type = TYPE_SERVICE
-                        list.add(componentInfo.parseFrom(it))
-                    }
+                .services?.forEach {
+                    val componentInfo = ComponentInfo()
+                    componentInfo.type = TYPE_SERVICE
+                    list.add(componentInfo.parseFrom(it))
+                }
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -136,11 +182,11 @@ class AppChecker(private val context: Context) {
         val list = mutableListOf<ComponentInfo>()
         try {
             context.packageManager.getPackageInfo(packageName, PackageManager.GET_PROVIDERS)
-                    .providers?.forEach {
-                        val componentInfo = ComponentInfo()
-                        componentInfo.type = TYPE_PROVIDER
-                        list.add(componentInfo.parseFrom(it))
-                    }
+                .providers?.forEach {
+                    val componentInfo = ComponentInfo()
+                    componentInfo.type = TYPE_PROVIDER
+                    list.add(componentInfo.parseFrom(it))
+                }
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -173,11 +219,11 @@ class AppChecker(private val context: Context) {
         val list = mutableListOf<ComponentInfo>()
         try {
             context.packageManager.getPackageInfo(packageName, PackageManager.GET_RECEIVERS)
-                    .receivers?.forEach {
-                        val componentInfo = ComponentInfo()
-                        componentInfo.type = TYPE_RECEIVER
-                        list.add(componentInfo.parseFrom(it))
-                    }
+                .receivers?.forEach {
+                    val componentInfo = ComponentInfo()
+                    componentInfo.type = TYPE_RECEIVER
+                    list.add(componentInfo.parseFrom(it))
+                }
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -209,7 +255,8 @@ class AppChecker(private val context: Context) {
     fun getPermissions(packageName: String): List<ComponentInfo> {
         val list = mutableListOf<ComponentInfo>()
         try {
-            val p = context.packageManager.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS)
+            val p =
+                context.packageManager.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS)
             p.requestedPermissions?.map {
                 val componentInfo = componentOfType(ComponentInfo.TYPE_PERMISSION)
                 componentInfo.name = it

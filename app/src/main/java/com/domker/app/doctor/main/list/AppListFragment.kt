@@ -5,6 +5,9 @@ import android.view.*
 import androidx.viewpager2.widget.ViewPager2
 import com.alibaba.android.arouter.launcher.ARouter
 import com.domker.app.doctor.R
+import com.domker.app.doctor.data.SORT_NAME
+import com.domker.app.doctor.data.SORT_SIZE
+import com.domker.app.doctor.data.SORT_TIME
 import com.domker.app.doctor.databinding.FragmentAppListBinding
 import com.domker.app.doctor.util.Router
 import com.domker.app.doctor.widget.BaseAppFragment
@@ -51,15 +54,23 @@ class AppListFragment : BaseAppFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val p = adapter.getDataProcessor()
         return when (item.itemId) {
-            R.id.menu_dashboard -> {
-                ARouter.getInstance()
-                        .build(Router.DASHBOARD_ACTIVITY)
-                        .withBoolean("show_all_app", appIncludeAll)
-                        .navigation()
+            R.id.menu_sort_time -> {
+                p.sortBy(SORT_TIME)
                 true
             }
-            else -> super.onOptionsItemSelected(item)
+            R.id.menu_sort_name -> {
+                p.sortBy(SORT_NAME)
+                true
+            }
+            R.id.menu_sort_size -> {
+                p.sortBy(SORT_SIZE)
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
         }
     }
 }
