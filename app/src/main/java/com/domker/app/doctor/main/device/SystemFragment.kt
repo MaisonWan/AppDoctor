@@ -30,7 +30,7 @@ class SystemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val data = DeviceScanner(requireContext()).getSystemProperties()
+//        val data = DeviceScanner(requireContext()).getSystemProperties()
 //        val adapter = PropertiesAdapter(requireContext(), data)
         binding.viewpager.adapter = SystemPagerAdapter(parentFragmentManager, lifecycle)
         TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, i ->

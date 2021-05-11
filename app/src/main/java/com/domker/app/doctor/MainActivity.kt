@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             println(destination.label)
             println(destination.id)
+
         }
     }
 
