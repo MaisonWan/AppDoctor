@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -102,6 +103,13 @@ class HomeFragment : Fragment() {
                     }
                 }.show()
         }
+
+        root.findViewById<Button>(R.id.buttonSettings).setOnClickListener {
+            appPackageName?.let {
+                openAppSetting(it)
+            }
+        }
+
     }
 
     private fun openPackageExplorer() {
@@ -112,6 +120,16 @@ class HomeFragment : Fragment() {
                 .withString("package_name", appPackageName)
                 .navigation()
         }
+    }
+
+    /**
+     * 打开app设置
+     */
+    private fun openAppSetting(packageName: String) {
+        val intent = Intent()
+        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+        intent.data = Uri.fromParts("package", packageName, null)
+        startActivity(intent)
     }
 
     private fun initObserver(root: View) {

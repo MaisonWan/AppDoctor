@@ -24,7 +24,7 @@ class DeviceFragment : BaseAppFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMainDeviceBinding.inflate(layoutInflater)
+        binding = FragmentMainDeviceBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 

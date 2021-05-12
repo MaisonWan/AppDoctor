@@ -35,6 +35,7 @@ class AppListFragment : BaseAppFragment() {
         adapter = AppListPageAdapter(requireContext(), this, this)
         adapter.includeSystemApp = appIncludeAll
         binding.viewpager.also { v ->
+            v.offscreenPageLimit = 1
             v.adapter = adapter
             v.orientation = ViewPager2.ORIENTATION_HORIZONTAL
             binding.circlePageIndicator.setViewPager(v)

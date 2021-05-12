@@ -60,38 +60,62 @@
 
     <Button
         android:id="@+id/buttonStart"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="@dimen/detail_button_width"
+        android:layout_height="@dimen/detail_button_height"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/bg_button_blue_state"
         android:text="@string/launch"
         android:textColor="@android:color/white"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/app_icon" />
 
+
     <Button
         android:id="@+id/buttonUninstall"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/detail_button_width"
+        android:layout_height="@dimen/detail_button_height"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/bg_button_red_state"
         android:text="@string/uninstall"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="@+id/buttonStart"
-        app:layout_constraintEnd_toStartOf="@+id/buttonApkExplorer"
+        app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toEndOf="@+id/buttonStart"
-        app:layout_constraintTop_toTopOf="@+id/buttonStart" />
+        app:layout_constraintTop_toTopOf="@+id/buttonStart"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/buttonApkExplorer"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/detail_button_width"
+        android:layout_height="@dimen/detail_button_height"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/bg_button_blue_state"
         android:text="@string/apk_explorer"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="@+id/buttonStart"
-        app:layout_constraintEnd_toEndOf="@+id/app_package"
-        app:layout_constraintTop_toTopOf="@+id/buttonStart" />
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/buttonUninstall"
+        app:layout_constraintTop_toTopOf="@+id/buttonStart"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/buttonSettings"
+        android:layout_width="@dimen/detail_button_width"
+        android:layout_height="@dimen/detail_button_height"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/bg_button_blue_state"
+        android:text="@string/apk_settings"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonStart"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintStart_toEndOf="@+id/buttonApkExplorer"
+        app:layout_constraintTop_toTopOf="@+id/buttonStart"
+        app:layout_constraintVertical_bias="0.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
