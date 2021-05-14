@@ -11,6 +11,11 @@
         android:label="@string/menu_app_list"
         tools:layout="@layout/fragment_app_list" />
     <fragment
+        android:id="@+id/nav_photo_info"
+        android:name="com.domker.app.doctor.main.photo.PhotoAnalysisFragment"
+        android:label="@string/menu_photo_info"
+        tools:layout="@layout/fragment_main_photo" />
+    <fragment
         android:id="@+id/nav_dashboard"
         android:name="com.domker.app.doctor.main.dashboard.DashboardFragment"
         android:label="@string/menu_dashboard"

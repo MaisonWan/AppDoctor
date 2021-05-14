@@ -12,6 +12,7 @@
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_system">系统</string>
     <string name="title_store">存储</string>
+    <string name="search">搜索</string>
     <string name="title_properties">属性</string>
     <string name="title_system_properties">属性</string>
     <string name="title_main">简介</string>
@@ -48,6 +49,7 @@
     <string name="menu_app_list">应用列表</string>
     <string name="menu_system_info">本机信息</string>
     <string name="menu_dashboard">数据统计</string>
+    <string name="menu_photo_info">图片信息</string>
     <string name="menu_sort_size">按大小排序</string>
     <string name="menu_sort_time">按时间排序</string>
     <string name="menu_sort_name">按名字排序</string>

@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import com.domker.app.doctor.data.AppState
 
+
 /**
  * Fragment的基类
  * Created by wanlipeng on 3/5/21 4:35 PM
