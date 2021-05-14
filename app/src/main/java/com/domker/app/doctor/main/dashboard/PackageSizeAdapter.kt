@@ -11,7 +11,7 @@ import com.domker.app.doctor.R
 import com.domker.app.doctor.data.AppDataProcessor
 import com.domker.app.doctor.data.DataProcessor
 import com.domker.app.doctor.main.dashboard.PackageSizeAdapter.PackageSizeViewHolder
-import com.domker.app.doctor.util.DateUtil
+import com.domker.app.doctor.util.DataFormat
 import com.domker.base.file.FileUtils
 import kotlinx.coroutines.flow.combineTransform
 import kotlinx.coroutines.launch
@@ -61,7 +61,7 @@ class PackageSizeAdapter(private val dashboardContext: DashboardContext) :
         holder.appName?.text = "${appEntity.appName}(${appEntity.versionName})"
         holder.packageSize?.text = FileUtils.formatFileSize(appEntity.sourceApkSize!!)
         holder.systemApp?.visibility = if (appEntity.isSystemApp) View.VISIBLE else View.INVISIBLE
-        holder.installTime?.text = DateUtil.getDataFromTimestamp(appEntity.updateTime)
+        holder.installTime?.text = DataFormat.getDataFromTimestamp(appEntity.updateTime)
     }
 
     class PackageSizeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

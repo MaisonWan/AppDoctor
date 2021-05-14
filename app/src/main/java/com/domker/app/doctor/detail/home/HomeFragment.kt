@@ -21,7 +21,7 @@ import com.domker.app.doctor.R
 import com.domker.app.doctor.detail.AppDetailActivity
 import com.domker.app.doctor.entiy.AppItemInfo
 import com.domker.app.doctor.entiy.AppItemInfo.Companion.TYPE_PACKAGE
-import com.domker.app.doctor.util.DateUtil
+import com.domker.app.doctor.util.DataFormat
 import com.domker.app.doctor.util.IntentUtil
 import com.domker.app.doctor.util.Router
 import com.domker.app.doctor.widget.AppDetailAdapter
@@ -163,8 +163,8 @@ class HomeFragment : Fragment() {
             val v = SystemVersion.getVersion(it.minSdkVersion)
             detailList.add(AppItemInfo("最低支持系统版本", SystemVersion.getShowLabel(v)))
             detailList.add(AppItemInfo("系统应用", it.isSystemApp.toChinese()))
-            detailList.add(AppItemInfo("首次安装时间", DateUtil.getAppInstallTime(it.installTime)))
-            detailList.add(AppItemInfo("最近更新时间", DateUtil.getDataFromTimestamp(it.updateTime)))
+            detailList.add(AppItemInfo("首次安装时间", DataFormat.getAppInstallTime(it.installTime)))
+            detailList.add(AppItemInfo("最近更新时间", DataFormat.getDataFromTimestamp(it.updateTime)))
             detailList.add(AppItemInfo("Application名称", it.applicationName!!))
             detailList.add(AppItemInfo("源文件路径", it.sourceDir!!, type = TYPE_PACKAGE))
             detailList.add(AppItemInfo("源文件大小", FileUtils.formatFileSize(it.sourceApkSize!!)))
