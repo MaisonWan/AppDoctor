@@ -114,10 +114,8 @@ class PhotoAnalysisFragment : BaseAppFragment() {
             } else {
                 data.clipData?.getItemAt(0)?.uri
             }
-
             uri?.let {
                 Glide.with(requireContext()).load(it).into(binding.imageViewPreview)
-
                 AppExecutors.executor.execute {
                     val stream = requireActivity().contentResolver.openInputStream(it)
                     val parser = PhotoExifParser(stream!!)
@@ -125,6 +123,7 @@ class PhotoAnalysisFragment : BaseAppFragment() {
                     exifViewModel.exif.postValue(exif)
                 }
             }
+
         }
     }
 
