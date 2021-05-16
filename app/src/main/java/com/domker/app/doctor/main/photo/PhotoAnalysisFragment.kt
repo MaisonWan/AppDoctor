@@ -146,8 +146,8 @@ class PhotoAnalysisFragment : BaseAppFragment() {
         data.add(AppItemInfo("闪光灯", exif.camera.flash.toString()))
         data.add(AppItemInfo("旋转角度", "${exif.camera.orientation}°"))
 
-        data.add(AppItemInfo("GPS经度", "${exif.gps.longitudeRef} ${exif.gps.longitude}°"))
-        data.add(AppItemInfo("GPS纬度", "${exif.gps.latitudeRef} ${exif.gps.latitude}°"))
+        data.add(AppItemInfo("GPS经度", "${exif.gps.longitudeRef} ${exif.gps.location.getLongitude()}"))
+        data.add(AppItemInfo("GPS纬度", "${exif.gps.latitudeRef} ${exif.gps.location.getLatitude()}"))
         data.add(AppItemInfo("GPS时间", DataFormat.getFormatFullDate(exif.gps.gpsDateTime)))
         data.add(AppItemInfo("海拔高度", "${exif.gps.altitudeRef}${exif.gps.altitude} M"))
 
