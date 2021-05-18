@@ -10,7 +10,7 @@ import java.util.*
 object DataFormat {
     private val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA)
     private val dateWeekFormat = SimpleDateFormat("yyyy-MM-dd E HH:mm:ss", Locale.CHINA)
-    private val decimalFormat = DecimalFormat("#0.00")
+    private val decimalFormat = DecimalFormat("#0.0000")
 
     fun getDate(date: Date): String = dateFormat.format(date)
 

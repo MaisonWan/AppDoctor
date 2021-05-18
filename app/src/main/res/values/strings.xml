@@ -12,6 +12,7 @@
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_system">系统</string>
     <string name="title_store">存储</string>
+    <string name="search">搜索</string>
     <string name="title_properties">属性</string>
     <string name="title_system_properties">属性</string>
     <string name="title_main">简介</string>

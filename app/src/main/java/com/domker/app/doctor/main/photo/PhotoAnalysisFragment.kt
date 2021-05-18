@@ -109,14 +109,21 @@ class PhotoAnalysisFragment : BaseAppFragment() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ACTION_CHOOSE_PHOTO && data != null) {
             initPhotoView()
-            Glide.with(requireContext()).load(data.data).into(binding.imageViewPreview)
-
-            AppExecutors.executor.execute {
-                val stream = requireActivity().contentResolver.openInputStream(data.data!!)
-                val parser = PhotoExifParser(stream!!)
-                val exif = parser.loadExif()
-                exifViewModel.exif.postValue(exif)
+            val uri = if (data.data != null) {
+                data.data
+            } else {
+                data.clipData?.getItemAt(0)?.uri
             }
+            uri?.let {
+                Glide.with(requireContext()).load(it).into(binding.imageViewPreview)
+                AppExecutors.executor.execute {
+                    val stream = requireActivity().contentResolver.openInputStream(it)
+                    val parser = PhotoExifParser(stream!!)
+                    val exif = parser.loadExif()
+                    exifViewModel.exif.postValue(exif)
+                }
+            }
+
         }
     }
 
@@ -139,8 +146,8 @@ class PhotoAnalysisFragment : BaseAppFragment() {
         data.add(AppItemInfo("闪光灯", exif.camera.flash.toString()))
         data.add(AppItemInfo("旋转角度", "${exif.camera.orientation}°"))
 
-        data.add(AppItemInfo("GPS经度", "${exif.gps.longitudeRef} ${exif.gps.longitude}°"))
-        data.add(AppItemInfo("GPS纬度", "${exif.gps.latitudeRef} ${exif.gps.latitude}°"))
+        data.add(AppItemInfo("GPS经度", "${exif.gps.longitudeRef} ${exif.gps.location.getLongitude()}"))
+        data.add(AppItemInfo("GPS纬度", "${exif.gps.latitudeRef} ${exif.gps.location.getLatitude()}"))
         data.add(AppItemInfo("GPS时间", DataFormat.getFormatFullDate(exif.gps.gpsDateTime)))
         data.add(AppItemInfo("海拔高度", "${exif.gps.altitudeRef}${exif.gps.altitude} M"))
 

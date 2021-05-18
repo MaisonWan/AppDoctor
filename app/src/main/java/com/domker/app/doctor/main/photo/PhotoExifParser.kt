@@ -108,9 +108,10 @@ class PhotoExifParser(stream: InputStream) {
     }
 
     private fun loadGps(exif: PhotoExif) {
-        exif.gps.latitude = getString(ExifInterface.TAG_GPS_LATITUDE)
+        exif.gps.location.parserLatitude(getString(ExifInterface.TAG_GPS_LATITUDE))
         exif.gps.latitudeRef = getString(ExifInterface.TAG_GPS_LATITUDE_REF)
-        exif.gps.longitude = getString(ExifInterface.TAG_GPS_LONGITUDE)
+
+        exif.gps.location.parserLongitude(getString(ExifInterface.TAG_GPS_LONGITUDE))
         exif.gps.longitudeRef = getString(ExifInterface.TAG_GPS_LONGITUDE_REF)
 
         // 解析GPS的时间

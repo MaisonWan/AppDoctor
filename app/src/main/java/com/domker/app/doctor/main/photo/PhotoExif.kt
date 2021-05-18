@@ -55,23 +55,72 @@ class PhotoExif {
      * GPS定位相关信息
      */
     class GPS {
+        // 具体的位置标示
+        val location = GPSLocation()
+
         // TAG_GPS_LATITUDE 纬度
-        var latitude = ""
+//        var latitude = ""
 
         // TAG_GPS_LATITUDE_REF 纬度参考
         var latitudeRef = ""
 
         // TAG_GPS_LONGITUDE 经度
-        var longitude = ""
+//        var longitude = ""
 
         // TAG_GPS_LONGITUDE_REF 经度参考
         var longitudeRef = ""
 
         //ExifInterface.TAG_GPS_ALTITUDE //海拔高度
         var altitude = 0.0
+
         //ExifInterface.TAG_GPS_ALTITUDE_REF //海拔高度
         var altitudeRef = ""
 
         var gpsDateTime: Long = 0
+    }
+
+    /**
+     * GPS的经纬度信息
+     */
+    class GPSLocation {
+        private var latitude = DoubleArray(3) { 0.0 }
+
+        private var longitude = DoubleArray(3) { 0.0 }
+
+        /**
+         * 解析纬度
+         */
+        fun parserLatitude(la: String) {
+            la.split(",").forEachIndexed { index, s ->
+                val num = s.split("/")
+                try {
+                    latitude[index] = num[0].toDouble() / num[1].toDouble()
+                } catch (e: Exception) {
+                    latitude[index] = 0.0
+                }
+            }
+        }
+
+        /**
+         * 解析经度
+         */
+        fun parserLongitude(lo: String) {
+            lo.split(",").forEachIndexed { index, s ->
+                val num = s.split("/")
+                try {
+                    longitude[index] = num[0].toDouble() / num[1].toDouble()
+                } catch (e: Exception) {
+                    longitude[index] = 0.0
+                }
+            }
+        }
+
+        fun getLatitude(): Double {
+            return latitude[0] + (latitude[1] + latitude[2] / 60.0) / 60.0
+        }
+
+        fun getLongitude(): Double {
+            return longitude[0] + (longitude[1] + longitude[2] / 60.0) / 60.0
+        }
     }
 }

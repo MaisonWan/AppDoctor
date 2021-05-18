@@ -33,6 +33,11 @@ class ExifListAdapter(context: Context) : RecyclerView.Adapter<ExifListAdapter.E
         return mDetailItemList?.size ?: 0
     }
 
+    override fun getItemViewType(position: Int): Int {
+        val item = mDetailItemList!![position]
+        return item.type
+    }
+
     fun setData(data: List<AppItemInfo>) {
         mDetailItemList = data
     }
