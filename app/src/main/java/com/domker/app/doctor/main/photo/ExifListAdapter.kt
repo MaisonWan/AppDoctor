@@ -1,32 +1,65 @@
 package com.domker.app.doctor.main.photo
 
-import android.content.Context
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.domker.app.doctor.R
-import com.domker.app.doctor.entiy.AppItemInfo
+import com.domker.map.OpenExternalMapAppUtils
+
+const val TYPE_LOCATION = 0x1
+const val TYPE_NORMAL = 0x2
 
 /**
  * Exif信息适配器
  * Created by wanlipeng on 2021/5/12 8:41 下午
  */
-class ExifListAdapter(context: Context) : RecyclerView.Adapter<ExifListAdapter.ExifViewHolder>() {
-    private val inflater: LayoutInflater = LayoutInflater.from(context)
-    private var mDetailItemList: List<AppItemInfo>? = null
+class ExifListAdapter(private val activity: Activity) :
+    RecyclerView.Adapter<ExifListAdapter.ExifViewHolder>() {
+    private val inflater: LayoutInflater = LayoutInflater.from(activity)
+    private var mDetailItemList: List<ExifItem>? = null
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExifViewHolder {
-        val view: View = inflater.inflate(R.layout.item_subject_right, parent, false)
+        val resId = if (viewType == TYPE_LOCATION) {
+            R.layout.item_location
+        } else {
+            R.layout.item_subject_right
+        }
+        val view: View = inflater.inflate(resId, parent, false)
         return ExifViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ExifViewHolder, position: Int) {
         val item = mDetailItemList!![position]
-        holder.label?.text = item.showLabel
+        when (item.type) {
+            TYPE_LOCATION -> {
+                bindLocation(item, holder)
+            }
+            else -> {
+                holder.label?.text = item.content
+                holder.subject?.text = item.subject
+            }
+        }
+    }
+
+    private fun bindLocation(
+        item: ExifItem,
+        holder: ExifViewHolder
+    ) {
+        val gps = item.expend as PhotoExif.GPS
         holder.subject?.text = item.subject
+        holder.locationLat?.text = "纬度 ${gps.latitudeRef} ${gps.location.getLatitude()}"
+        holder.locationLon?.text = "经度 ${gps.longitudeRef} ${gps.location.getLongitude()}"
+        holder.buttonOpenMap?.setOnClickListener {
+            OpenExternalMapAppUtils.openMapMarker(
+                activity, gps.location.getLongitude().toString(),
+                gps.location.getLatitude().toString(), "图片", "拍照位置", activity.packageName
+            )
+        }
     }
 
     override fun getItemCount(): Int {
@@ -38,17 +71,17 @@ class ExifListAdapter(context: Context) : RecyclerView.Adapter<ExifListAdapter.E
         return item.type
     }
 
-    fun setData(data: List<AppItemInfo>) {
+    fun setData(data: List<ExifItem>) {
         mDetailItemList = data
     }
 
     class ExifViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var subject: TextView? = null
-        var label: TextView? = null
+        var subject: TextView? = view.findViewById(R.id.textViewSubject)
+        var label: TextView? = view.findViewById(R.id.textViewLabel)
 
-        init {
-            subject = view.findViewById(R.id.textViewSubject)
-            label = view.findViewById(R.id.textViewLabel)
-        }
+        // TYPE_LOCATION
+        var locationLat: TextView? = view.findViewById(R.id.textViewLocationLat)
+        var locationLon: TextView? = view.findViewById(R.id.textViewLocationLon)
+        val buttonOpenMap: Button? = view.findViewById(R.id.buttonOpenMap)
     }
 }

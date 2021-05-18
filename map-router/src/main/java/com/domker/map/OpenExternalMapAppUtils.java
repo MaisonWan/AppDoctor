@@ -34,7 +34,7 @@ public class OpenExternalMapAppUtils {
     public static void openMapMarker(Activity activity, String longitude, String latitude,
                                      String title, String content, String appName) {
         List<String> mapApps = getMapApps(activity);
-        if (mapApps != null && !mapApps.isEmpty()) {
+        if (!mapApps.isEmpty()) {
             //有安装客户端 打开PopWindow显示数据
             if (mapApps.contains(paks[0]) && mapApps.contains(paks[1])) {
                 showAlertDialog(activity, TYPE_MAPVIEW_WITH_TIPS, true,
@@ -48,7 +48,7 @@ public class OpenExternalMapAppUtils {
             }
         } else {
             //没有安装客户端 打开网页版
-            openBrosserMarkerMap(activity, longitude, latitude, appName, title, content, false);
+            openBrowserMarkerMap(activity, longitude, latitude, appName, title, content, false);
         }
     }
 
@@ -56,7 +56,7 @@ public class OpenExternalMapAppUtils {
     public static void openMapMarker(Activity activity, String longitude, String latitude,
                                      String title, String content, String appName, boolean useOutWeb) {
         List<String> mapApps = getMapApps(activity);
-        if (mapApps != null && !mapApps.isEmpty()) {
+        if (!mapApps.isEmpty()) {
             //有安装客户端 打开PopWindow显示数据
             if (mapApps.contains(paks[0]) && mapApps.contains(paks[1])) {
                 showAlertDialog(activity, TYPE_MAPVIEW_WITH_TIPS, true,
@@ -70,7 +70,7 @@ public class OpenExternalMapAppUtils {
             }
         } else {
             //没有安装客户端 打开网页版
-            openBrosserMarkerMap(activity, longitude, latitude, appName, title, content, useOutWeb);
+            openBrowserMarkerMap(activity, longitude, latitude, appName, title, content, useOutWeb);
         }
     }
 
@@ -90,10 +90,10 @@ public class OpenExternalMapAppUtils {
     public static void openMapMarker(Activity activity, String longitude, String latitude,
                                      String title, String content, String appName, boolean useOutWeb, boolean forceUseBro) {
         if (forceUseBro) {
-            openBrosserMarkerMap(activity, longitude, latitude, appName, title, content, useOutWeb);
+            openBrowserMarkerMap(activity, longitude, latitude, appName, title, content, useOutWeb);
         } else {
             List<String> mapApps = getMapApps(activity);
-            if (mapApps != null && !mapApps.isEmpty()) {
+            if (!mapApps.isEmpty()) {
                 //有安装客户端 打开PopWindow显示数据
                 if (mapApps.contains(paks[0]) && mapApps.contains(paks[1])) {
                     showAlertDialog(activity, TYPE_MAPVIEW_WITH_TIPS, true,
@@ -107,7 +107,7 @@ public class OpenExternalMapAppUtils {
                 }
             } else {
                 //没有安装客户端 打开网页版
-                openBrosserMarkerMap(activity, longitude, latitude, appName, title, content, useOutWeb);
+                openBrowserMarkerMap(activity, longitude, latitude, appName, title, content, useOutWeb);
             }
         }
     }
@@ -128,7 +128,7 @@ public class OpenExternalMapAppUtils {
                                         String sName, String dLongitude, String dLatitude,
                                         String dName, String appName) {
         List<String> mapApps = getMapApps(activity);
-        if (mapApps != null && !mapApps.isEmpty()) {
+        if (!mapApps.isEmpty()) {
             //有安装客户端 打开PopWindow显示数据
             if (mapApps.contains(paks[0]) && mapApps.contains(paks[1])) {
                 showAlertDialog(activity, TYPE_MAPVIEW_DIRECTION, true, true,
@@ -153,7 +153,7 @@ public class OpenExternalMapAppUtils {
     public static void openMapNavi(Activity activity, String longitude, String latitude,
                                    String title, String content, String appName) {
         List<String> mapApps = getMapApps(activity);
-        if (mapApps != null && !mapApps.isEmpty()) {
+        if (!mapApps.isEmpty()) {
             //有安装客户端 打开PopWindow显示数据
             if (mapApps.contains(paks[0]) && mapApps.contains(paks[1])) {
                 showAlertDialog(activity, TYPE_MAPVIEW_NAVI, true, true,
@@ -178,7 +178,7 @@ public class OpenExternalMapAppUtils {
     public static void openMapNaviWithTwoPoints(Activity activity, String sLongitude, String sLatitude,
                                                 String sName, String dLongitude, String dLatitude, String dName, String region, String appName) {
         //百度地图网页版导航必须提供两个坐标点
-        openBrosserNaviMap(activity, sLongitude, sLatitude, sName, dLongitude, dLatitude, dName, region, appName, false);
+        openBrowserNaviMap(activity, sLongitude, sLatitude, sName, dLongitude, dLatitude, dName, region, appName, false);
 
     }
 
@@ -189,7 +189,7 @@ public class OpenExternalMapAppUtils {
     public static void openMapNaviWithTwoPoints(Activity activity, String sLongitude, String sLatitude,
                                                 String sName, String dLongitude, String dLatitude, String dName, String region, String appName, boolean useOutWeb) {
         //百度地图网页版导航必须提供两个坐标点
-        openBrosserNaviMap(activity, sLongitude, sLatitude, sName, dLongitude, dLatitude, dName, region, appName, useOutWeb);
+        openBrowserNaviMap(activity, sLongitude, sLatitude, sName, dLongitude, dLatitude, dName, region, appName, useOutWeb);
 
     }
     //************************************************************************
@@ -254,7 +254,7 @@ public class OpenExternalMapAppUtils {
      *
      * @param activity
      */
-    public static void openBaiduiDrectionMap(Context activity, String sLongitude, String sLatitude, String sName,
+    public static void openBaiduDirectionMap(Context activity, String sLongitude, String sLatitude, String sName,
                                              String dLongitude, String dLatitude, String dName) {
         Intent intent = new Intent("android.intent.action.VIEW",
                 android.net.Uri.parse("baidumap://map/direction?origin=name:" +
@@ -391,7 +391,7 @@ public class OpenExternalMapAppUtils {
      * @param appName
      * @param useOutWeb 是否调用外部的浏览器 默认不调用
      */
-    public static void openBrosserMarkerMap(Context activity, String longitude, String latitude,
+    public static void openBrowserMarkerMap(Context activity, String longitude, String latitude,
                                             String appName, String title, String content, boolean useOutWeb) {
         if (useOutWeb) {
             Uri mapUri = Uri.parse("http://api.map.baidu.com/marker?location=" + latitude + "," + longitude +
@@ -412,7 +412,7 @@ public class OpenExternalMapAppUtils {
      * @param appName
      * @param useOutWeb 是否调用外部的浏览器 默认不调用
      */
-    public static void openBrosserNaviMap(Context activity, String sLongitude, String sLatitude,
+    public static void openBrowserNaviMap(Context activity, String sLongitude, String sLatitude,
                                           String sName, String dLongitude, String dLatitude, String dName, String region, String appName, boolean useOutWeb) {
         if (useOutWeb) {
             Uri mapUri = Uri.parse("http://api.map.baidu.com/direction?origin=latlng:" +
@@ -436,9 +436,9 @@ public class OpenExternalMapAppUtils {
      * @param region   当给定region时，认为起点和终点都在同一城市，除非单独给定起点或终点的城市。
      * @param appName
      */
-    public static void openBrosserNaviMap(Context activity, String sLongitude, String sLatitude,
+    public static void openBrowserNaviMap(Context activity, String sLongitude, String sLatitude,
                                           String sName, String dLongitude, String dLatitude, String dName, String region, String appName) {
-        openBrosserNaviMap(activity, sLongitude, sLatitude, sName, dLongitude, dLatitude, dName, region, appName, false);
+        openBrowserNaviMap(activity, sLongitude, sLatitude, sName, dLongitude, dLatitude, dName, region, appName, false);
     }
 
 
@@ -459,7 +459,7 @@ public class OpenExternalMapAppUtils {
                     if (type == TYPE_MAPVIEW_WITH_TIPS) {
                         openBaiduMarkerMap(activity, longitude, latitude, title, content);
                     } else if (type == TYPE_MAPVIEW_DIRECTION) {
-                        openBaiduiDrectionMap(activity, longitude, latitude, title, dLongitude, dLatitude, dName);
+                        openBaiduDirectionMap(activity, longitude, latitude, title, dLongitude, dLatitude, dName);
                     } else if (type == TYPE_MAPVIEW_NAVI) {
                         openBaiduNaviMap(activity, longitude, latitude);
                     }

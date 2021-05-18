@@ -89,4 +89,5 @@ dependencies {
     implementation project(':apk_explorer')
     implementation project(':imageviewer')
     implementation project(':base')
+    implementation project(':map-router')
 }

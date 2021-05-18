@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.domker.app.doctor.R
 import com.domker.app.doctor.databinding.FragmentMainPhotoBinding
-import com.domker.app.doctor.entiy.AppItemInfo
 import com.domker.app.doctor.util.DataFormat
 import com.domker.app.doctor.widget.BaseAppFragment
 import com.domker.base.addItemDecoration
@@ -26,6 +25,7 @@ class PhotoAnalysisFragment : BaseAppFragment() {
     private lateinit var adapter: ExifListAdapter
     private lateinit var binding: FragmentMainPhotoBinding
     private lateinit var exifViewModel: ExifViewModel
+
     // 是否已经初始化了图片展示的View
     private var isInitPhotoView = false
 
@@ -75,7 +75,7 @@ class PhotoAnalysisFragment : BaseAppFragment() {
             R.drawable.inset_recyclerview_divider
         )
         recyclerViewAppInfo.setItemViewCacheSize(100)
-        adapter = ExifListAdapter(requireContext())
+        adapter = ExifListAdapter(requireActivity())
         recyclerViewAppInfo.adapter = adapter
         isInitPhotoView = true
     }
@@ -131,25 +131,24 @@ class PhotoAnalysisFragment : BaseAppFragment() {
      * 展示信息
      */
     private fun showExif(exif: PhotoExif) {
-        val data = mutableListOf<AppItemInfo>()
-        data.add(AppItemInfo("EXIF版本", exif.exifVersion))
-        data.add(AppItemInfo("分辨率", "${exif.width} x ${exif.height}px"))
-        data.add(AppItemInfo("拍摄时间", DataFormat.getFormatFullDate(exif.camera.dateTime)))
-        data.add(AppItemInfo("数字化时间", DataFormat.getFormatFullDate(exif.camera.dateTimeDigitized)))
-        data.add(AppItemInfo("设备型号", exif.camera.model))
-        data.add(AppItemInfo("设备品牌", exif.camera.make))
-        data.add(AppItemInfo("焦距", "${exif.camera.focalLength} mm"))
-        data.add(AppItemInfo("光圈", "f/${exif.camera.aperture}"))
-        data.add(AppItemInfo("曝光时长", DataFormat.getDoubleShort(exif.camera.exposureTime) + "s"))
-        data.add(AppItemInfo("ISO感光度", exif.camera.ios.toString()))
-        data.add(AppItemInfo("白平衡", exif.camera.whiteBalance))
-        data.add(AppItemInfo("闪光灯", exif.camera.flash.toString()))
-        data.add(AppItemInfo("旋转角度", "${exif.camera.orientation}°"))
+        val data = mutableListOf<ExifItem>()
+        data.add(ExifItem("EXIF版本", exif.exifVersion))
+        data.add(ExifItem("分辨率", "${exif.width} x ${exif.height}px"))
+        data.add(ExifItem("拍摄时间", DataFormat.getFormatFullDate(exif.camera.dateTime)))
+        data.add(ExifItem("数字化时间", DataFormat.getFormatFullDate(exif.camera.dateTimeDigitized)))
+        data.add(ExifItem("设备型号", exif.camera.model))
+        data.add(ExifItem("设备品牌", exif.camera.make))
+        data.add(ExifItem("焦距", "${exif.camera.focalLength} mm"))
+        data.add(ExifItem("光圈", "f/${exif.camera.aperture}"))
+        data.add(ExifItem("曝光时长", DataFormat.getDoubleShort(exif.camera.exposureTime) + "s"))
+        data.add(ExifItem("ISO感光度", exif.camera.ios.toString()))
+        data.add(ExifItem("白平衡", exif.camera.whiteBalance))
+        data.add(ExifItem("闪光灯", exif.camera.flash.toString()))
+        data.add(ExifItem("旋转角度", "${exif.camera.orientation}°"))
+        data.add(ExifItem("GPS定位", "", TYPE_LOCATION, exif.gps))
 
-        data.add(AppItemInfo("GPS经度", "${exif.gps.longitudeRef} ${exif.gps.location.getLongitude()}"))
-        data.add(AppItemInfo("GPS纬度", "${exif.gps.latitudeRef} ${exif.gps.location.getLatitude()}"))
-        data.add(AppItemInfo("GPS时间", DataFormat.getFormatFullDate(exif.gps.gpsDateTime)))
-        data.add(AppItemInfo("海拔高度", "${exif.gps.altitudeRef}${exif.gps.altitude} M"))
+        data.add(ExifItem("GPS时间", DataFormat.getFormatFullDate(exif.gps.gpsDateTime)))
+        data.add(ExifItem("海拔高度", "${exif.gps.altitudeRef}${exif.gps.altitude} M"))
 
         adapter.setData(data)
         adapter.notifyDataSetChanged()
