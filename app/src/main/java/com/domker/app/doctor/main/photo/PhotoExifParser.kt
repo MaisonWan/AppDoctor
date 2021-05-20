@@ -58,6 +58,15 @@ class PhotoExifParser(stream: InputStream) {
         //　　TAG_IMAGE_LENGTH：图片高度。
         exif.height = getInt(ExifInterface.TAG_IMAGE_LENGTH)
 
+        // 分辨率
+        exif.resolutionUnit = getInt(ExifInterface.TAG_RESOLUTION_UNIT)
+        exif.xResolution = getDouble(ExifInterface.TAG_X_RESOLUTION)
+        exif.yResolution = getDouble(ExifInterface.TAG_Y_RESOLUTION)
+
+        exif.colorSpace = getInt(ExifInterface.TAG_COLOR_SPACE)
+
+        exif.software = getString(ExifInterface.TAG_SOFTWARE)
+
         exif.exifVersion = getString(ExifInterface.TAG_EXIF_VERSION)
 
         loadCamera(exif)
@@ -81,8 +90,17 @@ class PhotoExifParser(stream: InputStream) {
 
         exif.camera.dateTimeDigitized = getTimeStamp(ExifInterface.TAG_DATETIME)
 
+        // 测光模式
+        exif.camera.meteringMode = getShort(ExifInterface.TAG_METERING_MODE)
+
         //　　TAG_EXPOSURE_TIME：曝光时间。
         exif.camera.exposureTime = getDouble(ExifInterface.TAG_EXPOSURE_TIME)
+
+        // 曝光补偿
+        exif.camera.exposureBiasValue = getDouble(ExifInterface.TAG_EXPOSURE_BIAS_VALUE)
+
+        // TAG_EXPOSURE_PROGRAM
+        exif.camera.exposureProgram = getShort(ExifInterface.TAG_EXPOSURE_PROGRAM)
 
         //　　TAG_FLASH：闪光灯。
         exif.camera.flash = getInt(ExifInterface.TAG_FLASH)
@@ -105,6 +123,9 @@ class PhotoExifParser(stream: InputStream) {
 
         //　　TAG_ORIENTATION：旋转角度，整形表示，在ExifInterface中有常量对应表示。
         exif.camera.orientation = parserOrientation(getInt(ExifInterface.TAG_ORIENTATION))
+
+        // TAG_ARTIST
+        exif.camera.artists = getString(ExifInterface.TAG_SOFTWARE)
     }
 
     private fun loadGps(exif: PhotoExif) {

@@ -14,6 +14,17 @@ class PhotoExif {
     //　　TAG_IMAGE_LENGTH：图片高度。
     var height: Int = 0
 
+    // 分辨率单元，以及X和Y方向的单元像素数
+    var resolutionUnit = 0
+    var xResolution = 0.0
+    var yResolution = 0.0
+
+    // 色彩空间
+    var colorSpace: Int = 0
+
+    // 处理或者生成的软件
+    var software: String = ""
+
     val camera = Camera()
 
     var gps = GPS()
@@ -26,8 +37,17 @@ class PhotoExif {
         var dateTime: Long = 0
         var dateTimeDigitized: Long = 0
 
+        // TAG_METERING_MODE
+        var meteringMode: Short = 0
+
         //　　TAG_EXPOSURE_TIME：曝光时间。
         var exposureTime: Double = 0.0
+
+        // 曝光补偿
+        var exposureBiasValue = 0.0
+
+        // 曝光模式
+        var exposureProgram: Short = 0
 
         //　　TAG_FLASH：闪光灯。
         var flash: Int = 0
@@ -49,6 +69,9 @@ class PhotoExif {
 
         //　　TAG_ORIENTATION：旋转角度，整形表示，在ExifInterface中有常量对应表示。
         var orientation: Int = 0
+
+        // TAG_ARTIST
+        var artists: String = ""
     }
 
     /**
