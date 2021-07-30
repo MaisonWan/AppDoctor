@@ -1,4 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <item
+        android:id="@+id/menu_start_app"
+        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:title="@string/menu_launch_app"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/menu_uninstall_app"
+        android:title="@string/menu_uninstall_app" />
+
+    <item
+        android:id="@+id/menu_setting_app"
+        android:title="@string/menu_setting_app" />
+
+    <item
+        android:id="@+id/menu_explorer_app"
+        android:title="@string/menu_explorer_apk" />
+
+    <item
+        android:id="@+id/menu_export_app"
+        android:title="@string/menu_export_apk" />
 </menu>

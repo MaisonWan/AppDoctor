@@ -1,18 +1,16 @@
 package com.domker.app.doctor.detail.home
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -42,6 +40,11 @@ class HomeFragment : Fragment() {
     private var apkSourcePath: String? = null
 
     private var detailList = mutableListOf<AppItemInfo>()
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -80,13 +83,7 @@ class HomeFragment : Fragment() {
     private fun initButtonListener(root: View) {
         val context = requireContext()
         root.findViewById<Button>(R.id.buttonStart).setOnClickListener {
-            Snackbar.make(it, R.string.action_launch_app, Snackbar.LENGTH_LONG)
-                .setAction(R.string.launch) {
-                    appPackageName?.apply {
-                        val intent = IntentUtil.createLaunchIntent(context, this)
-                        startActivity(intent)
-                    }
-                }.show()
+            launchApp(it, context)
         }
 
         root.findViewById<Button>(R.id.buttonApkExplorer).setOnClickListener {
@@ -94,14 +91,7 @@ class HomeFragment : Fragment() {
         }
 
         root.findViewById<Button>(R.id.buttonUninstall).setOnClickListener {
-            Snackbar.make(it, R.string.action_uninstall_app, Snackbar.LENGTH_LONG)
-                .setAction(R.string.uninstall) {
-                    appPackageName?.apply {
-                        val uri: Uri = Uri.parse("package:$this")
-                        val intent = Intent(Intent.ACTION_DELETE, uri)
-                        startActivity(intent)
-                    }
-                }.show()
+            uninstallApp(it)
         }
 
         root.findViewById<Button>(R.id.buttonSettings).setOnClickListener {
@@ -112,6 +102,30 @@ class HomeFragment : Fragment() {
 
     }
 
+    private fun uninstallApp(view: View) {
+        Snackbar.make(view, R.string.action_uninstall_app, Snackbar.LENGTH_LONG)
+            .setAction(R.string.uninstall) {
+                appPackageName?.apply {
+                    val uri: Uri = Uri.parse("package:$this")
+                    val intent = Intent(Intent.ACTION_DELETE, uri)
+                    startActivity(intent)
+                }
+            }.show()
+    }
+
+    /**
+     * 启动App
+     */
+    private fun launchApp(view: View, context: Context) {
+        Snackbar.make(view, R.string.action_launch_app, Snackbar.LENGTH_LONG)
+            .setAction(R.string.launch) {
+                appPackageName?.apply {
+                    val intent = IntentUtil.createLaunchIntent(context, this)
+                    startActivity(intent)
+                }
+            }.show()
+    }
+
     private fun openPackageExplorer() {
         apkSourcePath?.apply {
             ARouter.getInstance()
@@ -119,6 +133,40 @@ class HomeFragment : Fragment() {
                 .withString("apk_source_path", this)
                 .withString("package_name", appPackageName)
                 .navigation()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        menu.clear()
+        inflater.inflate(R.menu.detail_home_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_start_app -> {
+                launchApp(requireView(), requireContext())
+                true
+            }
+            R.id.menu_uninstall_app -> {
+                uninstallApp(requireView())
+                true
+            }
+            R.id.menu_setting_app -> {
+                appPackageName?.let {
+                    openAppSetting(it)
+                }
+                true
+            }
+            R.id.menu_explorer_app -> {
+                openPackageExplorer()
+                true
+            }
+            R.id.menu_export_app -> {
+                exportApp()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
@@ -132,12 +180,18 @@ class HomeFragment : Fragment() {
         startActivity(intent)
     }
 
+    private fun exportApp() {
+        apkSourcePath?.let {
+
+        }
+    }
+
     private fun initObserver(root: View) {
         val appName: TextView = root.findViewById(R.id.app_name)
         val appPackage: TextView = root.findViewById(R.id.app_package)
         val appIcon: ImageView = root.findViewById(R.id.app_icon)
 
-        homeViewModel.appInfo.observe(viewLifecycleOwner, Observer {
+        homeViewModel.appInfo.observe(viewLifecycleOwner, {
             appPackageName = it.packageName
             apkSourcePath = it.sourceDir
             appName.text = "${it.appName} (${it.versionName})"

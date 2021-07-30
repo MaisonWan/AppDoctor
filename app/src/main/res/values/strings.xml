@@ -53,6 +53,11 @@
     <string name="menu_sort_size">按大小排序</string>
     <string name="menu_sort_time">按时间排序</string>
     <string name="menu_sort_name">按名字排序</string>
+    <string name="menu_export_apk">导出安装包</string>
+    <string name="menu_explorer_apk">查看安装包</string>
+    <string name="menu_launch_app">启动程序</string>
+    <string name="menu_uninstall_app">卸载程序</string>
+    <string name="menu_setting_app">配置程序</string>
 
     <string name="system_app">系统应用</string>
     <string name="property_name_hint">属性名称</string>
