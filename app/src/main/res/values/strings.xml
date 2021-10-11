@@ -49,6 +49,7 @@
     <string name="menu_app_list">应用列表</string>
     <string name="menu_system_info">本机信息</string>
     <string name="menu_dashboard">数据统计</string>
+    <string name="menu_battery">电池统计</string>
     <string name="menu_photo_info">图片信息</string>
     <string name="menu_sort_size">按大小排序</string>
     <string name="menu_sort_time">按时间排序</string>
@@ -65,4 +66,5 @@
     <string name="system_about">关于本机</string>
     <string name="system_state">状态信息</string>
     <string name="system_parameter">运行参数</string>
+    <string name="title_activity_battery">BatteryActivity</string>
 </resources>

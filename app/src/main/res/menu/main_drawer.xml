@@ -17,6 +17,10 @@
             android:icon="@drawable/ic_notifications_black_24dp"
             android:title="@string/menu_system_info" />
         <item
+            android:id="@+id/nav_battery"
+            android:icon="@drawable/ic_baseline_battery_charging_full_24"
+            android:title="@string/menu_battery" />
+        <item
             android:id="@+id/nav_dashboard"
             android:icon="@drawable/ic_dashboard_black_24dp"
             android:title="@string/menu_dashboard" />

@@ -25,5 +25,9 @@
         android:name="com.domker.app.doctor.main.device.DeviceFragment"
         android:label="@string/menu_system_info"
         tools:layout="@layout/activity_device" />
+    <activity
+        android:id="@+id/nav_battery"
+        android:name="com.domker.app.doctor.battery.BatteryActivity"
+        android:label="@string/menu_battery" />
 
 </navigation>

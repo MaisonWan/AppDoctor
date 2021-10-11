@@ -96,7 +96,7 @@ fun AppEntity.parseFrom(
         this.versionCode =
             if (Build.VERSION.SDK_INT >= 28) packageInfo.longVersionCode else packageInfo.versionCode.toLong()
         this.iconDrawable = packageInfo.applicationInfo.loadIcon(packageManager)
-        this.isSystemApp = (packageInfo.applicationInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0
+        this.isSystemApp = isSystemApp(packageInfo.applicationInfo.flags)
         this.updateTime = packageInfo.lastUpdateTime
         this.installTime = packageInfo.firstInstallTime
         // 只获取基本信息
@@ -127,4 +127,13 @@ fun AppEntity.parseFrom(
         e.printStackTrace()
         return null
     }
+}
+
+/**
+ * 判断是否是系统应用
+ */
+private fun isSystemApp(flags: Int): Boolean {
+    val isSysApp = (flags and ApplicationInfo.FLAG_SYSTEM) == 1
+    val isSysUpdate = (flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 1
+    return isSysApp or isSysUpdate
 }

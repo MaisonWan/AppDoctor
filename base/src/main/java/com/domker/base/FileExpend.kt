@@ -64,10 +64,10 @@ fun File.unzip(context: Context, file: File): File? {
         val outFile = File(context.cacheDir.absolutePath + File.separator + apkFolderName, file.absolutePath)
         checkPath(outFile)
         zipFile = ZipFile(this)
-        val e = zipFile.entries()
-        while (e.hasMoreElements()) {
-            println(e.nextElement().name)
-        }
+//        val e = zipFile.entries()
+//        while (e.hasMoreElements()) {
+//            println(e.nextElement().name)
+//        }
         // 路径和zip里面的路径的匹配
         val entry = zipFile.getEntry(zipPath(file.absolutePath))
         inputStream = zipFile.getInputStream(entry)

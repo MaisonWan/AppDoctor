@@ -6,24 +6,27 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.domker.base.FileIntent
-import com.domker.base.file.ZipFileItem
-import com.domker.base.unzip
 import com.domker.app.doctor.explorer.ApkExplorer
 import com.domker.app.doctor.explorer.R
 import com.domker.app.doctor.explorer.menu.ExplorerMenu
 import com.domker.app.doctor.explorer.utils.IconUtil
 import com.domker.app.doctor.explorer.utils.RouterUtil
+import com.domker.base.FileIntent
+import com.domker.base.file.ZipFileItem
+import com.domker.base.unzip
 import java.io.File
 
 /**
  * 文件浏览的详情
  * Created by wanlipeng on 2020/9/29 5:39 PM
  */
-class ExplorerItemAdapter(private val context: Context,
-                          private val apkSourcePath: String) : RecyclerView.Adapter<ExplorerItemAdapter.ItemViewHolder>() {
+class ExplorerItemAdapter(
+    private val context: Context,
+    private val apkSourcePath: String
+) : RecyclerView.Adapter<ExplorerItemAdapter.ItemViewHolder>() {
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private val items: MutableList<ExplorerItem> = mutableListOf()
     private val apkExplorer = ApkExplorer(context)
@@ -60,8 +63,10 @@ class ExplorerItemAdapter(private val context: Context,
 
         holder.itemView.setOnClickListener {
             if (item.isFile) {
-//                Toast.makeText(context, "File: ${item.file.name}", Toast.LENGTH_SHORT).show()
-                onClickShow(item.file)
+                if (!onClickShow(item.file)) {
+                    Toast.makeText(context, "不支持该文件类型: ${item.file.name}", Toast.LENGTH_SHORT)
+                        .show()
+                }
             } else {
                 updateExplorerData(item.file.absolutePath)
                 notifyDataSetChanged()
@@ -102,26 +107,33 @@ class ExplorerItemAdapter(private val context: Context,
 
     /**
      * 点击并且展示
+     *
+     * @return 是否可以是别，不能打开的返回false
      */
-    private fun onClickShow(file: File) {
+    private fun onClickShow(file: File): Boolean {
+        // 解压到临时文件夹
         val tempFile = File(apkSourcePath).unzip(context, file)
         tempFile?.apply {
             println(tempFile)
-            when {
+            return when {
                 ApkExplorer.isResourceFile(tempFile) -> {
                     // 资源文件，名称固定
                     RouterUtil.openResourceExplorerActivity(tempFile.absolutePath)
+                    true
                 }
                 ApkExplorer.isJsonFile(tempFile) -> {
                     RouterUtil.openJsonViewerActivity(tempFile)
+                    true
                 }
                 else -> {
-                    FileIntent.createFileIntent(context, tempFile)?.let {
-                        context.startActivity(it)
+                    val intent = FileIntent.createFileIntent(context, tempFile)?.apply {
+                        context.startActivity(this)
                     }
+                    intent != null
                 }
             }
         }
+        return false
     }
 
     /**
@@ -158,7 +170,10 @@ class ExplorerItemAdapter(private val context: Context,
         if (folderPath != File.separator) {
             items.add(0, ExplorerItem(File(folderPath).parentFile!!, false))
         }
-        folderChangeListener?.let { it(folderPath.split(File.separator).filter { it.isNotBlank() }) }
+        folderChangeListener?.let {
+            it(
+                folderPath.split(File.separator).filter { it.isNotBlank() })
+        }
     }
 
     /**

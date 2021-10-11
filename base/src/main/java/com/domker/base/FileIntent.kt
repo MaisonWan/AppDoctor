@@ -43,7 +43,7 @@ object FileIntent {
     fun createFileIntent(context: Context, file: File): Intent? {
         return when (file.extension.toLowerCase(Locale.getDefault())) {
             "png", "jpg", "jpeg", "webp" -> createImageFileIntent(context, file)
-            "txt", "json", "ini" -> createHtmlFileIntent(context, file)
+            "txt", "json", "ini", "js" -> createHtmlFileIntent(context, file)
             else -> null
         }
     }
