@@ -41,8 +41,8 @@ class HomeFragment : Fragment() {
 
     private var detailList = mutableListOf<AppItemInfo>()
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
@@ -180,6 +180,9 @@ class HomeFragment : Fragment() {
         startActivity(intent)
     }
 
+    /**
+     * 导出APK到指定位置
+     */
     private fun exportApp() {
         apkSourcePath?.let {
 

@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/menu_start_app"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@drawable/ic_baseline_open_in_browser_24"
         android:title="@string/menu_launch_app"
         app:showAsAction="always" />
 

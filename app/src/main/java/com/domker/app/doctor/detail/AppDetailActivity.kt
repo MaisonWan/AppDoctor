@@ -18,6 +18,7 @@ import com.domker.app.doctor.widget.BaseAppCompatActivity
 import com.domker.base.thread.AppExecutors
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
+import com.google.android.material.navigation.NavigationBarView
 
 @Route(path = Router.DETAIL_ACTIVITY)
 class AppDetailActivity : BaseAppCompatActivity() {
@@ -37,7 +38,7 @@ class AppDetailActivity : BaseAppCompatActivity() {
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         // 一直显示图标和文字
-        navView.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
+        navView.labelVisibilityMode = NavigationBarView.LABEL_VISIBILITY_LABELED
 
         val navController = findNavController()
 //        val graph = navController.graph

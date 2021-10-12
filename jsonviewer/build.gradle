@@ -1,12 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 30
     resourcePrefix "jsonviewer"
+    compileSdkVersion 31
+    buildToolsVersion BUILD_TOOLS_VERSION
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 30
+        minSdkVersion MIN_SDK_VERSION
+        targetSdkVersion TARGET_SDK_VERSION
     }
 
     buildTypes {
@@ -20,6 +21,7 @@ android {
             }
         }
     }
+    buildToolsVersion '30.0.3'
 
 }
 

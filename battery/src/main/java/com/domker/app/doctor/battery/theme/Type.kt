@@ -1,4 +1,4 @@
-package com.domker.app.doctor.battery.ui.theme
+package com.domker.app.doctor.battery.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

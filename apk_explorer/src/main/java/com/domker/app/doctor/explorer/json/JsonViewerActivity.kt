@@ -2,6 +2,7 @@ package com.domker.app.doctor.explorer.json
 
 import android.os.Bundle
 import android.view.MotionEvent
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
@@ -49,7 +50,12 @@ class JsonViewerActivity : AppCompatActivity() {
             // 显示文件名到标题
             title = File(jsonFilePath).name
             val content = FileUtils.readFile(jsonFilePath)
-            binding.jsonRecyclerView.bindJson(content)
+            try {
+                binding.jsonRecyclerView.bindJson(content)
+            } catch (e: IllegalArgumentException) {
+                Toast.makeText(applicationContext, "json文件格式不正确，不能解析", Toast.LENGTH_SHORT).show()
+                finish()
+            }
         }
     }
 }

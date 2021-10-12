@@ -113,12 +113,13 @@ public class JsonRecyclerView extends RecyclerView {
 
     public void updateAll(float textSize) {
         LayoutManager manager = getLayoutManager();
+        if (manager != null) {
+            int count = manager.getChildCount();
 
-        int count = manager.getChildCount();
-
-        for (int i = 0; i < count; i++) {
-            View view = manager.getChildAt(i);
-            loop(view, textSize);
+            for (int i = 0; i < count; i++) {
+                View view = manager.getChildAt(i);
+                loop(view, textSize);
+            }
         }
     }
 

@@ -1,5 +1,6 @@
 package com.domker.app.doctor.explorer.main
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -139,6 +140,7 @@ class ExplorerItemAdapter(
     /**
      * 按返回按键的时候，需要返回上一层
      */
+    @SuppressLint("NotifyDataSetChanged")
     fun onBackPressed(): Boolean {
         // 判断不在顶层的时候，返回按键需要返回上一层
         return if (items.size > 0 && currentPath != File.separator) {
@@ -171,8 +173,7 @@ class ExplorerItemAdapter(
             items.add(0, ExplorerItem(File(folderPath).parentFile!!, false))
         }
         folderChangeListener?.let {
-            it(
-                folderPath.split(File.separator).filter { it.isNotBlank() })
+            it(folderPath.split(File.separator).filter { it.isNotBlank() })
         }
     }
 

@@ -14,7 +14,9 @@
         android:background="?attr/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabSelectedTextColor="@color/default_title_indicator_selected_color"
+        app:tabTextColor="@color/default_title_indicator_text_color">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"

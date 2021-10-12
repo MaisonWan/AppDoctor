@@ -41,9 +41,9 @@ object FileIntent {
      * 创建打开文件的Intent
      */
     fun createFileIntent(context: Context, file: File): Intent? {
-        return when (file.extension.toLowerCase(Locale.getDefault())) {
+        return when (file.extension.lowercase(Locale.getDefault())) {
             "png", "jpg", "jpeg", "webp" -> createImageFileIntent(context, file)
-            "txt", "json", "ini", "js" -> createHtmlFileIntent(context, file)
+            "txt", "json", "ini", "js", "html", "htm" -> createHtmlFileIntent(context, file)
             else -> null
         }
     }

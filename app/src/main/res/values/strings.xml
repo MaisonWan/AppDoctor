@@ -66,5 +66,4 @@
     <string name="system_about">关于本机</string>
     <string name="system_state">状态信息</string>
     <string name="system_parameter">运行参数</string>
-    <string name="title_activity_battery">BatteryActivity</string>
 </resources>

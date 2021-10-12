@@ -35,9 +35,9 @@ public class JsonViewerAdapter extends BaseJsonViewerAdapter<JsonViewerAdapter.J
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (object != null && object instanceof JSONObject) {
+        if (object instanceof JSONObject) {
             mJSONObject = (JSONObject) object;
-        } else if (object != null && object instanceof JSONArray) {
+        } else if (object instanceof JSONArray) {
             mJSONArray = (JSONArray) object;
         } else {
             throw new IllegalArgumentException("jsonStr is illegal.");
@@ -111,8 +111,9 @@ public class JsonViewerAdapter extends BaseJsonViewerAdapter<JsonViewerAdapter.J
     @Override
     public int getItemCount() {
         if (mJSONObject != null) {
-            if (mJSONObject.names() != null) {
-                return mJSONObject.names().length() + 2;
+            JSONArray names = mJSONObject.names();
+            if (names != null) {
+                return names.length() + 2;
             } else {
                 return 2;
             }
@@ -268,7 +269,7 @@ public class JsonViewerAdapter extends BaseJsonViewerAdapter<JsonViewerAdapter.J
         }
     }
 
-    class JsonItemViewHolder extends RecyclerView.ViewHolder {
+    static class JsonItemViewHolder extends RecyclerView.ViewHolder {
 
         JsonItemView itemView;
 
