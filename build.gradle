@@ -4,7 +4,6 @@
 
 buildscript {
     ext {
-        compose_version = '1.0.3'
         kotlin_version = '1.5.30'
         build_tools_version = '30.0.3'
     }

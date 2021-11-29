@@ -4,7 +4,7 @@
 
     <application>
         <activity
-            android:name=".BatteryActivity"
+            android:name=".BatteryFragment"
             android:exported="true"
             android:label="@string/title_activity_battery"/>
     </application>

@@ -3,13 +3,11 @@ package com.domker.app.doctor.main.list
 import android.os.Bundle
 import android.view.*
 import androidx.viewpager2.widget.ViewPager2
-import com.alibaba.android.arouter.launcher.ARouter
 import com.domker.app.doctor.R
 import com.domker.app.doctor.data.SORT_NAME
 import com.domker.app.doctor.data.SORT_SIZE
 import com.domker.app.doctor.data.SORT_TIME
 import com.domker.app.doctor.databinding.FragmentAppListBinding
-import com.domker.app.doctor.util.Router
 import com.domker.app.doctor.widget.BaseAppFragment
 
 /**
