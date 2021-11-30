@@ -13,6 +13,11 @@ open class BatteryInfo {
     var status: Int = BatteryManager.BATTERY_STATUS_UNKNOWN
 
     /**
+     * 是否是低电源模式
+     */
+    var batteryLow: Boolean = false
+
+    /**
      * 电池健康度
      */
     var health: Int = BatteryManager.BATTERY_HEALTH_UNKNOWN
@@ -58,4 +63,9 @@ open class BatteryInfo {
      * 取得电池的类型
      */
     var technology: String = ""
+
+    override fun toString(): String {
+        return "BatteryInfo(status=$status, health=$health, present=$present, level=$level, scale=$scale, iconSmall=$iconSmall, plugged=$plugged, voltage=$voltage, temperature=$temperature, technology='$technology')"
+    }
+
 }

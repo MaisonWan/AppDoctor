@@ -2,4 +2,27 @@
 <resources>
     <string name="title_activity_battery">BatteryActivity</string>
     <string name="title_battery">Battery</string>
+    <string name="battery_charging">充电中</string>
+    <string name="battery_charging_unknown">未知状态</string>
+    <string name="battery_discharging">未充电</string>
+    <string name="battery_charging_full">充满电</string>
+    <string name="battery_state">充电状态</string>
+    <string name="battery_plugged">电源类型</string>
+    <string name="battery_plugged_usb">USB电源</string>
+    <string name="battery_plugged_ac">交流电电源</string>
+    <string name="battery_plugged_wireless">无线充电</string>
+    <string name="battery_temperature">电池温度</string>
+    <string name="battery_temperature_format">%.1f℃</string>
+    <string name="battery_voltage">电池容量</string>
+    <string name="battery_voltage_format">%dmAh</string>
+    <string name="battery_health">电池健康</string>
+    <string name="battery_health_unknown">未知</string>
+    <string name="battery_health_good">健康度很好</string>
+    <string name="battery_health_dead">电池损坏</string>
+    <string name="battery_health_overheat">电池过热</string>
+    <string name="battery_health_cold">电池过冷</string>
+    <string name="battery_health_over_voltage">电压过载</string>
+
+
+    <dimen name="battery_align">64dp</dimen>
 </resources>

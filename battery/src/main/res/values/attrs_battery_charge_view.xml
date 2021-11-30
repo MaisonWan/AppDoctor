@@ -1,0 +1,8 @@
+<resources>
+    <declare-styleable name="BatteryChargeView">
+        <attr name="strokeWidth" format="dimension" />
+        <attr name="textSize" format="dimension" />
+        <attr name="normalColor" format="color" />
+        <attr name="backgroundColor" format="color" />
+    </declare-styleable>
+</resources>
