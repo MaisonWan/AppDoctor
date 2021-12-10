@@ -113,4 +113,5 @@ dependencies {
     implementation project(':base')
     implementation project(':map-router')
     implementation project(':battery')
+    implementation project(':sensor')
 }

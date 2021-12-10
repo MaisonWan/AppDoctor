@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@+id/navigation_sensor">
+
+    <fragment
+        android:id="@+id/navigation_sensor"
+        android:name="com.domker.app.doctor.sensor.SensorFragment"
+        android:label="@string/sensor"
+        tools:layout="@layout/fragment_sensor" />
+
+    <fragment
+        android:id="@+id/navigation_supervisor"
+        android:name="com.domker.app.doctor.sensor.DeviceSupervisorFragment"
+        android:label="@string/device"
+        tools:layout="@layout/fragment_device_supervisor" />
+</navigation>

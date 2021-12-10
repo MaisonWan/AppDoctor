@@ -30,6 +30,7 @@ class BatteryChargeView : View {
     // 属性颜色
     private var cycleBackgroundColor: Int = Color.GRAY
     private var cycleColor: Int = Color.GREEN
+    private var lowChargeColor: Int = Color.RED
     private var strokeWidth = 30f
     private var textSize = 20f
 
@@ -56,6 +57,7 @@ class BatteryChargeView : View {
         val a = context.obtainStyledAttributes(attrs, R.styleable.BatteryChargeView, defStyle, 0)
         cycleBackgroundColor = a.getColor(R.styleable.BatteryChargeView_backgroundColor, Color.GRAY)
         cycleColor = a.getColor(R.styleable.BatteryChargeView_normalColor, Color.GREEN)
+        lowChargeColor = a.getColor(R.styleable.BatteryChargeView_warningColor, Color.RED)
         strokeWidth = a.getDimension(R.styleable.BatteryChargeView_strokeWidth, 30f)
         textSize = a.getDimension(R.styleable.BatteryChargeView_textSize, 20f)
 
@@ -115,18 +117,19 @@ class BatteryChargeView : View {
         paint.strokeWidth = strokeWidth
 
         // 绘制背景
-        paint.color = cycleBackgroundColor
-        canvas.drawCircle(x, y, radius, paint)
+        drawBackground(canvas, x, y, radius)
 
         // 绘制圆环百分比
-        oval.left = x - radius
-        oval.top = y - radius
-        oval.right = x + radius
-        oval.bottom = y + radius
-        paint.color = cycleColor
-        canvas.drawArc(oval, 270f, -360 * charge / 100.0f, false, paint)
+        drawPercent(x, radius, y, canvas)
 
         // 绘制中间显示文字
+        drawText(canvas, contentWidth, contentHeight)
+    }
+
+    /**
+     * 绘制文字
+     */
+    private fun drawText(canvas: Canvas, contentWidth: Int, contentHeight: Int) {
         val chargeText = String.format("%d%%", charge)
         textWidth = textPaint.measureText(demoText)
         textHeight = textPaint.fontMetrics.bottom
@@ -136,6 +139,30 @@ class BatteryChargeView : View {
             paddingTop + (contentHeight / 2 + textHeight),
             textPaint
         )
+    }
+
+    /**
+     * 绘制百分比
+     */
+    private fun drawPercent(x: Float, radius: Float, y: Float, canvas: Canvas) {
+        oval.left = x - radius
+        oval.top = y - radius
+        oval.right = x + radius
+        oval.bottom = y + radius
+        if (charge > 20) {
+            paint.color = cycleColor
+        } else {
+            paint.color = lowChargeColor
+        }
+        canvas.drawArc(oval, 270f, -360 * charge / 100.0f, false, paint)
+    }
+
+    /**
+     * 绘制背景
+     */
+    private fun drawBackground(canvas: Canvas, x: Float, y: Float, radius: Float) {
+        paint.color = cycleBackgroundColor
+        canvas.drawCircle(x, y, radius, paint)
     }
 
 }

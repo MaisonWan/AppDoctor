@@ -34,10 +34,6 @@
     <string name="item_package_size">安装包大小</string>
     <string name="item_install_time">安装时间</string>
     <string name="title_activity_app_dashboard">AppDashboardActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <item name="key_switch" type="id" />
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -47,7 +43,7 @@
     <string name="nav_header_desc">Navigation header</string>
 
     <string name="menu_app_list">应用列表</string>
-    <string name="menu_system_info">本机信息</string>
+    <string name="menu_system_info">本机参数</string>
     <string name="menu_dashboard">数据统计</string>
     <string name="menu_battery">电池统计</string>
     <string name="menu_photo_info">图片信息</string>
@@ -59,6 +55,8 @@
     <string name="menu_launch_app">启动程序</string>
     <string name="menu_uninstall_app">卸载程序</string>
     <string name="menu_setting_app">配置程序</string>
+    <string name="menu_hardware">设备硬件</string>
+
 
     <string name="system_app">系统应用</string>
     <string name="property_name_hint">属性名称</string>
