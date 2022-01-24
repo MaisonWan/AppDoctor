@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,27 +20,29 @@ import com.domker.app.doctor.R
 import com.domker.app.doctor.detail.AppDetailActivity
 import com.domker.app.doctor.entiy.AppItemInfo
 import com.domker.app.doctor.entiy.AppItemInfo.Companion.TYPE_PACKAGE
+import com.domker.app.doctor.entiy.appItemOf
 import com.domker.app.doctor.util.DataFormat
 import com.domker.app.doctor.util.IntentUtil
 import com.domker.app.doctor.util.Router
 import com.domker.app.doctor.widget.AppDetailAdapter
 import com.domker.app.doctor.widget.AppDetailItemDiffCallBack
 import com.domker.base.SystemVersion
-import com.domker.base.addItemDecoration
+import com.domker.base.addDividerItemDecoration
 import com.domker.base.file.FileUtils
 import com.domker.base.toChinese
 import com.google.android.material.snackbar.Snackbar
 import com.king.image.imageviewer.ImageViewer
 import com.king.image.imageviewer.loader.GlideImageLoader
 
-
+/**
+ * App详情信息里面的首页
+ */
 class HomeFragment : Fragment() {
+    private val homeViewModel: HomeViewModel by activityViewModels()
     private lateinit var adapter: AppDetailAdapter
-    private lateinit var homeViewModel: HomeViewModel
+
     private var appPackageName: String? = null
     private var apkSourcePath: String? = null
-
-    private var detailList = mutableListOf<AppItemInfo>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,9 +53,7 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        homeViewModel = AppDetailActivity.homeViewModel
-            ?: ViewModelProvider(this).get(HomeViewModel::class.java)
+    ): View {
         return inflater.inflate(R.layout.fragment_detail_main, container, false)
     }
 
@@ -69,7 +70,7 @@ class HomeFragment : Fragment() {
         // recyclerview
         val recyclerViewAppInfo: RecyclerView = root.findViewById(R.id.recyclerViewAppInfo)
         recyclerViewAppInfo.layoutManager = LinearLayoutManager(context)
-        recyclerViewAppInfo.addItemDecoration(context, R.drawable.inset_recyclerview_divider)
+        recyclerViewAppInfo.addDividerItemDecoration(context, R.drawable.inset_recyclerview_divider)
         recyclerViewAppInfo.setItemViewCacheSize(100)
         adapter = AppDetailAdapter(context, AppDetailItemDiffCallBack())
         adapter.setOnItemClickListener { view, position ->
@@ -194,16 +195,17 @@ class HomeFragment : Fragment() {
         val appPackage: TextView = root.findViewById(R.id.app_package)
         val appIcon: ImageView = root.findViewById(R.id.app_icon)
 
-        homeViewModel.appInfo.observe(viewLifecycleOwner, {
-            appPackageName = it.packageName
-            apkSourcePath = it.sourceDir
-            appName.text = "${it.appName} (${it.versionName})"
-            appPackage.text = it.packageName
-            appIcon.setImageDrawable(it.iconDrawable)
+        homeViewModel.getAppInfo().observe(viewLifecycleOwner, {
+            val a = it.appEntity
+            appPackageName = a.packageName
+            apkSourcePath = a.sourceDir
+            appName.text = "${a.appName} (${a.versionName})"
+            appPackage.text = a.packageName
+            appIcon.setImageDrawable(a.iconDrawable)
             appIcon.setOnClickListener { v ->
                 //图片查看器
                 // data 可以多张图片List或单张图片，支持的类型可以是{@link Uri}, {@code url}, {@code path},{@link File}, {@link DrawableRes resId}…等
-                ImageViewer.load(it.iconDrawable!!) //要加载的图片数据，单张或多张
+                ImageViewer.load(a.iconDrawable!!) //要加载的图片数据，单张或多张
 //                        .selection(position) //当前选中位置
 //                        .indicator(true) //是否显示指示器，默认不显示
                     .imageLoader(GlideImageLoader()) //加载器，*必须配置，目前内置的有GlideImageLoader或PicassoImageLoader，也可以自己实现
@@ -212,28 +214,7 @@ class HomeFragment : Fragment() {
                     .orientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) //设置屏幕方向,默认：ActivityInfo.SCREEN_ORIENTATION_BEHIND
                     .start(this, v)
             }
-
-            detailList.add(AppItemInfo("版本名", it.versionName))
-            detailList.add(AppItemInfo("版本号", it.versionCode.toString()))
-            val t = SystemVersion.getVersion(it.targetSdkVersion)
-            detailList.add(AppItemInfo("目标版本号", SystemVersion.getShowLabel(t)))
-            val v = SystemVersion.getVersion(it.minSdkVersion)
-            detailList.add(AppItemInfo("最低支持系统版本", SystemVersion.getShowLabel(v)))
-            detailList.add(AppItemInfo("系统应用", it.isSystemApp.toChinese()))
-            detailList.add(AppItemInfo("首次安装时间", DataFormat.getAppInstallTime(it.installTime)))
-            detailList.add(AppItemInfo("最近更新时间", DataFormat.getDataFromTimestamp(it.updateTime)))
-            detailList.add(AppItemInfo("Application名称", it.applicationName!!))
-            detailList.add(AppItemInfo("源文件路径", it.sourceDir!!, type = TYPE_PACKAGE))
-            detailList.add(AppItemInfo("源文件大小", FileUtils.formatFileSize(it.sourceApkSize!!)))
-            detailList.add(AppItemInfo("Native库路径", it.nativeLibraryDir!!))
-            detailList.add(AppItemInfo("主要CPU架构", it.primaryCpuAbi ?: ""))
-            detailList.add(AppItemInfo("Data路径", it.dataDir!!))
-            detailList.add(AppItemInfo("主进程名", it.processName!!))
-            detailList.add(AppItemInfo("SHA256签名", it.signature ?: ""))
-            detailList.add(AppItemInfo("User ID", it.uid.toString()))
-            detailList.add(AppItemInfo("Flag", it.flag ?: "Unknown"))
-
-            adapter.setDetailList(detailList)
+            adapter.setDetailList(it.itemList)
             adapter.notifyDataSetChanged()
         })
     }

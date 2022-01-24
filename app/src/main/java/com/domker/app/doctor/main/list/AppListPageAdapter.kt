@@ -22,7 +22,7 @@ import com.domker.app.doctor.widget.AppDiffCallBack
 import com.domker.app.doctor.widget.AppListAdapter
 import com.domker.app.doctor.widget.LAYOUT_TYPE_GRID
 import com.domker.app.doctor.widget.LAYOUT_TYPE_LIST
-import com.domker.base.addItemDecoration
+import com.domker.base.addDividerItemDecoration
 import com.domker.base.thread.AppExecutors
 
 /**
@@ -95,7 +95,7 @@ class AppListPageAdapter(private val context: Context,
     private fun initAppList(index: Int, recyclerView: RecyclerView, layoutType: Int) {
         if (layoutType == LAYOUT_TYPE_LIST) {
             recyclerView.layoutManager = LinearLayoutManager(context)
-            recyclerView.addItemDecoration(context, R.drawable.inset_recyclerview_divider)
+            recyclerView.addDividerItemDecoration(context, R.drawable.inset_recyclerview_divider)
         } else if (layoutType == LAYOUT_TYPE_GRID) {
             recyclerView.layoutManager = GridLayoutManager(context, 4)
         }

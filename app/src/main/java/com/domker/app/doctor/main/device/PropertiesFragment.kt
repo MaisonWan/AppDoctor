@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.domker.app.doctor.R
 import com.domker.app.doctor.databinding.FragmentDevicePropertiesBinding
 import com.domker.app.doctor.util.DeviceScanner
-import com.domker.base.addItemDecoration
+import com.domker.base.addDividerItemDecoration
 import java.util.*
 
 /**
@@ -45,7 +45,7 @@ class PropertiesFragment : Fragment() {
         }
         binding.recyclerViewInfo.adapter = adapter
         binding.recyclerViewInfo.layoutManager = LinearLayoutManager(context)
-        binding.recyclerViewInfo.addItemDecoration(requireContext(), R.drawable.inset_recyclerview_divider)
+        binding.recyclerViewInfo.addDividerItemDecoration(requireContext(), R.drawable.inset_recyclerview_divider)
         adapter.notifyDataSetChanged()
 
         val downData = data.map { it.first }

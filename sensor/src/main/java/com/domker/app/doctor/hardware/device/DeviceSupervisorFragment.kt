@@ -1,4 +1,4 @@
-package com.domker.app.doctor.sensor
+package com.domker.app.doctor.hardware.device
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

@@ -10,29 +10,33 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.domker.app.doctor.R
-import com.domker.app.doctor.detail.AppDetailActivity
-import com.domker.base.addItemDecoration
+import com.domker.base.addDividerItemDecoration
 
 /**
  * ViewPager的适配器
  *
  * Created by wanlipeng on 2020/6/9 10:05 PM
  */
-class ComponentPageAdapter(private val context: Context,
-                           private val lifecycleOwner: LifecycleOwner,
-                           private val pageTitleRes: IntArray) : RecyclerView.Adapter<ComponentPageAdapter.PageViewHolder>() {
+class ComponentPageAdapter(
+    private val context: Context,
+    private val lifecycleOwner: LifecycleOwner,
+    componentViewModel: ComponentViewModel,
+    private val pageTitleRes: IntArray
+) :
+    RecyclerView.Adapter<ComponentPageAdapter.PageViewHolder>() {
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     // 按照数组的方式创建，数据，ViewModel，adapter
     private val data = Array<MutableList<ComponentInfo>>(pageTitleRes.size) { mutableListOf() }
     private val adapter: Array<ComponentAdapter?> = Array(pageTitleRes.size) { ComponentAdapter(context, data[it]) }
-    private lateinit var liveData: Array<MutableLiveData<List<ComponentInfo>>?>
 
-    init {
-        AppDetailActivity.componentViewModel?.let {
-            liveData = arrayOf(it.activityInfo, it.serviceInfo, it.providerInfo, it.receiverInfo)
-        }
-    }
+    // 按照四种类型的数据分别拿到LiveData
+    private val liveData: Array<MutableLiveData<List<ComponentInfo>>?> = arrayOf(
+        componentViewModel.getActivityInfo(),
+        componentViewModel.getServiceInfo(),
+        componentViewModel.getProviderInfo(),
+        componentViewModel.getReceiverInfo()
+    )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PageViewHolder {
         val view = inflater.inflate(R.layout.layout_component_pager, parent, false)
@@ -53,7 +57,7 @@ class ComponentPageAdapter(private val context: Context,
             holder.recyclerView?.let {
                 it.adapter = adapter[position]
                 it.layoutManager = LinearLayoutManager(context)
-                it.addItemDecoration(context, R.drawable.inset_recyclerview_divider)
+                it.addDividerItemDecoration(context, R.drawable.inset_recyclerview_divider)
                 it.setItemViewCacheSize(100)
             }
         }

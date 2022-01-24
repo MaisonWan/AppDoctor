@@ -20,6 +20,7 @@
     <string name="title_permission_detail">权限详情</string>
     <string name="title_component">组件</string>
     <string name="title_component_detail">组件详情</string>
+    <string name="title_lib">类库</string>
     <string name="title_dashboard">统计</string>
     <string name="title_activity_app_analyze">AppAnalyzeActivity</string>
 
@@ -64,4 +65,9 @@
     <string name="system_about">关于本机</string>
     <string name="system_state">状态信息</string>
     <string name="system_parameter">运行参数</string>
+
+    <string name="shortcut_view_image_info">查看图片Exif信息</string>
+    <string name="shortcut_view_image_info_short">查看图片</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -15,15 +15,17 @@ import com.domker.app.doctor.detail.home.HomeViewModel
 import com.domker.app.doctor.util.IntentUtil
 import com.domker.app.doctor.util.Router
 import com.domker.app.doctor.widget.BaseAppCompatActivity
-import com.domker.base.thread.AppExecutors
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.google.android.material.navigation.NavigationBarView
 
 @Route(path = Router.DETAIL_ACTIVITY)
 class AppDetailActivity : BaseAppCompatActivity() {
     private lateinit var appChecker: AppChecker
     private lateinit var appPackageName: String
+
+    // 组件的ViewModel
+    private lateinit var componentViewModel: ComponentViewModel
+    private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +35,8 @@ class AppDetailActivity : BaseAppCompatActivity() {
         appChecker = AppChecker(this)
         appPackageName = intent.getStringExtra(IntentUtil.INTENT_KEY_PACKAGE)!!
 
-        homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
-        componentViewModel = ViewModelProvider(this).get(ComponentViewModel::class.java)
+        homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        componentViewModel = ViewModelProvider(this)[ComponentViewModel::class.java]
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         // 一直显示图标和文字
@@ -44,9 +46,12 @@ class AppDetailActivity : BaseAppCompatActivity() {
 //        val graph = navController.graph
 //        graph.addArgument("homeViewModel", NavArgument.Builder().setDefaultValue(homeViewModel).build())
 
-        val appBarConfiguration = AppBarConfiguration(setOf(
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
                 R.id.navigation_main, R.id.navigation_permission,
-                R.id.navigation_component, R.id.navigation_dashboard))
+                R.id.navigation_component, R.id.navigation_lib, R.id.navigation_dashboard
+            )
+        )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         updateAppInfo()
@@ -57,39 +62,12 @@ class AppDetailActivity : BaseAppCompatActivity() {
         return navHostFragment.navController
     }
 
+    /**
+     * 提前初始化数据，这样Fragment展示的时候，数据已经Ready
+     */
     private fun updateAppInfo() {
-        AppExecutors.executor.execute {
-            appChecker.getAppEntity(appPackageName)?.let {
-                it.signature = getShowSignature(appChecker.getAppSignature(appPackageName))
-                homeViewModel?.appInfo?.postValue(it)
-            }
-            componentViewModel?.activityInfo?.postValue(appChecker.getActivityListInfo(appPackageName))
-            componentViewModel?.serviceInfo?.postValue(appChecker.getServiceListInfo(appPackageName))
-            componentViewModel?.providerInfo?.postValue(appChecker.getProvidersListInfo(appPackageName))
-            componentViewModel?.receiverInfo?.postValue(appChecker.getReceiversListInfo(appPackageName))
-            componentViewModel?.permissionInfo?.postValue(appChecker.getPermissions(appPackageName))
-        }
+        homeViewModel.updateData(appChecker, appPackageName)
+        componentViewModel.updateData(appChecker, appPackageName)
     }
 
-    private fun getShowSignature(array: Array<String>) :String {
-        val ans = StringBuffer()
-        for (i in array.indices) {
-            ans.append(array[i])
-            if (i != array.size - 1) {
-                ans.append("\n")
-            }
-        }
-        return ans.toString()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        homeViewModel = null
-        componentViewModel = null
-    }
-
-    companion object {
-        var homeViewModel: HomeViewModel? = null
-        var componentViewModel: ComponentViewModel? = null
-    }
 }

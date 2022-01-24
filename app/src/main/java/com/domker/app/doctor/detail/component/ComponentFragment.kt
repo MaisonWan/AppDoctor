@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.domker.app.doctor.R
 import com.google.android.material.tabs.TabLayout
@@ -16,6 +17,7 @@ import com.google.android.material.tabs.TabLayoutMediator
  */
 class ComponentFragment : Fragment() {
     private lateinit var adapter: ComponentPageAdapter
+    private val componentViewModel: ComponentViewModel by activityViewModels()
 
     // Tab标题的资源
     private val tabTitleRes = intArrayOf(R.string.item_activity, R.string.item_service, R.string.item_provider, R.string.item_receiver)
@@ -26,6 +28,7 @@ class ComponentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // 获取ViewModel
         initView(view)
     }
 
@@ -33,7 +36,7 @@ class ComponentFragment : Fragment() {
         val context = requireContext()
         val tabLayout: TabLayout = root.findViewById(R.id.tabLayout)
         val viewpager: ViewPager2 = root.findViewById(R.id.viewpager)
-        adapter = ComponentPageAdapter(context, viewLifecycleOwner, tabTitleRes)
+        adapter = ComponentPageAdapter(context, viewLifecycleOwner, componentViewModel, tabTitleRes)
         viewpager.adapter = adapter
         viewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 //        viewpager.registerOnPageChangeCallback(object : OnPageChangeCallback() {

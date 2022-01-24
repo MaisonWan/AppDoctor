@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.domker.app.doctor.R
 import com.domker.app.doctor.data.AppDataProcessor
 import com.domker.app.doctor.data.DataProcessor
-import com.domker.base.addItemDecoration
+import com.domker.base.addDividerItemDecoration
 
 
 /**
@@ -45,7 +45,7 @@ class DashboardPagerAdapter(private val dashboardContext: DashboardContext,
         holder.recyclerView?.apply {
             this.adapter = packageSizeAdapter
             this.layoutManager = LinearLayoutManager(context)
-            this.addItemDecoration(context, R.drawable.inset_recyclerview_divider)
+            this.addDividerItemDecoration(context, R.drawable.inset_recyclerview_divider)
             this.setItemViewCacheSize(100)
             packageSizeAdapter.notifyDataSetChanged()
         }

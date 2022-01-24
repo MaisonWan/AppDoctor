@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="sensor">传感器</string>
+    <string name="sensor_detail">传感器详情</string>
     <string name="device">设备</string>
+
+    <string name="sensor_size">共%d传感器</string>
 </resources>

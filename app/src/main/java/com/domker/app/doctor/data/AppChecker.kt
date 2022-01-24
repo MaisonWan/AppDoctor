@@ -130,6 +130,9 @@ class AppChecker(private val context: Context) {
             if (info.icon == null) {
                 info.icon = activityInfo.applicationInfo.loadIcon(context.packageManager)
             }
+            activityInfo.metaData?.keySet()?.forEach {
+                info.metaData[it] = activityInfo.metaData[it]?.toString() ?: ""
+            }
             info.parseFrom(activityInfo)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -247,6 +250,10 @@ class AppChecker(private val context: Context) {
             e.printStackTrace()
         }
         return info
+    }
+
+    fun getMetaData() {
+//        context.packageManager
     }
 
     /**

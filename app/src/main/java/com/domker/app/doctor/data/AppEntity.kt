@@ -81,6 +81,12 @@ class AppEntity {
 
     @Ignore
     var uid = 0
+
+    @Ignore
+    var backupAgentName: String? = null
+
+    @Ignore
+    var deviceProtectedDataDir: String? = null
 }
 
 
@@ -115,13 +121,13 @@ fun AppEntity.parseFrom(
         this.nativeLibraryDir = applicationInfo.nativeLibraryDir
         this.processName = applicationInfo.processName
         this.dataDir = applicationInfo.dataDir
-        if (Build.VERSION.SDK_INT >= 24) {
-            this.minSdkVersion = applicationInfo.minSdkVersion
-        }
+        this.minSdkVersion = applicationInfo.minSdkVersion
         this.targetSdkVersion = applicationInfo.targetSdkVersion
         this.primaryCpuAbi = RefInvoke.getFieldObject(applicationInfo, "primaryCpuAbi") as? String
         this.uid = applicationInfo.uid
         this.flag = Integer.toHexString(applicationInfo.flags)
+        this.backupAgentName = applicationInfo.backupAgentName
+        this.deviceProtectedDataDir = applicationInfo.deviceProtectedDataDir
         return this
     } catch (e: Exception) {
         e.printStackTrace()

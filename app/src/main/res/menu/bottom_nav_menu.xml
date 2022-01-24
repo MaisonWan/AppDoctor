@@ -15,6 +15,10 @@
         android:id="@+id/navigation_component"
         android:icon="@drawable/ic_dashboard_black_24dp"
         android:title="@string/title_component" />
+    <item
+        android:id="@+id/navigation_lib"
+        android:icon="@drawable/ic_baseline_memory_24"
+        android:title="@string/title_lib" />
 
     <item
         android:id="@+id/navigation_dashboard"

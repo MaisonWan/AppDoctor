@@ -7,13 +7,20 @@
 
     <fragment
         android:id="@+id/navigation_sensor"
-        android:name="com.domker.app.doctor.sensor.SensorFragment"
+        android:name="com.domker.app.doctor.hardware.sensor.SensorFragment"
         android:label="@string/sensor"
         tools:layout="@layout/fragment_sensor" />
 
     <fragment
         android:id="@+id/navigation_supervisor"
-        android:name="com.domker.app.doctor.sensor.DeviceSupervisorFragment"
+        android:name="com.domker.app.doctor.hardware.device.DeviceSupervisorFragment"
         android:label="@string/device"
         tools:layout="@layout/fragment_device_supervisor" />
+
+    <fragment
+        android:id="@+id/navigation_sensor_detail"
+        android:name="com.domker.app.doctor.hardware.sensor.SensorDetailFragment"
+        android:label="@string/sensor_detail"
+        tools:layout="@layout/fragment_sensor_detail_list" />
+
 </navigation>

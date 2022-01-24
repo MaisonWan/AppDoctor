@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -18,7 +17,6 @@ import com.google.android.material.navigation.NavigationBarView
  */
 class HardwareFragment : Fragment() {
 
-    private lateinit var viewModel: SensorViewModel
     private lateinit var binding: FragmentHardwareBinding
 
     override fun onCreateView(
@@ -28,11 +26,6 @@ class HardwareFragment : Fragment() {
         binding = FragmentHardwareBinding.inflate(inflater, container, false)
         initViews()
         return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this)[SensorViewModel::class.java]
     }
 
     /**

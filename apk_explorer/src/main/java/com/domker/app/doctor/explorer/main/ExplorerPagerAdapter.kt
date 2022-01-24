@@ -13,7 +13,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.domker.app.doctor.explorer.R
-import com.domker.base.addItemDecoration
+import com.domker.base.addDividerItemDecoration
 import com.domker.base.readZipFileList
 import com.domker.base.thread.AppExecutors
 import java.io.File
@@ -94,7 +94,7 @@ class ExplorerPagerAdapter(private val context: Context,
         holder.recyclerView?.apply {
             this.adapter = adapter
             this.layoutManager = LinearLayoutManager(context)
-            this.addItemDecoration(context, R.drawable.inset_recyclerview_divider)
+            this.addDividerItemDecoration(context, R.drawable.inset_recyclerview_divider)
             this.setItemViewCacheSize(100)
         }
     }
@@ -122,7 +122,7 @@ class ExplorerPagerAdapter(private val context: Context,
         holder.recyclerView?.apply {
             this.adapter = a
             this.layoutManager = LinearLayoutManager(context)
-            this.addItemDecoration(context, R.drawable.inset_recyclerview_divider)
+            this.addDividerItemDecoration(context, R.drawable.inset_recyclerview_divider)
             this.setItemViewCacheSize(100)
             a.notifyDataSetChanged()
         }

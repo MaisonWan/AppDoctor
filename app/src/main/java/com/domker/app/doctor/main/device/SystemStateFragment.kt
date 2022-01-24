@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.domker.app.doctor.databinding.FragmentSystemStateBinding
 import com.domker.app.doctor.explorer.R
-import com.domker.base.addItemDecoration
+import com.domker.base.addDividerItemDecoration
 import com.domker.base.device.DeviceManager
 
 private const val request_permission = 101
@@ -54,7 +54,7 @@ class SystemStateFragment : Fragment() {
         PropertiesAdapter(requireContext(), state).also {
             binding.recyclerView.adapter = it
             binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-            binding.recyclerView.addItemDecoration(requireContext(), R.drawable.inset_recyclerview_divider)
+            binding.recyclerView.addDividerItemDecoration(requireContext(), R.drawable.inset_recyclerview_divider)
         }.notifyDataSetChanged()
     }
 

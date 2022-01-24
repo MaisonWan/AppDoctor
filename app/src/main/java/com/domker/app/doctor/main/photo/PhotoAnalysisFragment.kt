@@ -11,7 +11,7 @@ import com.domker.app.doctor.R
 import com.domker.app.doctor.databinding.FragmentMainPhotoBinding
 import com.domker.app.doctor.util.DataFormat
 import com.domker.app.doctor.widget.BaseAppFragment
-import com.domker.base.addItemDecoration
+import com.domker.base.addDividerItemDecoration
 import com.domker.base.thread.AppExecutors
 
 const val ACTION_CHOOSE_PHOTO = 200
@@ -70,7 +70,7 @@ class PhotoAnalysisFragment : BaseAppFragment() {
 
         val recyclerViewAppInfo: RecyclerView = binding.recyclerViewExif
         recyclerViewAppInfo.layoutManager = LinearLayoutManager(context)
-        recyclerViewAppInfo.addItemDecoration(
+        recyclerViewAppInfo.addDividerItemDecoration(
             requireContext(),
             R.drawable.inset_recyclerview_divider
         )

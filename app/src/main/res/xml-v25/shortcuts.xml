@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_outline_collections_24"
+        android:shortcutId="open_with_image"
+        android:shortcutLongLabel="@string/shortcut_view_image_info"
+        android:shortcutShortLabel="@string/shortcut_view_image_info_short">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.domker.app.doctor.MainActivity"
+            android:targetPackage="com.domker.app.doctor" />
+        <extra
+            android:name="page_name"
+            android:value="image" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+</shortcuts>

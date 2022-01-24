@@ -5,31 +5,33 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.domker.app.doctor.R
 import com.domker.app.doctor.databinding.FragmentDetailPermissionBinding
-import com.domker.app.doctor.detail.AppDetailActivity
-import com.domker.base.addItemDecoration
+import com.domker.app.doctor.detail.component.ComponentViewModel
+import com.domker.base.addDividerItemDecoration
 
 class PermissionFragment : Fragment() {
     private lateinit var binding: FragmentDetailPermissionBinding
+    private val componentViewModel: ComponentViewModel by activityViewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentDetailPermissionBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        println("PermissionFragment onActivityCreated")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        AppDetailActivity.componentViewModel?.permissionInfo?.observe(viewLifecycleOwner, {
+        componentViewModel.getPermissionInfo().observe(viewLifecycleOwner, {
             binding.pathTitle.text = "共${it.size}条"
             binding.recyclerView.adapter = PermissionListAdapter(requireContext(), it.sortedBy { info -> info.name })
             binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-            binding.recyclerView.addItemDecoration(requireContext(), R.drawable.inset_recyclerview_divider)
+            binding.recyclerView.addDividerItemDecoration(requireContext(), R.drawable.inset_recyclerview_divider)
             binding.recyclerView.adapter?.notifyDataSetChanged()
         })
     }

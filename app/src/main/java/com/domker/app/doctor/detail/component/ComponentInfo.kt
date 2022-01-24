@@ -5,7 +5,9 @@ import android.content.pm.PermissionInfo
 import android.content.pm.ProviderInfo
 import android.content.pm.ServiceInfo
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Parcelable
+import androidx.annotation.RequiresApi
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -44,6 +46,10 @@ class ComponentInfo : Parcelable {
     var softInputMode: Int = 0
     var flags: Int = 0
     var configChanges: Int = 0
+    var colorMode: Int = 0
+
+    // metaData
+    val metaData = mutableMapOf<String, String>()
 }
 
 fun ComponentInfo.parseFrom(activityInfo: ActivityInfo): ComponentInfo {
@@ -60,6 +66,11 @@ fun ComponentInfo.parseFrom(activityInfo: ActivityInfo): ComponentInfo {
     this.softInputMode = activityInfo.softInputMode
     this.flags = activityInfo.flags
     this.configChanges = activityInfo.configChanges
+    // 颜色模式
+    if (Build.VERSION.SDK_INT >= 26) {
+        this.colorMode = activityInfo.colorMode
+    }
+
     return this
 //    if (activityInfo.metaData != null && activityInfo.metaData.keySet() != null) {
 //        activityInfo.metaData.keySet().forEach { key ->
@@ -100,7 +111,7 @@ fun ComponentInfo.parseFrom(permissionInfo: PermissionInfo): ComponentInfo {
 /**
  * 创建一个Component对象，设定类型
  */
-fun componentOfType(type: Int) : ComponentInfo {
+fun componentOfType(type: Int): ComponentInfo {
     val c = ComponentInfo()
     c.type = type
     return c

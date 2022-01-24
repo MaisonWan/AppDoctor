@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import com.domker.app.doctor.R
-import com.domker.app.doctor.detail.AppDetailActivity
+import com.domker.app.doctor.detail.component.ComponentViewModel
 import com.domker.app.doctor.view.TypeFacePool
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.RadarChart
@@ -29,49 +29,49 @@ import kotlin.collections.HashMap
  */
 class DashboardFragment : Fragment() {
     private val tabs = arrayOf("Activity", "Service", "Provider", "Receiver", "Permission")
-    private lateinit var dashboardViewModel: DashboardViewModel
+
+    private val componentViewModel: ComponentViewModel by activityViewModels()
     private lateinit var chart: RadarChart
     private val data = HashMap<String, Int>()
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        println("DashboardFragment onActivityCreated")
-        // 设置观察者模式，获取数量
-        initObserve()
-    }
-
     private fun initObserve() {
-        AppDetailActivity.componentViewModel?.let { vm ->
-            println("initObserve")
-            val info = arrayOf(vm.activityInfo, vm.serviceInfo, vm.providerInfo, vm.receiverInfo,
-                    vm.permissionInfo)
-            // 观察者
-            tabs.forEachIndexed { index, name ->
-                info[index].observe(viewLifecycleOwner, {
-                    println("$name = ${it.size}")
-                    data[name] = it.size
+//        componentViewModel = ViewModelProvider(this)[ComponentViewModel::class.java]
 
-                    // 获取够了5种类型的数据，则刷新图标
-                    if (data.size == tabs.size) {
-                        setData()
-                    }
-                })
-            }
+        println("initObserve")
+        val info = arrayOf(
+            componentViewModel.getActivityInfo(),
+            componentViewModel.getServiceInfo(),
+            componentViewModel.getProviderInfo(),
+            componentViewModel.getReceiverInfo(),
+            componentViewModel.getPermissionInfo()
+        )
+
+        // 观察者
+        tabs.forEachIndexed { index, name ->
+            info[index].observe(viewLifecycleOwner, {
+                println("$name = ${it.size}")
+                data[name] = it.size
+
+                // 获取够了5种类型的数据，则刷新图标
+                if (data.size == tabs.size) {
+                    setData()
+                }
+            })
         }
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
-        dashboardViewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
         return inflater.inflate(R.layout.fragment_detail_bashboard, container, false)
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initObserve()
         initChart(view)
     }
 
