@@ -51,7 +51,7 @@ class PermissionListAdapter(private val context: Context,
 
     class PermissionDetailViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var subject: TextView? = view.findViewById(R.id.textViewSubject)
-        var content: TextView? = view.findViewById(R.id.textViewLabel)
+        var content: TextView? = view.findViewById(R.id.textViewFile)
         var icon: ImageView? = view.findViewById(R.id.imageViewType)
 
         init {

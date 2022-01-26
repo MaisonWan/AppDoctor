@@ -49,6 +49,23 @@ fun File.readZipFileList(): List<ZipFileItem> {
 }
 
 /**
+ * 读取Zip中每个Item的详情
+ */
+fun File.readZipFileItemList(): List<ZipFileItem> {
+    val zipFile = ZipFile(this)
+    val entries = zipFile.entries()
+    val result = mutableListOf<ZipFileItem>()
+    while (entries.hasMoreElements()) {
+        val e = entries.nextElement()
+        val item = ZipFileItem(File(e.name), !e.isDirectory)
+        item.compressedSize = e.compressedSize
+        item.uncompressedSize = e.size
+        result.add(item)
+    }
+    return result
+}
+
+/**
  * 解压到临时目录
  */
 fun File.unzip(context: Context, file: File): File? {
@@ -64,10 +81,6 @@ fun File.unzip(context: Context, file: File): File? {
         val outFile = File(context.cacheDir.absolutePath + File.separator + apkFolderName, file.absolutePath)
         checkPath(outFile)
         zipFile = ZipFile(this)
-//        val e = zipFile.entries()
-//        while (e.hasMoreElements()) {
-//            println(e.nextElement().name)
-//        }
         // 路径和zip里面的路径的匹配
         val entry = zipFile.getEntry(zipPath(file.absolutePath))
         inputStream = zipFile.getInputStream(entry)

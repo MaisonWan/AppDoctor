@@ -102,7 +102,7 @@ class AppDetailAdapter(context: Context, diffCallback: DiffUtil.ItemCallback<App
 
         init {
             subjectTv = view.findViewById(R.id.textViewSubject)
-            labelTv = view.findViewById(R.id.textViewLabel)
+            labelTv = view.findViewById(R.id.textViewFile)
         }
     }
 }

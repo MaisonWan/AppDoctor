@@ -64,6 +64,6 @@ class SensorListAdapter(context: Context, private val sensorList: List<Sensor>) 
      */
     class SensorDetailViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val subject: TextView = itemView.findViewById(R.id.textViewSubject)
-        val label: TextView = itemView.findViewById(R.id.textViewLabel)
+        val label: TextView = itemView.findViewById(R.id.textViewFile)
     }
 }

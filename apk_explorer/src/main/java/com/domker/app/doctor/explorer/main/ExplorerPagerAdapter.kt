@@ -29,7 +29,7 @@ class ExplorerPagerAdapter(private val context: Context,
                            private val onLoadCompleteListener: () -> Unit) :
         RecyclerView.Adapter<ExplorerPagerAdapter.ExplorerViewHolder>() {
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-    private val viewModel = ViewModelProvider(owner).get(ApkExplorerViewModel::class.java)
+    private val viewModel = ViewModelProvider(owner)[ApkExplorerViewModel::class.java]
     private var explorerAdapter: ExplorerItemAdapter? = null
     private var currentPosition = 0
 

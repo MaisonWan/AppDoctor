@@ -6,7 +6,8 @@ import com.domker.app.doctor.data.AppChecker
 import com.domker.base.thread.AppExecutors
 
 /**
- * 四大组件的ViewModel
+ * 指定一个app的包名，获取四大组件和相关权限List的ViewModel
+ * 新增，检测安装包里面的lib库的信息，相对耗时一些
  * Created by wanlipeng on 2020/6/7 3:19 PM
  */
 class ComponentViewModel : ViewModel() {

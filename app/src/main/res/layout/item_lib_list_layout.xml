@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/item_selector">
+
+    <TextView
+        android:id="@+id/textViewZip"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|start"
+        android:paddingStart="2dp"
+        android:paddingTop="2dp"
+        android:paddingEnd="0dp"
+        android:paddingBottom="2dp"
+        android:textColor="@android:color/tertiary_text_dark"
+        android:textIsSelectable="true"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewFile"
+        app:layout_constraintStart_toEndOf="@+id/imageViewZip"
+        app:layout_constraintTop_toTopOf="@+id/textViewFile"
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="@tools:sample/full_names" />
+
+    <ImageView
+        android:id="@+id/imageViewZip"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="120dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewFile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageViewFile"
+        app:srcCompat="@drawable/ic_baseline_folder_zip_24" />
+
+    <TextView
+        android:id="@+id/textViewSubject"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingEnd="0dp"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/textViewFile"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewType"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/first_names" />
+
+    <ImageView
+        android:id="@+id/imageViewType"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_outline_keyboard_arrow_right_24"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewFile"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center_vertical|start"
+        android:paddingStart="2dp"
+        android:paddingTop="2dp"
+        android:paddingEnd="0dp"
+        android:paddingBottom="2dp"
+        android:textColor="@android:color/tertiary_text_dark"
+        android:textIsSelectable="true"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageViewFile"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSubject"
+        tools:text="@tools:sample/full_names" />
+
+    <ImageView
+        android:id="@+id/imageViewFile"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSubject"
+        app:srcCompat="@drawable/ic_baseline_topic_24" />
+</androidx.constraintlayout.widget.ConstraintLayout>

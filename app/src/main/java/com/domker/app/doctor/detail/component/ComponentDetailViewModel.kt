@@ -4,14 +4,16 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.domker.app.doctor.data.AppCheckFactory
+import com.domker.app.doctor.data.AppChecker
 import com.domker.app.doctor.entiy.AppItemInfo
 import com.domker.app.doctor.util.ManifestLabel
-import com.domker.base.thread.AppExecutors
 import com.domker.base.toChinese
+import kotlinx.coroutines.launch
 
 /**
- * 组件详情
+ * App的四大组件具体的详情，比如单独查看某个Activity的详情
  * Created by wanlipeng on 2020/6/17 6:28 PM
  */
 class ComponentDetailViewModel : ViewModel() {
@@ -24,20 +26,30 @@ class ComponentDetailViewModel : ViewModel() {
     fun updateData(context: Context, c: ComponentInfo) {
         val checker = AppCheckFactory.getInstance(context).checker
         // 异步操作
-        AppExecutors.executor.execute {
-            // 根据当前的类型，分别获取原始数据
-            val originalData = when (c.type) {
-                ComponentInfo.TYPE_ACTIVITY -> checker.getActivityInfo(c.packageName!!, c.name!!)
-                ComponentInfo.TYPE_SERVICE -> checker.getServiceInfo(c.packageName!!, c.name!!)
-                ComponentInfo.TYPE_PROVIDER -> checker.getProviderInfo(c.packageName!!, c.name!!)
-                ComponentInfo.TYPE_RECEIVER -> checker.getReceiverInfo(c.packageName!!, c.name!!)
-                else -> checker.getActivityInfo(c.processName!!, c.name!!)
-            }
-            val detail = Detail(warpDetailInfo(originalData))
-            detail.icon = originalData.icon
-            detail.name = originalData.name
-            this.liveData.postValue(detail)
+//        AppExecutors.executor.execute {
+//
+//        }
+        viewModelScope.launch {
+            // Coroutine that will be canceled when the ViewModel is cleared.
+            fetchData(c, checker)
         }
+    }
+
+    private fun fetchData(c: ComponentInfo, checker: AppChecker) {
+        val packageName = c.packageName!!
+        val name = c.name!!
+        // 根据当前的类型，分别获取原始数据
+        val originalData = when (c.type) {
+            ComponentInfo.TYPE_ACTIVITY -> checker.getActivityInfo(packageName, name)
+            ComponentInfo.TYPE_SERVICE -> checker.getServiceInfo(packageName, name)
+            ComponentInfo.TYPE_PROVIDER -> checker.getProviderInfo(packageName, name)
+            ComponentInfo.TYPE_RECEIVER -> checker.getReceiverInfo(packageName, name)
+            else -> checker.getActivityInfo(c.processName!!, name)
+        }
+        val detail = Detail(warpDetailInfo(originalData))
+        detail.icon = originalData.icon
+        detail.name = originalData.name
+        this.liveData.postValue(detail)
     }
 
     /**

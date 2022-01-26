@@ -109,7 +109,7 @@ class AppChecker(private val context: Context) {
             context.packageManager.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
                 .activities?.forEach {
                     val componentInfo = ComponentInfo()
-                    componentInfo.type = ComponentInfo.TYPE_ACTIVITY
+                    componentInfo.type = TYPE_ACTIVITY
                     list.add(componentInfo.parseFrom(it))
                 }
         } catch (e: Exception) {

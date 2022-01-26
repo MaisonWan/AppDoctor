@@ -17,7 +17,10 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorPrimary">@color/holo_blue_light</item>
+        <item name="colorPrimaryDark">@color/holo_blue_dark</item>
+    </style>
 
     <style name="noAnimation">
         <item name="android:activityOpenEnterAnimation">@anim/activity_in</item>

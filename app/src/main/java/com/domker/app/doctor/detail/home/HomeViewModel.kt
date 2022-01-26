@@ -6,11 +6,14 @@ import com.domker.app.doctor.data.AppChecker
 import com.domker.app.doctor.data.AppEntity
 import com.domker.app.doctor.entiy.AppItemInfo
 import com.domker.app.doctor.entiy.appItemOf
+import com.domker.app.doctor.util.ApkViewer
 import com.domker.app.doctor.util.DataFormat
 import com.domker.base.SystemVersion
 import com.domker.base.file.FileUtils
+import com.domker.base.file.ZipFileItem
 import com.domker.base.thread.AppExecutors
 import com.domker.base.toChinese
+import java.io.File
 
 /**
  * App详情的首页的ViewModel
@@ -19,7 +22,15 @@ class HomeViewModel : ViewModel() {
 
     private val liveData = MutableLiveData<HomeDetail>()
 
+    // 安装包里面的LiveData
+    private val apkLiveData = MutableLiveData<Map<String, List<ZipFileItem>>>()
+
     fun getAppInfo(): MutableLiveData<HomeDetail> = liveData
+
+    /**
+     * 获取apk里面的信息，需要详细分析apk安装包，比较耗时
+     */
+    fun getApkDetail(): MutableLiveData<Map<String, List<ZipFileItem>>> = apkLiveData
 
     /**
      * 更新数据
@@ -27,10 +38,14 @@ class HomeViewModel : ViewModel() {
     fun updateData(appChecker: AppChecker, appPackageName: String) {
         AppExecutors.executor.execute {
             // 异步获取app的信息
-            appChecker.getAppEntity(appPackageName)?.also {
-                it.signature = getShowSignature(appChecker.getAppSignature(appPackageName))
-                val homeDetail = HomeDetail(it, warpAppEntity(it))
+            appChecker.getAppEntity(appPackageName)?.also { entity ->
+                // 获取apk签名
+                entity.signature = getShowSignature(appChecker.getAppSignature(appPackageName))
+                val homeDetail = HomeDetail(entity, warpAppEntity(entity))
                 liveData.postValue(homeDetail)
+
+                // 分析apk安装包内部详细信息
+                parserApkInfo(entity)
             }
         }
     }
@@ -76,6 +91,13 @@ class HomeViewModel : ViewModel() {
             }
         }
         return ans.toString()
+    }
+
+    private fun parserApkInfo(appEntity: AppEntity) {
+        appEntity.sourceDir?.apply {
+            val viewer = ApkViewer(this)
+            apkLiveData.postValue(viewer.getLibFiles())
+        }
     }
 
     data class HomeDetail(val appEntity: AppEntity, val itemList: List<AppItemInfo>)
