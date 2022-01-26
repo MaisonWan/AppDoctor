@@ -54,6 +54,7 @@ class AppDetailActivity : BaseAppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
         updateAppInfo()
     }
 

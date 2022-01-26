@@ -52,13 +52,13 @@ class ComponentDetailFragment : Fragment() {
      * 监听初始化监听器
      */
     private fun initObserver() {
-        componentDetailViewModel.getDetail().observe(viewLifecycleOwner, { detail ->
+        componentDetailViewModel.getDetail().observe(viewLifecycleOwner) { detail ->
             binding.appIcon.setImageDrawable(detail.icon)
             binding.appPackage.text = detail.name
 
             adapter.setDetailList(detail.itemList)
             adapter.notifyDataSetChanged()
-        })
+        }
     }
 
 }
