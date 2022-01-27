@@ -22,9 +22,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tabGravity="center"
+        app:tabGravity="fill"
         app:tabIndicatorColor="@color/holo_blue_light"
-        app:tabInlineLabel="true"
+        app:tabInlineLabel="false"
         app:tabMode="auto">
 
         <com.google.android.material.tabs.TabItem

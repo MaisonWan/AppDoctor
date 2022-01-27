@@ -45,6 +45,12 @@ class AppLibFragment : Fragment() {
             val adapter = AppLibPageAdapter(context, titles, map)
             viewpager.adapter = adapter
             viewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+
+            if (titles.size > 3) {
+                tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
+            } else {
+                tabLayout.tabMode = TabLayout.MODE_FIXED
+            }
             TabLayoutMediator(tabLayout, viewpager) { tab, position ->
                 tab.text = titles[position].uppercase()
             }.attach()
