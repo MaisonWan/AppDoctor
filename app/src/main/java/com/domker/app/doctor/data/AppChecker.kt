@@ -2,6 +2,7 @@ package com.domker.app.doctor.data
 
 import android.content.ComponentName
 import android.content.Context
+import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Build
 import com.domker.app.doctor.detail.component.ComponentInfo
@@ -252,8 +253,17 @@ class AppChecker(private val context: Context) {
         return info
     }
 
-    fun getMetaData() {
-//        context.packageManager
+    /**
+     * 获取AndroidManifest里面的元数据
+     */
+    fun getMetaData(packageName: String): Map<String, String> {
+        val map = mutableMapOf<String, String>()
+        val applicationInfo: ApplicationInfo = context.packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)
+        val metadata = applicationInfo.metaData
+        metadata?.keySet()?.forEach {
+            map[it] = metadata[it].toString()
+        }
+        return map
     }
 
     /**

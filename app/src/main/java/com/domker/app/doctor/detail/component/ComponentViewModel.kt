@@ -17,12 +17,14 @@ class ComponentViewModel : ViewModel() {
     private val providerInfoList = MutableLiveData<List<ComponentInfo>>()
     private val receiverInfoList = MutableLiveData<List<ComponentInfo>>()
     private val permissionInfoList = MutableLiveData<List<ComponentInfo>>()
+    private val metaData = MutableLiveData<Map<String, String>>()
 
     fun getActivityInfo() = activityInfoList
     fun getServiceInfo() = serviceInfoList
     fun getProviderInfo() = providerInfoList
     fun getReceiverInfo() = receiverInfoList
     fun getPermissionInfo() = permissionInfoList
+    fun getMetaData() = metaData
 
     /**
      * 更新数据
@@ -36,6 +38,7 @@ class ComponentViewModel : ViewModel() {
             providerInfoList.postValue(appChecker.getProvidersListInfo(appPackageName))
             receiverInfoList.postValue(appChecker.getReceiversListInfo(appPackageName))
             permissionInfoList.postValue(appChecker.getPermissions(appPackageName))
+            metaData.postValue(appChecker.getMetaData(appPackageName))
         }
     }
 }

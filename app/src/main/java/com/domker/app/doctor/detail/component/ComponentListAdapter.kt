@@ -3,9 +3,6 @@ package com.domker.app.doctor.detail.component
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.recyclerview.widget.RecyclerView
 import com.domker.app.doctor.R
 import com.domker.app.doctor.util.log
 import com.domker.app.doctor.widget.BaseItemListAdapter
@@ -17,7 +14,7 @@ import com.domker.app.doctor.widget.BaseItemListAdapter
 class ComponentListAdapter(
     context: Context,
     private val componentList: List<ComponentInfo>
-) : BaseItemListAdapter<ComponentListAdapter.ComponentViewHolder>(context) {
+) : BaseItemListAdapter<ComponentViewHolder>(context) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ComponentViewHolder {
         log("onCreateViewHolder $viewType")
@@ -47,19 +44,5 @@ class ComponentListAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return componentList[position].type
-    }
-
-    /**
-     * 显示App详细信息的ViewHolder
-     */
-    class ComponentViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        var subject: TextView? = view.findViewById(R.id.textViewSubject)
-        var content: TextView? = view.findViewById(R.id.textViewFile)
-        var icon: ImageView? = view.findViewById(R.id.imageViewType)
-
-        init {
-            subject?.setTextIsSelectable(false)
-            content?.setTextIsSelectable(false)
-        }
     }
 }

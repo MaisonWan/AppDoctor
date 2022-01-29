@@ -20,7 +20,8 @@ class ComponentFragment : Fragment() {
     private val componentViewModel: ComponentViewModel by activityViewModels()
 
     // Tab标题的资源
-    private val tabTitleRes = intArrayOf(R.string.item_activity, R.string.item_service, R.string.item_provider, R.string.item_receiver)
+    private val tabTitleRes =
+        intArrayOf(R.string.item_activity, R.string.item_service, R.string.item_provider, R.string.item_receiver, R.string.item_meta_data)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_detail_component, container, false)
@@ -52,7 +53,7 @@ class ComponentFragment : Fragment() {
 //                super.onPageSelected(position)
 //            }
 //        })
-
+        tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
         TabLayoutMediator(tabLayout, viewpager) { tab, position ->
             tab.setText(tabTitleRes[position])
         }.attach()
