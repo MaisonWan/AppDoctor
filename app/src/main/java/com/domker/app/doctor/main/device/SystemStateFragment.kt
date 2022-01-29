@@ -26,8 +26,10 @@ class SystemStateFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentSystemStateBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -55,7 +57,7 @@ class SystemStateFragment : Fragment() {
             binding.recyclerView.adapter = it
             binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
             binding.recyclerView.addDividerItemDecoration(requireContext(), R.drawable.inset_recyclerview_divider)
-        }.notifyDataSetChanged()
+        }.notifyItemRangeChanged(0, state.size)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {

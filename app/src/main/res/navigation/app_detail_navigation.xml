@@ -64,6 +64,16 @@
         android:id="@+id/navigation_lib"
         android:name="com.domker.app.doctor.detail.lib.AppLibFragment"
         android:label="@string/title_lib"
-        tools:layout="@layout/fragment_app_lib" />
+        tools:layout="@layout/fragment_app_lib">
+        <action
+            android:id="@+id/action_navigation_lib_to_appLibDetailFragment"
+            app:destination="@id/navigation_lib_detail" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_lib_detail"
+        android:name="com.domker.app.doctor.detail.lib.AppLibDetailFragment"
+        android:label="@string/title_lib_detail"
+        tools:layout="@layout/fragment_app_lib_detail" />
+
 
 </navigation>

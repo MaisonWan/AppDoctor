@@ -1,15 +1,18 @@
 package com.domker.app.doctor.detail.lib
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.domker.app.doctor.R
 import com.domker.app.doctor.databinding.FragmentAppLibBinding
 import com.domker.app.doctor.detail.home.HomeViewModel
+import com.domker.base.file.ZipFileItem
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -42,19 +45,43 @@ class AppLibFragment : Fragment() {
         // 监听异步获取的结果
         homeViewModel.getApkDetail().observe(viewLifecycleOwner) { map ->
             val titles = map.keys.sorted().toList()
-            val adapter = AppLibPageAdapter(context, titles, map)
-            viewpager.adapter = adapter
-            viewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-
-            if (titles.size > 3) {
-                tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
+            if (titles.isEmpty()) {
+                initEmptyView(root, viewpager, tabLayout)
             } else {
-                tabLayout.tabMode = TabLayout.MODE_FIXED
+                initViewPager(context, titles, map, viewpager, tabLayout)
             }
-            TabLayoutMediator(tabLayout, viewpager) { tab, position ->
-                tab.text = titles[position].uppercase()
-            }.attach()
         }
 
+    }
+
+    private fun initEmptyView(
+        root: View,
+        viewpager: ViewPager2,
+        tabLayout: TabLayout
+    ) {
+        viewpager.visibility = View.GONE
+        tabLayout.visibility = View.GONE
+        root.findViewById<View?>(R.id.empty_layout)?.visibility = View.VISIBLE
+        root.findViewById<TextView>(R.id.textViewEmpty)?.text = getString(R.string.lib_empty_data)
+    }
+
+    private fun initViewPager(
+        context: Context,
+        titles: List<String>,
+        map: Map<String, List<ZipFileItem>>,
+        viewpager: ViewPager2,
+        tabLayout: TabLayout
+    ) {
+        val adapter = AppLibPageAdapter(context, titles, map)
+        viewpager.adapter = adapter
+        viewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        if (titles.size > 3) {
+            tabLayout.tabMode = TabLayout.MODE_SCROLLABLE
+        } else {
+            tabLayout.tabMode = TabLayout.MODE_FIXED
+        }
+        TabLayoutMediator(tabLayout, viewpager) { tab, position ->
+            tab.text = titles[position].uppercase()
+        }.attach()
     }
 }
