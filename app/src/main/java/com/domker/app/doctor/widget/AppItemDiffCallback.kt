@@ -23,6 +23,6 @@ class AppItemDiffCallback(private val oldList: List<AppItemInfo>,
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         val newItem = newList[newItemPosition]
         val oldItem = oldList[oldItemPosition]
-        return newItem.type == oldItem.type && newItem.showLabel == oldItem.showLabel
+        return newItem.type == oldItem.type && newItem.content == oldItem.content
     }
 }

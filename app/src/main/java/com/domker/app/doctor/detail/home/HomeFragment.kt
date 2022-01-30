@@ -1,35 +1,23 @@
 package com.domker.app.doctor.detail.home
 
 import android.content.Context
-import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.view.*
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
 import com.domker.app.doctor.R
-import com.domker.app.doctor.detail.AppDetailActivity
-import com.domker.app.doctor.entiy.AppItemInfo
+import com.domker.app.doctor.detail.AppDetailListAdapter
 import com.domker.app.doctor.entiy.AppItemInfo.Companion.TYPE_PACKAGE
-import com.domker.app.doctor.entiy.appItemOf
-import com.domker.app.doctor.util.DataFormat
 import com.domker.app.doctor.util.IntentUtil
 import com.domker.app.doctor.util.Router
-import com.domker.app.doctor.widget.AppDetailAdapter
-import com.domker.app.doctor.widget.AppDetailItemDiffCallBack
-import com.domker.base.SystemVersion
 import com.domker.base.addDividerItemDecoration
-import com.domker.base.file.FileUtils
-import com.domker.base.toChinese
 import com.google.android.material.snackbar.Snackbar
 import com.king.image.imageviewer.ImageViewer
 import com.king.image.imageviewer.loader.GlideImageLoader
@@ -39,7 +27,7 @@ import com.king.image.imageviewer.loader.GlideImageLoader
  */
 class HomeFragment : Fragment() {
     private val homeViewModel: HomeViewModel by activityViewModels()
-    private lateinit var adapter: AppDetailAdapter
+    private lateinit var mListAdapter: AppDetailListAdapter
 
     private var appPackageName: String? = null
     private var apkSourcePath: String? = null
@@ -72,13 +60,13 @@ class HomeFragment : Fragment() {
         recyclerViewAppInfo.layoutManager = LinearLayoutManager(context)
         recyclerViewAppInfo.addDividerItemDecoration(context, R.drawable.inset_recyclerview_divider)
         recyclerViewAppInfo.setItemViewCacheSize(100)
-        adapter = AppDetailAdapter(context, AppDetailItemDiffCallBack())
-        adapter.setOnItemClickListener { view, position ->
-            if (adapter.getItemViewType(position) == TYPE_PACKAGE) {
+        mListAdapter = AppDetailListAdapter(context)
+        mListAdapter.itemClick { _, position ->
+            if (mListAdapter.getItemViewType(position) == TYPE_PACKAGE) {
                 openPackageExplorer()
             }
         }
-        recyclerViewAppInfo.adapter = adapter
+        recyclerViewAppInfo.adapter = mListAdapter
     }
 
     private fun initButtonListener(root: View) {
@@ -107,9 +95,7 @@ class HomeFragment : Fragment() {
         Snackbar.make(view, R.string.action_uninstall_app, Snackbar.LENGTH_LONG)
             .setAction(R.string.uninstall) {
                 appPackageName?.apply {
-                    val uri: Uri = Uri.parse("package:$this")
-                    val intent = Intent(Intent.ACTION_DELETE, uri)
-                    startActivity(intent)
+                    startActivity(IntentUtil.createUninstallAppIntent(this))
                 }
             }.show()
     }
@@ -121,8 +107,7 @@ class HomeFragment : Fragment() {
         Snackbar.make(view, R.string.action_launch_app, Snackbar.LENGTH_LONG)
             .setAction(R.string.launch) {
                 appPackageName?.apply {
-                    val intent = IntentUtil.createLaunchIntent(context, this)
-                    startActivity(intent)
+                    startActivity(IntentUtil.createLaunchIntent(context, this))
                 }
             }.show()
     }
@@ -175,10 +160,7 @@ class HomeFragment : Fragment() {
      * 打开app设置
      */
     private fun openAppSetting(packageName: String) {
-        val intent = Intent()
-        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-        intent.data = Uri.fromParts("package", packageName, null)
-        startActivity(intent)
+        startActivity(IntentUtil.createOpenSettingIntent(packageName))
     }
 
     /**
@@ -195,7 +177,7 @@ class HomeFragment : Fragment() {
         val appPackage: TextView = root.findViewById(R.id.app_package)
         val appIcon: ImageView = root.findViewById(R.id.app_icon)
 
-        homeViewModel.getAppInfo().observe(viewLifecycleOwner, {
+        homeViewModel.getAppInfo().observe(viewLifecycleOwner) {
             val a = it.appEntity
             appPackageName = a.packageName
             apkSourcePath = a.sourceDir
@@ -214,8 +196,8 @@ class HomeFragment : Fragment() {
                     .orientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) //设置屏幕方向,默认：ActivityInfo.SCREEN_ORIENTATION_BEHIND
                     .start(this, v)
             }
-            adapter.setDetailList(it.itemList)
-            adapter.notifyDataSetChanged()
-        })
+            mListAdapter.setDetailList(it.itemList)
+            mListAdapter.notifyItemRangeChanged(0, it.itemList.size)
+        }
     }
 }

@@ -17,14 +17,14 @@
         android:paddingEnd="0dp"
         android:textColor="@android:color/black"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/textViewFile"
+        app:layout_constraintBottom_toTopOf="@+id/textViewContent"
         app:layout_constraintEnd_toStartOf="@+id/buttonPackage"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@tools:sample/first_names" />
 
     <TextView
-        android:id="@+id/textViewFile"
+        android:id="@+id/textViewContent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -50,8 +50,8 @@
         android:background="@drawable/bg_button_blue_state"
         android:text="@string/apk_explorer"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/textViewFile"
-        app:layout_constraintEnd_toEndOf="@+id/textViewFile"
+        app:layout_constraintBottom_toTopOf="@+id/textViewContent"
+        app:layout_constraintEnd_toEndOf="@+id/textViewContent"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

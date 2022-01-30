@@ -68,7 +68,7 @@ class ComponentPageAdapter(
         metaAdapter = MetaDataAdapter(context, data)
         holder.recyclerView?.adapter = metaAdapter
         metaAdapter.notifyItemRangeChanged(0, data.size)
-        holder.title?.text = "共${data.size}条"
+        holder.title?.text = context.getString(R.string.total, data.size)
     }
 
     /**
@@ -84,11 +84,12 @@ class ComponentPageAdapter(
             Navigation.findNavController(componentViewHolder.view).navigate(R.id.navigation_component_detail, bundle)
         }
         mListAdapter[position]?.notifyItemRangeChanged(0, list.size)
-        holder.title?.text = "共${list.size}条"
+        holder.title?.text = context.getString(R.string.total, list.size)
     }
 
     private fun bindRecyclerView(holder: PageViewHolder, position: Int) {
         holder.recyclerView?.let {
+            // 最后一个MetaData类型不同，需要用其它类型的adapter
             if (position < itemCount - 1) {
                 it.adapter = mListAdapter[position]
             }

@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import com.domker.app.doctor.R
+import com.domker.app.doctor.detail.DetailItemViewHolder
 import com.domker.app.doctor.widget.BaseItemListAdapter
 
 /**
@@ -12,15 +13,15 @@ import com.domker.app.doctor.widget.BaseItemListAdapter
 class MetaDataAdapter(
     context: Context,
     private val metaDataMap: Map<String, String>
-) : BaseItemListAdapter<ComponentViewHolder>(context) {
+) : BaseItemListAdapter<DetailItemViewHolder>(context) {
     private val dataKeys = metaDataMap.keys.sorted()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ComponentViewHolder {
-        val view: View = inflater.inflate(R.layout.item_detail_subject, parent, false)
-        return ComponentViewHolder(view)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailItemViewHolder {
+        val view: View = inflater.inflate(R.layout.item_subject_content, parent, false)
+        return DetailItemViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ComponentViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: DetailItemViewHolder, position: Int) {
         val key = dataKeys[position]
         holder.subject?.text = key
         holder.content?.text = metaDataMap[key]

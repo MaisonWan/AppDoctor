@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -12,22 +13,25 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.domker.app.doctor.data.AppState
 import com.domker.app.doctor.databinding.ActivityMainDrawerBinding
+import com.domker.app.doctor.main.AppViewModel
 import com.domker.app.doctor.util.Router
 
 @Route(path = Router.MAIN_ACTIVITY)
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainDrawerBinding
+    private lateinit var appViewModel: AppViewModel
+
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AppState.init(this)
         binding = ActivityMainDrawerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        appViewModel = ViewModelProvider(this)[AppViewModel::class.java]
+
         initToolbar()
         initHeaderView()
         initNavigation()
@@ -66,7 +70,7 @@ class MainActivity : AppCompatActivity() {
             } else {
                 buttonView.setText(R.string.nav_header_switch_install)
             }
-            AppState.appViewModel.includeAllApp.postValue(isChecked)
+            appViewModel.includeAllApp.postValue(isChecked)
         }
     }
 

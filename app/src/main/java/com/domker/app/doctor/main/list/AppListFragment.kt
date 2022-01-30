@@ -2,6 +2,7 @@ package com.domker.app.doctor.main.list
 
 import android.os.Bundle
 import android.view.*
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.domker.app.doctor.R
 import com.domker.app.doctor.data.SORT_NAME
@@ -15,26 +16,41 @@ import com.domker.app.doctor.widget.BaseAppFragment
  */
 class AppListFragment : BaseAppFragment() {
     private lateinit var binding: FragmentAppListBinding
-    private lateinit var adapter: AppListPageAdapter
+    private lateinit var mAdapter: AppPageAdapter
+    private lateinit var appListViewModel: AppListViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        appListViewModel = ViewModelProvider(this)[AppListViewModel::class.java]
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = FragmentAppListBinding.inflate(inflater, container, false)
         initViews(binding)
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initDataChanged()
+    }
+
+    private fun initDataChanged() {
+        appListViewModel.getAppList().observe(viewLifecycleOwner) {
+            mAdapter.updateAppList(it)
+        }
+        appListViewModel.updateAppList(requireContext(), appIncludeAll)
+    }
+
     private fun initViews(binding: FragmentAppListBinding) {
-        adapter = AppListPageAdapter(requireContext(), this, this)
-        adapter.includeSystemApp = appIncludeAll
+        mAdapter = AppPageAdapter(requireContext())
+        mAdapter.includeSystemApp = appIncludeAll
         binding.viewpager.also { v ->
-//            v.offscreenPageLimit = 1
-            v.adapter = adapter
+            v.adapter = mAdapter
             v.orientation = ViewPager2.ORIENTATION_HORIZONTAL
             binding.circlePageIndicator.setViewPager(v)
         }
@@ -42,7 +58,7 @@ class AppListFragment : BaseAppFragment() {
 
     override fun onAppIncludeChanged(includeAll: Boolean) {
         super.onAppIncludeChanged(includeAll)
-        adapter.fetchAppList(binding.viewpager.currentItem, includeAll)
+        appListViewModel.updateAppList(requireContext(), includeAll)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -53,7 +69,7 @@ class AppListFragment : BaseAppFragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val p = adapter.getDataProcessor()
+        val p = mAdapter.getDataProcessor()
         return when (item.itemId) {
             R.id.menu_sort_time -> {
                 p.sortBy(SORT_TIME)

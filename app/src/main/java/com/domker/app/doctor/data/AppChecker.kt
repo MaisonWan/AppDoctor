@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.content.pm.Signature
 import android.os.Build
 import com.domker.app.doctor.detail.component.ComponentInfo
 import com.domker.app.doctor.detail.component.ComponentInfo.Companion.TYPE_ACTIVITY
@@ -14,6 +15,9 @@ import com.domker.app.doctor.detail.component.componentOfType
 import com.domker.app.doctor.detail.component.parseFrom
 import java.security.MessageDigest
 
+val SIGNATURE_SHA256 = "sha256"
+val SIGNATURE_SHA1 = "sha1"
+val SIGNATURE_MD5 = "md5"
 
 /**
  * 检测App信息
@@ -59,7 +63,7 @@ class AppChecker(private val context: Context) {
     /**
      * 获取应用的签名
      */
-    fun getAppSignature(packageName: String): Array<String> {
+    fun getAppSignature(packageName: String): Map<String, Array<String>> {
         try {
             val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                 PackageManager.GET_SIGNING_CERTIFICATES
@@ -73,31 +77,38 @@ class AppChecker(private val context: Context) {
                 info.signatures
             }
 
-            // 创建结果
-            val signatures = Array(cert.size) { "" }
-            val md: MessageDigest = MessageDigest.getInstance("SHA256")
-
-            cert.forEachIndexed { index, signature ->
-                val publicKey: ByteArray = md.digest(signature.toByteArray())
-                val hexString = StringBuilder()
-                for (i in publicKey.indices) {
-                    val appendString =
-                        Integer.toHexString(publicKey[i].toInt().and(0xFF)).uppercase()
-                    if (appendString.length == 1) {
-                        hexString.append("0")
-                    }
-                    hexString.append(appendString)
-                    if (i != publicKey.size - 1) {
-                        hexString.append(":")
-                    }
-                }
-                signatures[index] = hexString.toString()
-            }
-            return signatures
+            val sha256 = parserSignature(cert, MessageDigest.getInstance("SHA256"))
+            val sha1 = parserSignature(cert, MessageDigest.getInstance("SHA1"))
+            val md5 = parserSignature(cert, MessageDigest.getInstance("MD5"))
+            return mapOf(Pair(SIGNATURE_SHA256, sha256), Pair(SIGNATURE_SHA1, sha1), Pair(SIGNATURE_MD5, md5))
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
         }
-        return emptyArray()
+        return emptyMap()
+    }
+
+    /**
+     * 把签名的信息，根据md的类型，转化为字符串
+     */
+    private fun parserSignature(cert: Array<Signature>, md: MessageDigest): Array<String> {
+        // 创建结果
+        val signatures = Array(cert.size) { "" }
+        cert.forEachIndexed { index, signature ->
+            val publicKey: ByteArray = md.digest(signature.toByteArray())
+            val hexString = StringBuilder()
+            for (i in publicKey.indices) {
+                val appendString = Integer.toHexString(publicKey[i].toInt().and(0xFF)).uppercase()
+                if (appendString.length == 1) {
+                    hexString.append("0")
+                }
+                hexString.append(appendString)
+                if (i != publicKey.size - 1) {
+                    hexString.append(":")
+                }
+            }
+            signatures[index] = hexString.toString()
+        }
+        return signatures
     }
 
     /**

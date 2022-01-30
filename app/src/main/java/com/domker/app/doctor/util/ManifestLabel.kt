@@ -15,7 +15,7 @@ object ManifestLabel {
     /**
      * int类型10进制和16进制展示
      */
-    fun intAndHex(n: Int): String {
+    fun intToHex(n: Int): String {
         return "$n (0x${Integer.toHexString(n)})"
     }
 

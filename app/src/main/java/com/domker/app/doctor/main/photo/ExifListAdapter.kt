@@ -77,7 +77,7 @@ class ExifListAdapter(private val activity: Activity) :
 
     class ExifViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var subject: TextView? = view.findViewById(R.id.textViewSubject)
-        var label: TextView? = view.findViewById(R.id.textViewFile)
+        var label: TextView? = view.findViewById(R.id.textViewContent)
 
         // TYPE_LOCATION
         var locationLat: TextView? = view.findViewById(R.id.textViewLocationLat)

@@ -19,9 +19,9 @@
         android:textColor="@android:color/tertiary_text_dark"
         android:textIsSelectable="true"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewFile"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewContent"
         app:layout_constraintStart_toEndOf="@+id/imageViewZip"
-        app:layout_constraintTop_toTopOf="@+id/textViewFile"
+        app:layout_constraintTop_toTopOf="@+id/textViewContent"
         app:layout_constraintVertical_bias="0.0"
         tools:text="@tools:sample/full_names" />
 
@@ -46,7 +46,7 @@
         android:paddingEnd="0dp"
         android:textColor="@android:color/black"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/textViewFile"
+        app:layout_constraintBottom_toTopOf="@+id/textViewContent"
         app:layout_constraintEnd_toStartOf="@+id/imageViewType"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -64,7 +64,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textViewFile"
+        android:id="@+id/textViewContent"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:gravity="center_vertical|start"

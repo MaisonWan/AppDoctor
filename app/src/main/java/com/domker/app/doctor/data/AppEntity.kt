@@ -61,6 +61,9 @@ class AppEntity {
     @ColumnInfo(name = "signature")
     var signature: String? = null
 
+    @Ignore
+    var signatureMap: Map<String, Array<String>>? = null
+
     @ColumnInfo(name = "native_lib_dir")
     var nativeLibraryDir: String? = null
 

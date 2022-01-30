@@ -9,8 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.domker.app.doctor.R
 import com.domker.app.doctor.databinding.FragmentDetailComponentInfoBinding
-import com.domker.app.doctor.widget.AppDetailAdapter
-import com.domker.app.doctor.widget.AppDetailItemDiffCallBack
+import com.domker.app.doctor.detail.AppDetailListAdapter
 import com.domker.base.addDividerItemDecoration
 
 /**
@@ -21,7 +20,7 @@ import com.domker.base.addDividerItemDecoration
 class ComponentDetailFragment : Fragment() {
     // ViewModel
     private lateinit var componentDetailViewModel: ComponentDetailViewModel
-    private lateinit var adapter: AppDetailAdapter
+    private lateinit var mListAdapter: AppDetailListAdapter
     private lateinit var binding: FragmentDetailComponentInfoBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -44,8 +43,8 @@ class ComponentDetailFragment : Fragment() {
         binding.recyclerViewActivityInfo.layoutManager = LinearLayoutManager(context)
         binding.recyclerViewActivityInfo.addDividerItemDecoration(context, R.drawable.inset_recyclerview_divider)
         binding.recyclerViewActivityInfo.setItemViewCacheSize(100)
-        adapter = AppDetailAdapter(context, AppDetailItemDiffCallBack())
-        binding.recyclerViewActivityInfo.adapter = adapter
+        mListAdapter = AppDetailListAdapter(context)
+        binding.recyclerViewActivityInfo.adapter = mListAdapter
     }
 
     /**
@@ -56,8 +55,8 @@ class ComponentDetailFragment : Fragment() {
             binding.appIcon.setImageDrawable(detail.icon)
             binding.appPackage.text = detail.name
 
-            adapter.setDetailList(detail.itemList)
-            adapter.notifyDataSetChanged()
+            mListAdapter.setDetailList(detail.itemList)
+            mListAdapter.notifyDataSetChanged()
         }
     }
 

@@ -50,9 +50,9 @@
         android:textColor="@android:color/tertiary_text_dark"
         android:textIsSelectable="true"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewFile"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewContent"
         app:layout_constraintStart_toEndOf="@+id/imageViewZip"
-        app:layout_constraintTop_toTopOf="@+id/textViewFile"
+        app:layout_constraintTop_toTopOf="@+id/textViewContent"
         app:layout_constraintVertical_bias="0.0"
         tools:text="@tools:sample/full_names" />
 
@@ -61,12 +61,12 @@
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewFile"
-        app:layout_constraintStart_toEndOf="@+id/textViewFile"
+        app:layout_constraintStart_toEndOf="@+id/textViewContent"
         app:layout_constraintTop_toTopOf="@+id/imageViewFile"
         app:srcCompat="@drawable/ic_baseline_folder_zip_24" />
 
     <TextView
-        android:id="@+id/textViewFile"
+        android:id="@+id/textViewContent"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:gravity="center_vertical|start"

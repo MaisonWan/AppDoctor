@@ -3,7 +3,8 @@ package com.domker.app.doctor.widget
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.domker.app.doctor.data.AppState
+import androidx.fragment.app.activityViewModels
+import com.domker.app.doctor.main.AppViewModel
 
 
 /**
@@ -15,10 +16,11 @@ abstract class BaseAppFragment : Fragment() {
      * 是否包含所有的app
      */
     protected var appIncludeAll = false
+    private val appViewModel: AppViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        AppState.appViewModel.includeAllApp.observe(viewLifecycleOwner) {
+        appViewModel.includeAllApp.observe(viewLifecycleOwner) {
             onAppIncludeChanged(it)
         }
     }

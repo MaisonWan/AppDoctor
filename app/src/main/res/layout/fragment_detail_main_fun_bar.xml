@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <Button
+        android:id="@+id/buttonStart"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/detail_button_height"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_button_blue_state"
+        android:text="@string/launch"
+        android:textColor="@android:color/white" />
+
+
+    <Button
+        android:id="@+id/buttonUninstall"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/detail_button_height"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_button_red_state"
+        android:text="@string/uninstall"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/buttonApkExplorer"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/detail_button_height"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_button_blue_state"
+        android:text="@string/apk_explorer"
+        android:textColor="@android:color/white" />
+
+    <Button
+        android:id="@+id/buttonSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/detail_button_height"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_button_blue_state"
+        android:text="@string/apk_settings"
+        android:textColor="@android:color/white" />
+</LinearLayout>

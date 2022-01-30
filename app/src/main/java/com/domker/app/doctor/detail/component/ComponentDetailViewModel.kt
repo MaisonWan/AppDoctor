@@ -73,27 +73,27 @@ class ComponentDetailViewModel : ViewModel() {
     }
 
     private fun warpActivityData(it: ComponentInfo, detailList: MutableList<AppItemInfo>) {
-        detailList.add(AppItemInfo("屏幕方向", ManifestLabel.screen(it.screenOrientation), ManifestLabel.intAndHex(it.screenOrientation)))
+        detailList.add(AppItemInfo("屏幕方向", ManifestLabel.screen(it.screenOrientation), ManifestLabel.intToHex(it.screenOrientation)))
         detailList.add(AppItemInfo("任务栈名称", it.taskAffinity ?: "NONE"))
-        detailList.add(AppItemInfo("输入法模式", ManifestLabel.inputMethod(it.softInputMode), ManifestLabel.intAndHex(it.softInputMode)))
-        detailList.add(AppItemInfo("Config", ManifestLabel.config(it.configChanges), ManifestLabel.intAndHex(it.configChanges)))
-        detailList.add(AppItemInfo("Flag", ManifestLabel.activityFlag(it.flags), ManifestLabel.intAndHex(it.flags)))
+        detailList.add(AppItemInfo("输入法模式", ManifestLabel.inputMethod(it.softInputMode), ManifestLabel.intToHex(it.softInputMode)))
+        detailList.add(AppItemInfo("Config", ManifestLabel.config(it.configChanges), ManifestLabel.intToHex(it.configChanges)))
+        detailList.add(AppItemInfo("Flag", ManifestLabel.activityFlag(it.flags), ManifestLabel.intToHex(it.flags)))
         detailList.add(AppItemInfo("启动模式", it.launchMode.toString()))
     }
 
     private fun warpServiceData(it: ComponentInfo, detailList: MutableList<AppItemInfo>) {
         detailList.add(AppItemInfo("权限", it.permission.toChinese()))
-        detailList.add(AppItemInfo("Flag", ManifestLabel.activityFlag(it.flags), ManifestLabel.intAndHex(it.flags)))
+        detailList.add(AppItemInfo("Flag", ManifestLabel.activityFlag(it.flags), ManifestLabel.intToHex(it.flags)))
     }
 
     private fun warpProviderData(it: ComponentInfo, detailList: MutableList<AppItemInfo>) {
-        detailList.add(AppItemInfo("Flag", ManifestLabel.providerFlag(it.flags), ManifestLabel.intAndHex(it.flags)))
+        detailList.add(AppItemInfo("Flag", ManifestLabel.providerFlag(it.flags), ManifestLabel.intToHex(it.flags)))
     }
 
     private fun warpReceiverData(it: ComponentInfo, detailList: MutableList<AppItemInfo>) {
         detailList.add(AppItemInfo("任务栈名称", it.taskAffinity!!))
-        detailList.add(AppItemInfo("Config", ManifestLabel.config(it.configChanges), ManifestLabel.intAndHex(it.configChanges)))
-        detailList.add(AppItemInfo("Flag", ManifestLabel.activityFlag(it.flags), ManifestLabel.intAndHex(it.flags)))
+        detailList.add(AppItemInfo("Config", ManifestLabel.config(it.configChanges), ManifestLabel.intToHex(it.configChanges)))
+        detailList.add(AppItemInfo("Flag", ManifestLabel.activityFlag(it.flags), ManifestLabel.intToHex(it.flags)))
     }
 
     /**

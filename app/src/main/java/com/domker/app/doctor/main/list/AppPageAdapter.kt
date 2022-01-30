@@ -3,9 +3,6 @@ package com.domker.app.doctor.main.list
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,16 +26,19 @@ import com.domker.base.thread.AppExecutors
  * 程序列表的分页适配器
  * Created by wanlipeng on 1/29/21 11:52 AM
  */
-class AppListPageAdapter(private val context: Context,
-                         private val lifecycleOwner: LifecycleOwner,
-                         viewModelStoreOwner: ViewModelStoreOwner) :
-        RecyclerView.Adapter<AppListPageAdapter.PageViewHolder>(),
-        DataProcessor {
-    private var adapters: Array<AppListAdapter?> = arrayOfNulls(2)
+class AppPageAdapter(
+    private val context: Context,
+) :
+    RecyclerView.Adapter<AppPageAdapter.PageViewHolder>(),
+    DataProcessor {
+    /**
+     * 目前支持的类型和分页
+     */
+    private val pages = arrayOf(LAYOUT_TYPE_LIST, LAYOUT_TYPE_GRID)
+
+    private var adapters: Array<AppListAdapter?> = arrayOfNulls(pages.size)
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-    private val app = AppCheckFactory.getInstance(context)
     private val dataProcessor = AppDataProcessor()
-    private val viewModel = ViewModelProvider(viewModelStoreOwner).get(AppListViewModel::class.java)
 
     var includeSystemApp = false
 
@@ -55,44 +55,26 @@ class AppListPageAdapter(private val context: Context,
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PageViewHolder {
         val begin = System.currentTimeMillis()
         val binding: PagerAppListItemBinding = PagerAppListItemBinding.inflate(inflater, parent, false)
-        initViewModel()
         val end = System.currentTimeMillis()
         println("onCreateViewHolder type=$viewType time=${end - begin}")
         return PageViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = 2
+    override fun getItemCount(): Int = pages.size
 
-    override fun onBindViewHolder(holder: PageViewHolder, position: Int) {
-        when (position) {
-            LAYOUT_TYPE_LIST -> {
-                val begin = System.currentTimeMillis()
-                initAppList(position, holder.binding.recyclerView, LAYOUT_TYPE_LIST)
-                fetchAppList(position)
-                val end = System.currentTimeMillis()
-                println("onCreateViewHolder position=$position time=${end - begin}")
-            }
-            LAYOUT_TYPE_GRID -> {
-                val begin = System.currentTimeMillis()
-                initAppList(position, holder.binding.recyclerView, LAYOUT_TYPE_GRID)
-                fetchAppList(position)
-                val end = System.currentTimeMillis()
-                println("onCreateViewHolder position=$position time=${end - begin}")
-            }
-        }
+    override fun getItemViewType(position: Int): Int {
+        return pages[position]
     }
 
-
-    private fun initViewModel() {
-        viewModel.appListData.observe(lifecycleOwner, {
-            updateAppList(it.first, it.second)
-        })
+    override fun onBindViewHolder(holder: PageViewHolder, position: Int) {
+        bindPager(position, holder.binding.recyclerView, getItemViewType(position))
+        notifyData(position)
     }
 
     /**
      * 初始化app列表
      */
-    private fun initAppList(index: Int, recyclerView: RecyclerView, layoutType: Int) {
+    private fun bindPager(index: Int, recyclerView: RecyclerView, layoutType: Int) {
         if (layoutType == LAYOUT_TYPE_LIST) {
             recyclerView.layoutManager = LinearLayoutManager(context)
             recyclerView.addDividerItemDecoration(context, R.drawable.inset_recyclerview_divider)
@@ -103,18 +85,18 @@ class AppListPageAdapter(private val context: Context,
         recyclerView.adapter = adapters[index]
         adapters[index]?.setOnItemClickListener { _, packageName ->
             ARouter.getInstance()
-                    .build(Router.DETAIL_ACTIVITY)
-                    .withString("package_name", packageName)
-                    .navigation()
+                .build(Router.DETAIL_ACTIVITY)
+                .withString("package_name", packageName)
+                .navigation()
         }
     }
 
     /**
      * 刷新app列表
      */
-    private fun updateAppList(index: Int, newAppList: List<AppEntity>) {
+    fun updateAppList(newAppList: List<AppEntity>) {
         dataProcessor.resetData(newAppList)
-        repeat(2) { pageIndex ->
+        repeat(itemCount) { pageIndex ->
             notifyData(pageIndex)
         }
 
@@ -132,25 +114,6 @@ class AppListPageAdapter(private val context: Context,
             it.setAppList(list)
             diffResult.dispatchUpdatesTo(it)
         }
-    }
-
-    /**
-     * 获取最新的信息，是否包含系统应用
-     */
-    private fun fetchAppList(index: Int) {
-        AppExecutors.executor.execute {
-            val newAppList = app.getAppList(includeSystemApp)
-            viewModel.appListData.postValue(Pair(index, newAppList))
-        }
-    }
-
-    /**
-     * @param index 当前界面的index
-     * @param includeAll 是否包含所有app
-     */
-    fun fetchAppList(index: Int, includeAll: Boolean) {
-        includeSystemApp = includeAll
-        fetchAppList(index)
     }
 
     override fun getDataProcessor(): AppDataProcessor = dataProcessor

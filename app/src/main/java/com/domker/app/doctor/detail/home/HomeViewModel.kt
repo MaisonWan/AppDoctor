@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.domker.app.doctor.data.AppChecker
 import com.domker.app.doctor.data.AppEntity
+import com.domker.app.doctor.data.SIGNATURE_SHA256
 import com.domker.app.doctor.entiy.AppItemInfo
 import com.domker.app.doctor.entiy.appItemOf
 import com.domker.app.doctor.util.ApkViewer
@@ -13,7 +14,6 @@ import com.domker.base.file.FileUtils
 import com.domker.base.file.ZipFileItem
 import com.domker.base.thread.AppExecutors
 import com.domker.base.toChinese
-import java.io.File
 
 /**
  * App详情的首页的ViewModel
@@ -40,7 +40,9 @@ class HomeViewModel : ViewModel() {
             // 异步获取app的信息
             appChecker.getAppEntity(appPackageName)?.also { entity ->
                 // 获取apk签名
-                entity.signature = getShowSignature(appChecker.getAppSignature(appPackageName))
+                val s = appChecker.getAppSignature(appPackageName)
+                entity.signature = s[SIGNATURE_SHA256]?.let { getShowSignature(it) }
+                entity.signatureMap = s
                 val homeDetail = HomeDetail(entity, warpAppEntity(entity))
                 liveData.postValue(homeDetail)
 
@@ -73,7 +75,10 @@ class HomeViewModel : ViewModel() {
         detailList.add(appItemOf("Data路径", appEntity.dataDir))
         detailList.add(appItemOf("保护Data路径", appEntity.deviceProtectedDataDir))
         detailList.add(appItemOf("主进程名", appEntity.processName))
-        detailList.add(appItemOf("SHA256签名", appEntity.signature))
+        detailList.add(appItemOf("SHA256签名", appEntity.signature).also {
+            it.type = AppItemInfo.TYPE_SIGNATURE
+            it.signature = appEntity.signatureMap
+        })
         detailList.add(appItemOf("User ID", appEntity.uid.toString()))
         detailList.add(appItemOf("Flag", appEntity.flag))
         return detailList

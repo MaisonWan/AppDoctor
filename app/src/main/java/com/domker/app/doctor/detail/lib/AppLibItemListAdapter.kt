@@ -40,7 +40,7 @@ class AppLibItemListAdapter(
 
     class LibItemViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val textViewSubject: TextView = view.findViewById(R.id.textViewSubject)
-        val textViewFile: TextView = view.findViewById(R.id.textViewFile)
+        val textViewFile: TextView = view.findViewById(R.id.textViewContent)
         val textViewZip: TextView = view.findViewById(R.id.textViewZip)
         var icon: ImageView = view.findViewById(R.id.imageViewType)
     }
