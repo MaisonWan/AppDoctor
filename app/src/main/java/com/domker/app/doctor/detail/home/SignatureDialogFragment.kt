@@ -4,42 +4,37 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.domker.app.doctor.R
+import com.domker.app.doctor.data.SIGNATURE_MD5
+import com.domker.app.doctor.data.SIGNATURE_SHA1
+import com.domker.app.doctor.data.SIGNATURE_SHA256
 import com.domker.app.doctor.databinding.FragmentSignatureDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-const val ARG_ITEM_COUNT = "item_count"
 
 /**
  * 展示签名详情的Fragment
  */
 class SignatureDialogFragment : BottomSheetDialogFragment() {
 
-    private lateinit var _binding: FragmentSignatureDialogBinding
-
-    private val binding get() = _binding
+    private lateinit var binding: FragmentSignatureDialogBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        _binding = FragmentSignatureDialogBinding.inflate(inflater, container, false)
+        binding = FragmentSignatureDialogBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        activity?.findViewById<RecyclerView>(R.id.rootLayout)?.layoutManager = LinearLayoutManager(context)
-//        activity?.findViewById<RecyclerView>(R.id.rootLayout)?.adapter = arguments?.getInt(ARG_ITEM_COUNT)?.let { ItemAdapter(it) }
-    }
+        val md5 = arguments?.getString(SIGNATURE_MD5)
+        binding.textViewMd5.text = md5 ?: ""
 
-    private inner class ViewHolder(binding: FragmentSignatureDialogBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+        val sha1 = arguments?.getString(SIGNATURE_SHA1)
+        binding.textViewSHA1.text = sha1 ?: ""
 
-//        val text: TextView = binding.text
+        val sha256 = arguments?.getString(SIGNATURE_SHA256)
+        binding.textViewSHA256.text = sha256 ?: ""
     }
 
 }

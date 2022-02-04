@@ -30,6 +30,27 @@ data class AppItemInfo(val subject: String?, val content: String, val extra: Str
      * 签名组合
      */
     var signature: Map<String, Array<String>>? = null
+
+    /**
+     * 按照指定类型，获取该类型的签名
+     */
+    fun getWarpSignature(type: String): String {
+        return getShowSignature(signature?.get(type)!!)
+    }
+
+    /**
+     * 根据app的签名，做进一步的数据格式的整理
+     */
+    private fun getShowSignature(array: Array<String>): String {
+        val ans = StringBuffer()
+        for (i in array.indices) {
+            ans.append(array[i])
+            if (i != array.size - 1) {
+                ans.append("\n")
+            }
+        }
+        return ans.toString()
+    }
 }
 
 /**

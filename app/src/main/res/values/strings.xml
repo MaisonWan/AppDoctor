@@ -36,6 +36,7 @@
     <string name="item_meta_data">MetaData</string>
     <string name="item_package_size">安装包大小</string>
     <string name="item_install_time">安装时间</string>
+    <string name="item_signature">签名详情</string>
     <string name="title_activity_app_dashboard">AppDashboardActivity</string>
 
     <item name="key_switch" type="id" />

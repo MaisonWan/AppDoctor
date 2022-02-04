@@ -1,10 +1,15 @@
 package com.domker.app.doctor.detail
 
 import android.content.Context
+import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.navigation.Navigation
 import com.domker.app.doctor.R
+import com.domker.app.doctor.data.SIGNATURE_MD5
+import com.domker.app.doctor.data.SIGNATURE_SHA1
+import com.domker.app.doctor.data.SIGNATURE_SHA256
 import com.domker.app.doctor.entiy.AppItemInfo
 import com.domker.app.doctor.widget.BaseItemListAdapter
 
@@ -46,9 +51,22 @@ class AppDetailListAdapter(context: Context) :
             it.visibility = View.VISIBLE
             it.setImageResource(R.drawable.ic_baseline_article_24)
         }
+        holder.itemView.setOnClickListener {
+            val item = mDetailItemList[position]
+            // 点击打开签名弹窗，展示详细多种类型的签名
+            val bundle = Bundle()
+            bundle.putString(SIGNATURE_MD5, item.getWarpSignature(SIGNATURE_MD5))
+            bundle.putString(SIGNATURE_SHA1, item.getWarpSignature(SIGNATURE_SHA1))
+            bundle.putString(SIGNATURE_SHA256, item.getWarpSignature(SIGNATURE_SHA256))
+            Navigation.findNavController(holder.view).navigate(R.id.navigation_signature_dialog, bundle)
+        }
     }
 
-    private fun bindSubjectContent(holder: DetailItemViewHolder, appItemInfo: AppItemInfo, position: Int) {
+    private fun bindSubjectContent(
+        holder: DetailItemViewHolder,
+        appItemInfo: AppItemInfo,
+        position: Int
+    ) {
         holder.itemView.setOnClickListener {
             invokeItemClick(holder, position)
         }

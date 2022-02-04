@@ -24,7 +24,7 @@
             app:destination="@id/navigation_lib" />
         <action
             android:id="@+id/action_navigation_main_to_signatureDialogFragment"
-            app:destination="@id/fragment_signature_dialog" />
+            app:destination="@id/navigation_signature_dialog" />
     </fragment>
 
     <fragment
@@ -79,7 +79,7 @@
         tools:layout="@layout/fragment_app_lib_detail" />
 
     <dialog
-        android:id="@+id/fragment_signature_dialog"
+        android:id="@+id/navigation_signature_dialog"
         android:name="com.domker.app.doctor.detail.home.SignatureDialogFragment"
         android:label="fragment_signature_dialog"
         tools:layout="@layout/fragment_signature_dialog" />
