@@ -44,7 +44,7 @@ class AppPageAdapter(
 
     init {
         dataProcessor.setOnSortedCallback { type, desc ->
-            repeat(2) {
+            repeat(itemCount) {
                 notifyData(it)
             }
         }
