@@ -5,8 +5,11 @@ import androidx.lifecycle.ViewModel
 import com.domker.app.doctor.data.AppChecker
 import com.domker.app.doctor.data.AppEntity
 import com.domker.app.doctor.data.SIGNATURE_SHA256
+import com.domker.app.doctor.detail.container.DETAIL_TYPE_PACKAGE
+import com.domker.app.doctor.detail.container.DETAIL_TYPE_SIGNATURE
 import com.domker.app.doctor.entiy.AppItemInfo
 import com.domker.app.doctor.entiy.appItemOf
+import com.domker.app.doctor.entiy.mergeSignature
 import com.domker.app.doctor.util.ApkViewer
 import com.domker.app.doctor.util.DataFormat
 import com.domker.base.SystemVersion
@@ -41,7 +44,7 @@ class HomeViewModel : ViewModel() {
             appChecker.getAppEntity(appPackageName)?.also { entity ->
                 // 获取apk签名
                 val s = appChecker.getAppSignature(appPackageName)
-                entity.signature = s[SIGNATURE_SHA256]?.let { getShowSignature(it) }
+                entity.signature = s[SIGNATURE_SHA256]?.let { mergeSignature(it) }
                 entity.signatureMap = s
                 val homeDetail = HomeDetail(entity, warpAppEntity(entity))
                 liveData.postValue(homeDetail)
@@ -67,7 +70,7 @@ class HomeViewModel : ViewModel() {
         detailList.add(appItemOf("首次安装时间", DataFormat.getAppInstallTime(appEntity.installTime)))
         detailList.add(appItemOf("最近更新时间", DataFormat.getDataFromTimestamp(appEntity.updateTime)))
         detailList.add(appItemOf("Application名称", appEntity.applicationName!!))
-        detailList.add(AppItemInfo("源文件路径", appEntity.sourceDir!!, type = AppItemInfo.TYPE_PACKAGE))
+        detailList.add(AppItemInfo("源文件路径", appEntity.sourceDir!!, type = DETAIL_TYPE_PACKAGE))
         detailList.add(appItemOf("源文件大小", FileUtils.formatFileSize(appEntity.sourceApkSize!!)))
         detailList.add(appItemOf("Native库路径", appEntity.nativeLibraryDir))
         detailList.add(appItemOf("备份代理类", appEntity.backupAgentName))
@@ -76,26 +79,16 @@ class HomeViewModel : ViewModel() {
         detailList.add(appItemOf("保护Data路径", appEntity.deviceProtectedDataDir))
         detailList.add(appItemOf("主进程名", appEntity.processName))
         detailList.add(appItemOf("SHA256签名", appEntity.signature).also {
-            it.type = AppItemInfo.TYPE_SIGNATURE
+            it.type = DETAIL_TYPE_SIGNATURE
             it.signature = appEntity.signatureMap
         })
         detailList.add(appItemOf("User ID", appEntity.uid.toString()))
         detailList.add(appItemOf("Flag", appEntity.flag))
-        return detailList
-    }
-
-    /**
-     * 根据app的签名，做进一步的数据格式的整理
-     */
-    private fun getShowSignature(array: Array<String>): String {
-        val ans = StringBuffer()
-        for (i in array.indices) {
-            ans.append(array[i])
-            if (i != array.size - 1) {
-                ans.append("\n")
-            }
+        // 关联
+        detailList.forEach {
+            it.appEntity = appEntity
         }
-        return ans.toString()
+        return detailList
     }
 
     private fun parserApkInfo(appEntity: AppEntity) {

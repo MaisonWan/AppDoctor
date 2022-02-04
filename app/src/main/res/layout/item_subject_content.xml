@@ -7,6 +7,17 @@
     android:layout_height="wrap_content"
     android:background="@drawable/item_selector">
 
+    <ImageView
+        android:id="@+id/imageViewType"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_outline_keyboard_arrow_right_24"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/textViewSubject"
         android:layout_width="0dp"
@@ -23,17 +34,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@tools:sample/first_names" />
 
-    <ImageView
-        android:id="@+id/imageViewType"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginEnd="8dp"
-        android:src="@drawable/ic_outline_keyboard_arrow_right_24"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/textViewContent"
         android:layout_width="0dp"
@@ -41,7 +41,7 @@
         android:gravity="center_vertical"
         android:paddingStart="16dp"
         android:paddingTop="5dp"
-        android:paddingEnd="0dp"
+        android:paddingEnd="10dp"
         android:paddingBottom="10dp"
         android:textColor="@android:color/tertiary_text_dark"
         android:textIsSelectable="true"

@@ -1,30 +1,21 @@
 package com.domker.app.doctor.entiy
 
+import com.domker.app.doctor.data.AppEntity
+import com.domker.app.doctor.detail.container.DETAIL_TYPE_SUBJECT_CONTENT
+
 /**
  * App信息按行显示时
  */
-data class AppItemInfo(val subject: String?, val content: String, val extra: String = "", var type: Int = TYPE_SUBJECT_CONTENT) {
-    companion object {
-        /**
-         * 有标题和内容的Item
-         */
-        const val TYPE_SUBJECT_CONTENT = 1
-
-        /**
-         * 只展示标题
-         */
-        const val TYPE_SUBJECT = 2
-
-        /**
-         * 包体积专用
-         */
-        const val TYPE_PACKAGE = 4
-
-        /**
-         * 签名专用类型
-         */
-        const val TYPE_SIGNATURE = 5
-    }
+data class AppItemInfo(
+    val subject: String?,
+    val content: String,
+    val extra: String = "",
+    var type: Int = DETAIL_TYPE_SUBJECT_CONTENT
+) {
+    /**
+     * app的信息
+     */
+    var appEntity: AppEntity? = null
 
     /**
      * 签名组合
@@ -35,22 +26,22 @@ data class AppItemInfo(val subject: String?, val content: String, val extra: Str
      * 按照指定类型，获取该类型的签名
      */
     fun getWarpSignature(type: String): String {
-        return getShowSignature(signature?.get(type)!!)
+        return mergeSignature(signature?.get(type)!!)
     }
+}
 
-    /**
-     * 根据app的签名，做进一步的数据格式的整理
-     */
-    private fun getShowSignature(array: Array<String>): String {
-        val ans = StringBuffer()
-        for (i in array.indices) {
-            ans.append(array[i])
-            if (i != array.size - 1) {
-                ans.append("\n")
-            }
+/**
+ * 根据app的签名，做进一步的数据格式的整理
+ */
+fun mergeSignature(array: Array<String>): String {
+    val ans = StringBuffer()
+    for (i in array.indices) {
+        ans.append(array[i])
+        if (i != array.size - 1) {
+            ans.append("\n")
         }
-        return ans.toString()
     }
+    return ans.toString()
 }
 
 /**

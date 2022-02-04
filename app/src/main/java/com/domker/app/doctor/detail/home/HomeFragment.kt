@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
 import com.domker.app.doctor.R
 import com.domker.app.doctor.detail.AppDetailListAdapter
-import com.domker.app.doctor.entiy.AppItemInfo.Companion.TYPE_PACKAGE
 import com.domker.app.doctor.util.IntentUtil
 import com.domker.app.doctor.util.Router
 import com.domker.base.addDividerItemDecoration
@@ -61,11 +60,6 @@ class HomeFragment : Fragment() {
         recyclerViewAppInfo.addDividerItemDecoration(context, R.drawable.inset_recyclerview_divider)
         recyclerViewAppInfo.setItemViewCacheSize(100)
         mListAdapter = AppDetailListAdapter(context)
-        mListAdapter.itemClick { _, position ->
-            if (mListAdapter.getItemViewType(position) == TYPE_PACKAGE) {
-                openPackageExplorer()
-            }
-        }
         recyclerViewAppInfo.adapter = mListAdapter
     }
 

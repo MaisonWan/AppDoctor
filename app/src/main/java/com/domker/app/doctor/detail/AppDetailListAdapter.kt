@@ -1,15 +1,11 @@
 package com.domker.app.doctor.detail
 
 import android.content.Context
-import android.os.Bundle
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import androidx.navigation.Navigation
 import com.domker.app.doctor.R
-import com.domker.app.doctor.data.SIGNATURE_MD5
-import com.domker.app.doctor.data.SIGNATURE_SHA1
-import com.domker.app.doctor.data.SIGNATURE_SHA256
+import com.domker.app.doctor.data.AppEntity
+import com.domker.app.doctor.detail.container.DetailContainerManager
 import com.domker.app.doctor.entiy.AppItemInfo
 import com.domker.app.doctor.widget.BaseItemListAdapter
 
@@ -20,66 +16,27 @@ class AppDetailListAdapter(context: Context) :
     BaseItemListAdapter<DetailItemViewHolder>(context) {
     // 展示数据
     private var mDetailItemList: MutableList<AppItemInfo> = mutableListOf()
+    private val containerManager: DetailContainerManager = DetailContainerManager(inflater)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailItemViewHolder {
-        val layoutResId = when (viewType) {
-            AppItemInfo.TYPE_SUBJECT_CONTENT, AppItemInfo.TYPE_SIGNATURE -> R.layout.item_subject_content
-            AppItemInfo.TYPE_SUBJECT -> R.layout.item_subject
-            AppItemInfo.TYPE_PACKAGE -> R.layout.item_detail_package
-            else -> R.layout.detail_label_layout
-        }
-        val view: View = inflater.inflate(layoutResId, parent, false)
-        return DetailItemViewHolder(view)
+        val container = containerManager.obtain(viewType)
+        return DetailItemViewHolder(container.createContainerView(parent))
     }
 
     override fun getItemCount(): Int = mDetailItemList.size
 
     override fun onBindViewHolder(holder: DetailItemViewHolder, position: Int) {
-        val item = mDetailItemList[position]
-        holder.content?.text = item.content
-        holder.subject?.text = item.subject
-
-        when (getItemViewType(position)) {
-            AppItemInfo.TYPE_SUBJECT_CONTENT -> bindSubjectContent(holder, item, position)
-            AppItemInfo.TYPE_PACKAGE -> bindPackage(holder, position)
-            AppItemInfo.TYPE_SIGNATURE -> bindSignature(holder, position)
-        }
-    }
-
-    private fun bindSignature(holder: DetailItemViewHolder, position: Int) {
-        holder.icon?.let {
-            it.visibility = View.VISIBLE
-            it.setImageResource(R.drawable.ic_baseline_article_24)
-        }
-        holder.itemView.setOnClickListener {
-            val item = mDetailItemList[position]
-            // 点击打开签名弹窗，展示详细多种类型的签名
-            val bundle = Bundle()
-            bundle.putString(SIGNATURE_MD5, item.getWarpSignature(SIGNATURE_MD5))
-            bundle.putString(SIGNATURE_SHA1, item.getWarpSignature(SIGNATURE_SHA1))
-            bundle.putString(SIGNATURE_SHA256, item.getWarpSignature(SIGNATURE_SHA256))
-            Navigation.findNavController(holder.view).navigate(R.id.navigation_signature_dialog, bundle)
-        }
-    }
-
-    private fun bindSubjectContent(
-        holder: DetailItemViewHolder,
-        appItemInfo: AppItemInfo,
-        position: Int
-    ) {
-        holder.itemView.setOnClickListener {
-            invokeItemClick(holder, position)
-        }
-    }
-
-    private fun bindPackage(holder: DetailItemViewHolder, position: Int) {
-        holder.itemView.findViewById<Button>(R.id.buttonPackage).setOnClickListener {
-            invokeItemClick(holder, position)
-        }
+        val item = getItem(position)
+        val container = containerManager.obtain(getItemViewType(position))
+        container.bindViewHolder(holder, item, position)
     }
 
     override fun getItemViewType(position: Int): Int {
         return mDetailItemList[position].type
+    }
+
+    private fun getItem(position: Int): AppItemInfo {
+        return mDetailItemList[position]
     }
 
     /**
@@ -90,5 +47,4 @@ class AppDetailListAdapter(context: Context) :
         mDetailItemList.addAll(detailList)
     }
 
-    fun getItemList(): List<AppItemInfo> = mDetailItemList
 }
