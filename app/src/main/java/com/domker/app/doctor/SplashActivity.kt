@@ -33,25 +33,11 @@ class SplashActivity : AppCompatActivity() {
         mHandler = Handler(handlerThread.looper) { msg ->
             when (msg.what) {
                 ACTION_ANIMATION_BEGIN -> {
-                    log("SplashActivityTag", "before updateAppList")
-                    val checker = AppCheckFactory.getInstance(applicationContext)
-                    if (checker.updateAppListFromDatabase().isEmpty()) {
-                        checker.updateAppListFromSystem()
-                    }
-                    log("SplashActivityTag", "after updateAppList")
-                    mHandler.removeMessages(ACTION_ANIMATION_END)
-                    if (System.currentTimeMillis() - startTimeStamp > 500) {
-                        mHandler.sendEmptyMessage(ACTION_ANIMATION_END)
-                    } else {
-                        mHandler.sendEmptyMessageDelayed(ACTION_ANIMATION_END, 500)
-                    }
+                    animationBegin()
                     true
                 }
                 ACTION_ANIMATION_END -> {
-                    runOnUiThread {
-                        binding.animationView.cancelAnimation()
-                    }
-                    openMainActivity()
+                    animationEnd()
                     true
                 }
                 else -> {
@@ -61,6 +47,28 @@ class SplashActivity : AppCompatActivity() {
             }
         }
         binding.animationView.speed = 1f
+    }
+
+    private fun animationEnd() {
+        runOnUiThread {
+            binding.animationView.cancelAnimation()
+        }
+        openMainActivity()
+    }
+
+    private fun animationBegin() {
+        log("SplashActivityTag", "before updateAppList")
+        val checker = AppCheckFactory.instance
+        if (checker.fetchAppListFromDatabase().isEmpty()) {
+            checker.updateAppListFromSystem()
+        }
+        log("SplashActivityTag", "after updateAppList")
+        mHandler.removeMessages(ACTION_ANIMATION_END)
+        if (System.currentTimeMillis() - startTimeStamp > 500) {
+            mHandler.sendEmptyMessage(ACTION_ANIMATION_END)
+        } else {
+            mHandler.sendEmptyMessageDelayed(ACTION_ANIMATION_END, 500)
+        }
     }
 
     override fun onResume() {
@@ -78,8 +86,8 @@ class SplashActivity : AppCompatActivity() {
 
     private fun openMainActivity() {
         ARouter.getInstance()
-                .build(Router.MAIN_ACTIVITY)
-                .navigation()
+            .build(Router.MAIN_ACTIVITY)
+            .navigation()
         this.overridePendingTransition(0, 0)
         finish()
     }

@@ -23,8 +23,8 @@ class ComponentDetailViewModel : ViewModel() {
     /**
      * 根据当前组件的类型，来获取相关的数据
      */
-    fun updateData(context: Context, c: ComponentInfo) {
-        val checker = AppCheckFactory.getInstance(context).checker
+    fun updateData(c: ComponentInfo) {
+        val checker = AppCheckFactory.instance.checker
         // 异步操作
 //        AppExecutors.executor.execute {
 //

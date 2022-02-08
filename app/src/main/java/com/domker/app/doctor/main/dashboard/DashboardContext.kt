@@ -28,13 +28,13 @@ class DashboardContext(val fragment: Fragment) {
     val setting = DashboardSetting(context)
 
     // 数据列表
-    var appList = AppCheckFactory.getInstance(context).getAppList()
+    var appList = AppCheckFactory.instance.getAppList()
 
     /**
      * 重载App List
      */
     fun reloadAppList(includeSystemApp: Boolean): List<AppEntity> {
-        appList = AppCheckFactory.getInstance(context).getAppList(includeSystemApp)
+        appList = AppCheckFactory.instance.getAppList(includeSystemApp)
         return appList
     }
 

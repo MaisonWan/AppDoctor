@@ -33,7 +33,7 @@ class ComponentDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val p = arguments?.get("component") as ComponentInfo
         initView(p)
-        componentDetailViewModel.updateData(requireContext(), p)
+        componentDetailViewModel.updateData(p)
         initObserver()
     }
 

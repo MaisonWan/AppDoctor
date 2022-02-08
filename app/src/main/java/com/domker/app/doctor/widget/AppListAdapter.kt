@@ -42,7 +42,7 @@ class AppListAdapter(private val context: Context, private val gridType: Int) :
         val item = mAppList?.get(position)
         item?.let {
             if (item.iconDrawable == null) {
-                item.iconDrawable = AppCheckFactory.getInstance(context).getAppIcon(item.packageName)
+                item.iconDrawable = AppCheckFactory.instance.getAppIcon(item.packageName)
             }
             item.iconDrawable?.apply {
                 holder.icon?.setImageDrawable(this)

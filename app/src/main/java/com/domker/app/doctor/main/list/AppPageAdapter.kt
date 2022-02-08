@@ -102,7 +102,7 @@ class AppPageAdapter(
 
         // 更新一下最新信息到数据库
         AppExecutors.executor.execute {
-            AppCheckFactory.getInstance(context).updateInfoToDatabase()
+            AppCheckFactory.instance.updateInfoToDatabase()
         }
     }
 

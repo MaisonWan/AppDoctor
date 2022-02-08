@@ -43,7 +43,7 @@ class AppListFragment : BaseAppFragment() {
         appListViewModel.getAppList().observe(viewLifecycleOwner) {
             mAdapter.updateAppList(it)
         }
-        appListViewModel.updateAppList(requireContext(), appIncludeAll)
+        appListViewModel.updateAppList(appIncludeAll)
     }
 
     private fun initViews(binding: FragmentAppListBinding) {
@@ -58,7 +58,7 @@ class AppListFragment : BaseAppFragment() {
 
     override fun onAppIncludeChanged(includeAll: Boolean) {
         super.onAppIncludeChanged(includeAll)
-        appListViewModel.updateAppList(requireContext(), includeAll)
+        appListViewModel.updateAppList(includeAll)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

@@ -24,8 +24,8 @@ class AppListViewModel : ViewModel() {
     /**
      * 获取最新的信息，是否包含系统应用
      */
-    fun updateAppList(context: Context, allApp: Boolean) {
-        val app = AppCheckFactory.getInstance(context)
+    fun updateAppList(allApp: Boolean) {
+        val app = AppCheckFactory.instance
 
         AppExecutors.executor.execute {
             val newAppList = app.getAppList(allApp)

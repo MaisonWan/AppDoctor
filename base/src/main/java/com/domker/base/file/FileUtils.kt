@@ -19,7 +19,7 @@ object FileUtils {
         try {
             val file = File(path)
             if (file.exists()) {
-                val fis: FileInputStream = FileInputStream(file)
+                val fis = FileInputStream(file)
                 return fis.available().toLong()
             }
         } catch (e: Exception) {

@@ -14,18 +14,9 @@ class AppCheckFactory private constructor(private val context: Context) {
     val checker = AppChecker(context)
 
     companion object {
-        @Volatile
-        private var instance: AppCheckFactory? = null
 
-        fun getInstance(context: Context): AppCheckFactory {
-            if (instance == null) {
-                synchronized(AppCheckFactory::class) {
-                    if (instance == null) {
-                        instance = AppCheckFactory(context)
-                    }
-                }
-            }
-            return instance!!
+        val instance: AppCheckFactory by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+            AppCheckFactory(CheckerApplication.applicationContext)
         }
     }
 
@@ -42,8 +33,10 @@ class AppCheckFactory private constructor(private val context: Context) {
      */
     fun getAppList(includeSystemApp: Boolean = false): List<AppEntity> {
         if (appList == null) {
+            // 默认获取系统所有的应用
             updateAppListFromSystem()
         }
+        // 如果包含系统应用，则返回默认即可，否则过滤一次
         if (includeSystemApp) {
             return appList!!
         }
@@ -58,11 +51,14 @@ class AppCheckFactory private constructor(private val context: Context) {
     fun updateInfoToDatabase() {
         val indexData = HashMap<String, AppEntity>()
         db.allAppData().forEach { indexData[it.packageName] = it }
-        // 需要升级的
+        // 需要新增的
         val needInsert = mutableListOf<AppEntity>()
+        // 需要升级的
         val needUpdate = mutableListOf<AppEntity>()
+        // 系统目前安装的app的包名
         val installAppPackageNameList = mutableListOf<String>()
 
+        // 从系统中查询最新的app安装情况，然后和数据库里面对比，区分出来新增和需要升级的
         checker.getPackageList(true).forEach { item ->
             installAppPackageNameList.add(item.packageName)
             if (item.packageName in indexData) {
@@ -75,42 +71,54 @@ class AppCheckFactory private constructor(private val context: Context) {
                 needInsert.add(item)
             }
         }
+        // 需要移除的数据
+        val deleteList = indexData.values.filter { it.packageName !in installAppPackageNameList }.toList()
 
         // 更新到内存中的icon
-        appList?.forEach {
-            val icon = indexData[it.packageName]?.iconDrawable
-            if (icon != null) {
-                it.iconDrawable = icon
-            }
-        }
+        updateIconToMemory(indexData)
 
         // 挨个更新基本信息和包大小然后存储
-        val updateSize: (MutableList<AppEntity>) -> Unit = { list ->
-            list.forEachIndexed { index, appEntity ->
-                checker.getAppEntity(appEntity.packageName)?.apply {
-                    list[index].sourceApkSize = FileUtils.size(this.sourceDir!!)
-                }
-            }
-        }
         updateSize(needInsert)
         updateSize(needUpdate)
+
         if (needInsert.isNotEmpty()) {
             db.insertAppData(needInsert)
         }
         if (needUpdate.isNotEmpty()) {
             db.updateAppData(needUpdate)
         }
-        val deleteList = indexData.values.filter { it.packageName !in installAppPackageNameList }.toList()
         if (deleteList.isNotEmpty()) {
             db.deleteAppData(deleteList)
+        }
+    }
 
+    /**
+     * 更新到内存中的icon
+     */
+    private fun updateIconToMemory(indexData: HashMap<String, AppEntity>) {
+        appList?.forEach { entity ->
+            //
+            indexData[entity.packageName]?.iconDrawable?.also {
+                entity.iconDrawable = it
+            }
+        }
+    }
+
+    /**
+     * 更新列表中的包体积大小的数据
+     */
+    private fun updateSize(list: MutableList<AppEntity>) {
+        list.forEachIndexed { index, appEntity ->
+            checker.getAppEntity(appEntity.packageName)?.apply {
+                list[index].sourceApkSize = FileUtils.size(this.sourceDir!!)
+            }
         }
     }
 
     /**
      * 从数据库中更新
      */
-    fun updateAppListFromDatabase(): List<AppEntity> {
+    fun fetchAppListFromDatabase(): List<AppEntity> {
         appList = db.allAppData()
         return appList!!
     }

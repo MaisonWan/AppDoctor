@@ -16,6 +16,7 @@ class CheckerApplication : Application() {
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
+        CheckerApplication.applicationContext = this
         AppExecutors.init()
 
         // 这两行必须写在init之前，否则这些配置在init过程中将无效
@@ -29,12 +30,13 @@ class CheckerApplication : Application() {
         TypeFacePool.init(this)
 
         appDatabase = Room.databaseBuilder(this, AppDatabase::class.java, "app_list.db")
-                .allowMainThreadQueries()
-//                .setQueryExecutor(AppExecutors.executor)
-                .build()
+            .allowMainThreadQueries()
+            .setQueryExecutor(AppExecutors.executor)
+            .build()
     }
 
     companion object {
         lateinit var appDatabase: AppDatabase
+        lateinit var applicationContext: Context
     }
 }
