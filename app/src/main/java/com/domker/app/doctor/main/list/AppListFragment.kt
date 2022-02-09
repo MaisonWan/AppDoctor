@@ -41,7 +41,7 @@ class AppListFragment : BaseAppFragment() {
 
     private fun initDataChanged() {
         appListViewModel.getAppList().observe(viewLifecycleOwner) {
-            mAdapter.updateAppList(it)
+            mAdapter.updateAppDataList(it)
         }
         appListViewModel.updateAppList(appIncludeAll)
     }

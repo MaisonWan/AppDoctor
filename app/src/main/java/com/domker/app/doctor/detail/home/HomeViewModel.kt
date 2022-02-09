@@ -4,12 +4,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.domker.app.doctor.data.AppChecker
 import com.domker.app.doctor.data.AppEntity
-import com.domker.app.doctor.data.SIGNATURE_SHA256
 import com.domker.app.doctor.detail.container.DETAIL_TYPE_PACKAGE
 import com.domker.app.doctor.detail.container.DETAIL_TYPE_SIGNATURE
 import com.domker.app.doctor.entiy.AppItemInfo
 import com.domker.app.doctor.entiy.appItemOf
-import com.domker.app.doctor.entiy.mergeSignature
 import com.domker.app.doctor.util.ApkViewer
 import com.domker.app.doctor.util.DataFormat
 import com.domker.base.SystemVersion
@@ -43,9 +41,7 @@ class HomeViewModel : ViewModel() {
             // 异步获取app的信息
             appChecker.getAppEntity(appPackageName)?.also { entity ->
                 // 获取apk签名
-                val s = appChecker.getAppSignature(appPackageName)
-                entity.signature = s[SIGNATURE_SHA256]?.let { mergeSignature(it) }
-                entity.signatureMap = s
+                entity.signatures = appChecker.getAppSignatures(appPackageName)
                 val homeDetail = HomeDetail(entity, warpAppEntity(entity))
                 liveData.postValue(homeDetail)
 
@@ -78,10 +74,14 @@ class HomeViewModel : ViewModel() {
         detailList.add(appItemOf("Data路径", appEntity.dataDir))
         detailList.add(appItemOf("保护Data路径", appEntity.deviceProtectedDataDir))
         detailList.add(appItemOf("主进程名", appEntity.processName))
-        detailList.add(appItemOf("SHA256签名", appEntity.signature).also {
-            it.type = DETAIL_TYPE_SIGNATURE
-            it.signature = appEntity.signatureMap
-        })
+        // 默认展示第一个
+        appEntity.signatures?.first { appSignature ->
+            detailList.add(appItemOf("SHA256签名", appSignature.sha256Signature).also {
+                it.type = DETAIL_TYPE_SIGNATURE
+                it.signatures = appEntity.signatures
+            })
+        }
+
         detailList.add(appItemOf("User ID", appEntity.uid.toString()))
         detailList.add(appItemOf("Flag", appEntity.flag))
         // 关联

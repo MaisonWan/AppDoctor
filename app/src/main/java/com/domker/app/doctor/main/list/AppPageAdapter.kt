@@ -94,7 +94,7 @@ class AppPageAdapter(
     /**
      * 刷新app列表
      */
-    fun updateAppList(newAppList: List<AppEntity>) {
+    fun updateAppDataList(newAppList: List<AppEntity>) {
         dataProcessor.resetData(newAppList)
         repeat(itemCount) { pageIndex ->
             notifyData(pageIndex)

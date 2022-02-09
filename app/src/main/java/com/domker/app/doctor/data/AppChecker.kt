@@ -65,17 +65,7 @@ class AppChecker(private val context: Context) {
      */
     fun getAppSignature(packageName: String): Map<String, Array<String>> {
         try {
-            val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                PackageManager.GET_SIGNING_CERTIFICATES
-            } else {
-                PackageManager.GET_SIGNATURES
-            }
-            val info = context.packageManager.getPackageInfo(packageName, flag)
-            val cert = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-                info.signingInfo.apkContentsSigners
-            } else {
-                info.signatures
-            }
+            val cert = getAppSignatureCert(packageName)
 
             val sha256 = parserSignature(cert, MessageDigest.getInstance("SHA256"))
             val sha1 = parserSignature(cert, MessageDigest.getInstance("SHA1"))
@@ -88,27 +78,73 @@ class AppChecker(private val context: Context) {
     }
 
     /**
+     * 指定包名，返回该app的所有签名实体
+     */
+    fun getAppSignatures(packageName: String): Array<AppSignature> {
+        try {
+            val result = mutableListOf<AppSignature>()
+            getAppSignatureCert(packageName).forEach { signature ->
+                val s = AppSignature()
+                // 转化为二进制之后
+                val byteArray = signature.toByteArray()
+                s.packageName = packageName
+                s.originSignature = byteArray
+                s.sha256Signature = certToString(MessageDigest.getInstance("SHA256"), byteArray)
+                s.sha1Signature = certToString(MessageDigest.getInstance("SHA1"), byteArray)
+                s.md5Signature = certToString(MessageDigest.getInstance("MD5"), byteArray, false)
+                result.add(s)
+            }
+            return result.toTypedArray()
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+        return emptyArray()
+    }
+
+    private fun getAppSignatureCert(packageName: String): Array<Signature> {
+        val flag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            PackageManager.GET_SIGNING_CERTIFICATES
+        } else {
+            PackageManager.GET_SIGNATURES
+        }
+        val info = context.packageManager.getPackageInfo(packageName, flag)
+
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            info.signingInfo.apkContentsSigners
+        } else {
+            info.signatures
+        }
+    }
+
+    /**
      * 把签名的信息，根据md的类型，转化为字符串
      */
     private fun parserSignature(cert: Array<Signature>, md: MessageDigest, splitChar: Boolean = true): Array<String> {
         // 创建结果
         val signatures = Array(cert.size) { "" }
         cert.forEachIndexed { index, signature ->
-            val publicKey: ByteArray = md.digest(signature.toByteArray())
-            val hexString = StringBuilder()
-            for (i in publicKey.indices) {
-                val appendString = Integer.toHexString(publicKey[i].toInt().and(0xFF)).uppercase()
-                if (appendString.length == 1) {
-                    hexString.append("0")
-                }
-                hexString.append(appendString)
-                if (splitChar && i != publicKey.size - 1) {
-                    hexString.append(":")
-                }
-            }
-            signatures[index] = hexString.toString()
+            signatures[index] = certToString(md, signature.toByteArray(), splitChar)
         }
         return signatures
+    }
+
+    /**
+     * 根据给定的加密方式，把签名转化为字符串
+     */
+    private fun certToString(md: MessageDigest, signature: ByteArray, splitChar: Boolean = true): String {
+        val publicKey: ByteArray = md.digest(signature)
+        val hexString = StringBuilder()
+        for (i in publicKey.indices) {
+            val appendString = Integer.toHexString(publicKey[i].toInt().and(0xFF)).uppercase()
+            if (appendString.length == 1) {
+                hexString.append("0")
+            }
+            hexString.append(appendString)
+            if (splitChar && i != publicKey.size - 1) {
+                hexString.append(":")
+            }
+        }
+        return hexString.toString()
     }
 
     /**

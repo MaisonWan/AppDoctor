@@ -1,6 +1,7 @@
 package com.domker.app.doctor.entiy
 
 import com.domker.app.doctor.data.AppEntity
+import com.domker.app.doctor.data.AppSignature
 import com.domker.app.doctor.detail.container.DETAIL_TYPE_SUBJECT_CONTENT
 
 /**
@@ -20,14 +21,14 @@ data class AppItemInfo(
     /**
      * 签名组合
      */
-    var signature: Map<String, Array<String>>? = null
+    var signatures: Array<AppSignature>? = null
 
-    /**
-     * 按照指定类型，获取该类型的签名
-     */
-    fun getWarpSignature(type: String): String {
-        return mergeSignature(signature?.get(type)!!)
-    }
+//    /**
+//     * 按照指定类型，获取该类型的签名
+//     */
+//    fun getWarpSignature(type: String): String {
+//        return mergeSignature(signature?.get(type)!!)
+//    }
 }
 
 /**

@@ -6,15 +6,18 @@ import com.domker.app.doctor.CheckerApplication
 import com.domker.base.file.FileUtils
 
 /**
+ * 单例方法，集合checker的一些操作
  * Created by wanlipeng on 2018/3/5.
  */
 class AppCheckFactory private constructor(private val context: Context) {
-    private val db = CheckerApplication.appDatabase.appDataDao()
+    private val appDataDao = CheckerApplication.appDatabase.appDataDao()
+    private val appSignatureDao = CheckerApplication.appDatabase.appSignatureDao()
+
     private var appList: List<AppEntity>? = null
     val checker = AppChecker(context)
 
     companion object {
-
+        // 懒加载
         val instance: AppCheckFactory by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
             AppCheckFactory(CheckerApplication.applicationContext)
         }
@@ -50,7 +53,7 @@ class AppCheckFactory private constructor(private val context: Context) {
      */
     fun updateInfoToDatabase() {
         val indexData = HashMap<String, AppEntity>()
-        db.allAppData().forEach { indexData[it.packageName] = it }
+        appDataDao.allAppData().forEach { indexData[it.packageName] = it }
         // 需要新增的
         val needInsert = mutableListOf<AppEntity>()
         // 需要升级的
@@ -79,16 +82,37 @@ class AppCheckFactory private constructor(private val context: Context) {
 
         // 挨个更新基本信息和包大小然后存储
         updateSize(needInsert)
-        updateSize(needUpdate)
+        updateSignature(needInsert)
 
+        updateSize(needUpdate)
+        updateSignature(needUpdate)
+
+        saveToDataBase(needInsert, needUpdate, deleteList)
+    }
+
+    private fun saveToDataBase(
+        needInsert: MutableList<AppEntity>,
+        needUpdate: MutableList<AppEntity>,
+        deleteList: List<AppEntity>
+    ) {
         if (needInsert.isNotEmpty()) {
-            db.insertAppData(needInsert)
+            appDataDao.insertAppData(needInsert)
+            needInsert.forEach { appEntity ->
+                appEntity.signatures?.also {
+                    appSignatureDao.insertAppSignatures(it)
+                }
+            }
         }
         if (needUpdate.isNotEmpty()) {
-            db.updateAppData(needUpdate)
+            appDataDao.updateAppData(needUpdate)
+            needInsert.forEach { appEntity ->
+                appEntity.signatures?.also {
+                    appSignatureDao.insertAppSignatures(it)
+                }
+            }
         }
         if (deleteList.isNotEmpty()) {
-            db.deleteAppData(deleteList)
+            appDataDao.deleteAppData(deleteList)
         }
     }
 
@@ -115,11 +139,17 @@ class AppCheckFactory private constructor(private val context: Context) {
         }
     }
 
+    private fun updateSignature(list: MutableList<AppEntity>) {
+        list.forEach { appEntity ->
+            appEntity.signatures = checker.getAppSignatures(appEntity.packageName)
+        }
+    }
+
     /**
      * 从数据库中更新
      */
     fun fetchAppListFromDatabase(): List<AppEntity> {
-        appList = db.allAppData()
+        appList = appDataDao.allAppData()
         return appList!!
     }
 

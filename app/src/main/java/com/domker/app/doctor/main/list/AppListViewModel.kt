@@ -1,6 +1,5 @@
 package com.domker.app.doctor.main.list
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

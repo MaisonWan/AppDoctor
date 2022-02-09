@@ -38,11 +38,12 @@ class SignatureContainer(inflater: LayoutInflater) :
         holder.itemView.setOnClickListener {
             // 点击打开签名弹窗，展示详细多种类型的签名
             val bundle = Bundle()
-            bundle.putString(SIGNATURE_MD5, data.getWarpSignature(SIGNATURE_MD5))
-            bundle.putString(SIGNATURE_SHA1, data.getWarpSignature(SIGNATURE_SHA1))
-            bundle.putString(SIGNATURE_SHA256, data.getWarpSignature(SIGNATURE_SHA256))
-            Navigation.findNavController(holder.view)
-                .navigate(R.id.navigation_signature_dialog, bundle)
+            data.signatures?.first()?.also { appSignature ->
+                bundle.putString(SIGNATURE_MD5, appSignature.md5Signature)
+                bundle.putString(SIGNATURE_SHA1, appSignature.sha1Signature)
+                bundle.putString(SIGNATURE_SHA256, appSignature.sha256Signature)
+                Navigation.findNavController(holder.view).navigate(R.id.navigation_signature_dialog, bundle)
+            }
         }
     }
 

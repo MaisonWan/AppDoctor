@@ -58,8 +58,8 @@ class AppEntity {
     @ColumnInfo(name = "source_apk_size")
     var sourceApkSize: Long? = 0
 
-    @ColumnInfo(name = "signature")
-    var signature: String? = null
+    @Ignore
+    var signatures: Array<AppSignature>? = null
 
     @Ignore
     var signatureMap: Map<String, Array<String>>? = null
