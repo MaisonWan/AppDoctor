@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.domker.app.doctor.R
 import com.domker.app.doctor.data.AppCheckFactory
-import com.domker.app.doctor.data.AppEntity
+import com.domker.app.doctor.db.AppEntity
 
 const val LAYOUT_TYPE_LIST = 0
 const val LAYOUT_TYPE_GRID = 1
@@ -20,7 +20,7 @@ const val LAYOUT_TYPE_GRID = 1
  * Created by wanlipeng on 2018/2/6.
  */
 class AppListAdapter(private val context: Context, private val gridType: Int) :
-        RecyclerView.Adapter<AppListAdapter.AppInfoViewHolder>() {
+    RecyclerView.Adapter<AppListAdapter.AppInfoViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var mListener: ((view: View, packageName: String) -> Unit)? = null

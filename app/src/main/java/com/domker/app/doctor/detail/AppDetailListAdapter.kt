@@ -2,9 +2,6 @@ package com.domker.app.doctor.detail
 
 import android.content.Context
 import android.view.ViewGroup
-import android.widget.Button
-import com.domker.app.doctor.R
-import com.domker.app.doctor.data.AppEntity
 import com.domker.app.doctor.detail.container.DetailContainerManager
 import com.domker.app.doctor.entiy.AppItemInfo
 import com.domker.app.doctor.widget.BaseItemListAdapter

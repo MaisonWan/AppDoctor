@@ -1,4 +1,4 @@
-package com.domker.app.doctor.data
+package com.domker.app.doctor.db
 
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageInfo

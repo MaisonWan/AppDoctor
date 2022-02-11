@@ -9,8 +9,8 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
 import com.domker.app.doctor.data.AppCheckFactory
-import com.domker.app.doctor.data.AppEntity
 import com.domker.app.doctor.data.SORT_SIZE
+import com.domker.app.doctor.db.AppEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

@@ -1,7 +1,7 @@
 package com.domker.app.doctor.entiy
 
-import com.domker.app.doctor.data.AppEntity
-import com.domker.app.doctor.data.AppSignature
+import com.domker.app.doctor.db.AppEntity
+import com.domker.app.doctor.db.AppSignature
 import com.domker.app.doctor.detail.container.DETAIL_TYPE_SUBJECT_CONTENT
 
 /**

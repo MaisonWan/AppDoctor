@@ -1,5 +1,7 @@
 package com.domker.app.doctor.data
 
+import com.domker.app.doctor.db.AppEntity
+
 const val SORT_NAME = 1
 const val SORT_TIME = 2
 const val SORT_SIZE = 3

@@ -3,7 +3,7 @@ package com.domker.app.doctor.detail.home
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.domker.app.doctor.data.AppChecker
-import com.domker.app.doctor.data.AppEntity
+import com.domker.app.doctor.db.AppEntity
 import com.domker.app.doctor.detail.container.DETAIL_TYPE_PACKAGE
 import com.domker.app.doctor.detail.container.DETAIL_TYPE_SIGNATURE
 import com.domker.app.doctor.entiy.AppItemInfo

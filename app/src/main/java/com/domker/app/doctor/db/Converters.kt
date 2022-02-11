@@ -1,4 +1,4 @@
-package com.domker.app.doctor.data
+package com.domker.app.doctor.db
 
 import androidx.room.TypeConverter
 import java.util.*

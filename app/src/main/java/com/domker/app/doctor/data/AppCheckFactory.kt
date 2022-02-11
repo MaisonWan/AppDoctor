@@ -3,6 +3,7 @@ package com.domker.app.doctor.data
 import android.content.Context
 import android.graphics.drawable.Drawable
 import com.domker.app.doctor.CheckerApplication
+import com.domker.app.doctor.db.AppEntity
 import com.domker.base.file.FileUtils
 
 /**
@@ -75,7 +76,8 @@ class AppCheckFactory private constructor(private val context: Context) {
             }
         }
         // 需要移除的数据
-        val deleteList = indexData.values.filter { it.packageName !in installAppPackageNameList }.toList()
+        val deleteList =
+            indexData.values.filter { it.packageName !in installAppPackageNameList }.toList()
 
         // 更新到内存中的icon
         updateIconToMemory(indexData)

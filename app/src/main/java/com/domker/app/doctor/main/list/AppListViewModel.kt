@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.domker.app.doctor.data.AppCheckFactory
-import com.domker.app.doctor.data.AppEntity
+import com.domker.app.doctor.db.AppEntity
 import com.domker.base.thread.AppExecutors
 
 /**

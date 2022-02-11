@@ -6,6 +6,9 @@ import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.content.pm.Signature
 import android.os.Build
+import com.domker.app.doctor.db.AppEntity
+import com.domker.app.doctor.db.AppSignature
+import com.domker.app.doctor.db.parseFrom
 import com.domker.app.doctor.detail.component.ComponentInfo
 import com.domker.app.doctor.detail.component.ComponentInfo.Companion.TYPE_ACTIVITY
 import com.domker.app.doctor.detail.component.ComponentInfo.Companion.TYPE_PROVIDER
@@ -70,7 +73,11 @@ class AppChecker(private val context: Context) {
             val sha256 = parserSignature(cert, MessageDigest.getInstance("SHA256"))
             val sha1 = parserSignature(cert, MessageDigest.getInstance("SHA1"))
             val md5 = parserSignature(cert, MessageDigest.getInstance("MD5"), false)
-            return mapOf(Pair(SIGNATURE_SHA256, sha256), Pair(SIGNATURE_SHA1, sha1), Pair(SIGNATURE_MD5, md5))
+            return mapOf(
+                Pair(SIGNATURE_SHA256, sha256),
+                Pair(SIGNATURE_SHA1, sha1),
+                Pair(SIGNATURE_MD5, md5)
+            )
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
         }
@@ -119,7 +126,11 @@ class AppChecker(private val context: Context) {
     /**
      * 把签名的信息，根据md的类型，转化为字符串
      */
-    private fun parserSignature(cert: Array<Signature>, md: MessageDigest, splitChar: Boolean = true): Array<String> {
+    private fun parserSignature(
+        cert: Array<Signature>,
+        md: MessageDigest,
+        splitChar: Boolean = true
+    ): Array<String> {
         // 创建结果
         val signatures = Array(cert.size) { "" }
         cert.forEachIndexed { index, signature ->
@@ -131,7 +142,11 @@ class AppChecker(private val context: Context) {
     /**
      * 根据给定的加密方式，把签名转化为字符串
      */
-    private fun certToString(md: MessageDigest, signature: ByteArray, splitChar: Boolean = true): String {
+    private fun certToString(
+        md: MessageDigest,
+        signature: ByteArray,
+        splitChar: Boolean = true
+    ): String {
         val publicKey: ByteArray = md.digest(signature)
         val hexString = StringBuilder()
         for (i in publicKey.indices) {
@@ -305,7 +320,8 @@ class AppChecker(private val context: Context) {
      */
     fun getMetaData(packageName: String): Map<String, String> {
         val map = mutableMapOf<String, String>()
-        val applicationInfo: ApplicationInfo = context.packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)
+        val applicationInfo: ApplicationInfo =
+            context.packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA)
         val metadata = applicationInfo.metaData
         metadata?.keySet()?.forEach {
             map[it] = metadata[it].toString()

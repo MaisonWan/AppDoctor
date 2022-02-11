@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.alibaba.android.arouter.launcher.ARouter
 import com.domker.app.doctor.R
-import com.domker.app.doctor.data.AppEntity
+import com.domker.app.doctor.db.AppEntity
 import com.domker.app.doctor.detail.DetailItemViewHolder
 import com.domker.app.doctor.entiy.AppItemInfo
 import com.domker.app.doctor.util.Router

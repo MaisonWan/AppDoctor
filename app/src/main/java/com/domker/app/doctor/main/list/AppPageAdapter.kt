@@ -11,9 +11,9 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.domker.app.doctor.R
 import com.domker.app.doctor.data.AppCheckFactory
 import com.domker.app.doctor.data.AppDataProcessor
-import com.domker.app.doctor.data.AppEntity
 import com.domker.app.doctor.data.DataProcessor
 import com.domker.app.doctor.databinding.PagerAppListItemBinding
+import com.domker.app.doctor.db.AppEntity
 import com.domker.app.doctor.util.Router
 import com.domker.app.doctor.widget.AppDiffCallBack
 import com.domker.app.doctor.widget.AppListAdapter
