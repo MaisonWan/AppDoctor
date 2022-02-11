@@ -14,7 +14,7 @@ import com.domker.app.doctor.db.AppEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore("dash_board")
+val Context.dashDataStore: DataStore<Preferences> by preferencesDataStore("dash_board")
 
 /**
  * 看板的上下文
@@ -62,14 +62,14 @@ class DashboardContext(val fragment: Fragment) {
          * 读取排序的类型
          */
         fun readSortType(): Flow<Int> {
-            return context.dataStore.data.map { it[keySortType] ?: SORT_SIZE }
+            return context.dashDataStore.data.map { it[keySortType] ?: SORT_SIZE }
         }
 
         /**
          * 写入排序类型到存储中
          */
         suspend fun writeSortType(type: Int) {
-            context.dataStore.edit {
+            context.dashDataStore.edit {
                 it[keySortType] = type
             }
         }
@@ -78,14 +78,14 @@ class DashboardContext(val fragment: Fragment) {
          * 读取是否是降序排列
          */
         fun readSortDescending(): Flow<Boolean> {
-            return context.dataStore.data.map { it[keySortDescending] ?: false }
+            return context.dashDataStore.data.map { it[keySortDescending] ?: false }
         }
 
         /**
          * 是否是降序排列
          */
         suspend fun writeSortDescending(desc: Boolean) {
-            context.dataStore.edit {
+            context.dashDataStore.edit {
                 it[keySortDescending] = desc
             }
         }
@@ -94,14 +94,14 @@ class DashboardContext(val fragment: Fragment) {
          * 是否包含所有的app
          */
         fun readShowAllApp(): Flow<Boolean> {
-            return context.dataStore.data.map { it[keyShowAllApp] ?: false }
+            return context.dashDataStore.data.map { it[keyShowAllApp] ?: false }
         }
 
         /**
          * 是否包含全部的app
          */
         suspend fun writeShowAllApp(allApp: Boolean) {
-            context.dataStore.edit {
+            context.dashDataStore.edit {
                 it[keyShowAllApp] = allApp
             }
         }

@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-option java_package = "com.domker.app.doctor";
-option java_multiple_files = true;
-
-message AppCheckerSettings {
-  bool include_all_app = 1;
-}

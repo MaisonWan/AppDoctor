@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -15,7 +16,9 @@ import androidx.navigation.ui.setupWithNavController
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.domker.app.doctor.databinding.ActivityMainDrawerBinding
 import com.domker.app.doctor.main.AppViewModel
+import com.domker.app.doctor.store.AppSettings
 import com.domker.app.doctor.util.Router
+import kotlinx.coroutines.launch
 
 @Route(path = Router.MAIN_ACTIVITY)
 class MainActivity : AppCompatActivity() {
@@ -38,11 +41,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initNavigation() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        val ids = setOf(R.id.nav_app_list, R.id.nav_photo_info, R.id.nav_battery, R.id.nav_hardware,
-            R.id.nav_system_info, R.id.nav_dashboard)
+        val ids = setOf(
+            R.id.nav_app_list, R.id.nav_photo_info, R.id.nav_battery, R.id.nav_hardware,
+            R.id.nav_system_info, R.id.nav_dashboard
+        )
         appBarConfiguration = AppBarConfiguration(ids, binding.drawerLayout)
 
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -64,11 +70,21 @@ class MainActivity : AppCompatActivity() {
     private fun initHeaderView() {
         val headerView = binding.navView.getHeaderView(0)
         val switchAppInclude = headerView.findViewById<SwitchCompat>(R.id.switchAppInclude)
+
+        appViewModel.includeAllApp.observe(this) {
+            // 第一次初始化，切换按钮展示
+            switchAppInclude.isChecked = it
+//            appViewModel.includeAllApp.removeObserver()
+        }
+
         switchAppInclude.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 buttonView.setText(R.string.nav_header_switch_all)
             } else {
                 buttonView.setText(R.string.nav_header_switch_install)
+            }
+            lifecycleScope.launch {
+                AppSettings.setIncludeAllApp(this@MainActivity, isChecked)
             }
             appViewModel.includeAllApp.postValue(isChecked)
         }
