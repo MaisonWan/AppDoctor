@@ -4,11 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import com.domker.app.doctor.main.AppViewModel
-import com.domker.app.doctor.store.AppSettings
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import com.domker.app.doctor.store.LaunchSetting
 
 
 /**
@@ -20,19 +17,21 @@ abstract class BaseAppFragment : Fragment() {
      * 是否包含所有的app
      */
     protected var appIncludeAll = false
+    private var firstLoad = true
     private val appViewModel: AppViewModel by activityViewModels()
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        lifecycleScope.launch {
-            AppSettings.getIncludeAllApp(requireContext()).collect {
-                onLoadedIncludeAllAppSettings(it)
+        appViewModel.getLaunchSetting().observe(viewLifecycleOwner) {
+            if (appIncludeAll != it.includeAllApp) {
+                onAppIncludeChanged(it.includeAllApp)
             }
-        }
-
-        appViewModel.includeAllApp.observe(viewLifecycleOwner) {
-            onAppIncludeChanged(it)
+            if (firstLoad) {
+                onLoadLaunchSetting(it)
+                firstLoad = false
+            }
         }
     }
 
@@ -41,9 +40,10 @@ abstract class BaseAppFragment : Fragment() {
     }
 
     /**
-     * 加载配置，子类复写的时候写一些事件
+     * 加载启动阶段的配置，只执行一次
      */
-    protected open fun onLoadedIncludeAllAppSettings(includeAll: Boolean) {
-        appIncludeAll = includeAll
+    protected open fun onLoadLaunchSetting(launchSetting: LaunchSetting) {
+
     }
+
 }

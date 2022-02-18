@@ -71,10 +71,15 @@ class MainActivity : AppCompatActivity() {
         val headerView = binding.navView.getHeaderView(0)
         val switchAppInclude = headerView.findViewById<SwitchCompat>(R.id.switchAppInclude)
 
-        appViewModel.includeAllApp.observe(this) {
+        // 异步加载配置
+        lifecycleScope.launch {
+            println(Thread.currentThread().name)
+            appViewModel.loadLaunchSettings(this@MainActivity)
+        }
+
+        appViewModel.observeLoadSettingsOnce(this) {
             // 第一次初始化，切换按钮展示
-            switchAppInclude.isChecked = it
-//            appViewModel.includeAllApp.removeObserver()
+            switchAppInclude.isChecked = it.includeAllApp
         }
 
         switchAppInclude.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -86,7 +91,7 @@ class MainActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 AppSettings.setIncludeAllApp(this@MainActivity, isChecked)
             }
-            appViewModel.includeAllApp.postValue(isChecked)
+            appViewModel.switchChanged(isChecked)
         }
     }
 

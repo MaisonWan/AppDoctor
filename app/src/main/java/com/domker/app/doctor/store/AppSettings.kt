@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
@@ -23,11 +24,19 @@ object AppSettings {
     private val includeAllAppKey = booleanPreferencesKey("include_all_app")
 
     /**
+     * 启动阶段展示菜单
+     */
+    private val launchMenuStyleKey = intPreferencesKey("launch_menu_style")
+
+    /**
      * 是否包含所有的app
      */
-    fun getIncludeAllApp(context: Context): Flow<Boolean> {
-        return context.settingsDataStore.data.map {
-            it[includeAllAppKey] ?: false
+    fun getLaunchSetting(context: Context): Flow<LaunchSetting> {
+        return context.settingsDataStore.data.map { p ->
+            LaunchSetting().also { setting ->
+                setting.includeAllApp = p[includeAllAppKey] ?: false
+                setting.launchMenuStyle = p[launchMenuStyleKey] ?: MENU_STYLE_LIST
+            }
         }
     }
 
@@ -37,6 +46,15 @@ object AppSettings {
     suspend fun setIncludeAllApp(context: Context, include: Boolean) {
         context.settingsDataStore.edit {
             it[includeAllAppKey] = include
+        }
+    }
+
+    /**
+     * 设置启动时候app界面的样式
+     */
+    suspend fun setLaunchMenuStyle(context: Context, style: Int) {
+        context.settingsDataStore.edit {
+            it[launchMenuStyleKey] = style
         }
     }
 }

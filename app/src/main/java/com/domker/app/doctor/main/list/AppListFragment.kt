@@ -2,6 +2,7 @@ package com.domker.app.doctor.main.list
 
 import android.os.Bundle
 import android.view.*
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.domker.app.doctor.R
@@ -9,6 +10,8 @@ import com.domker.app.doctor.data.SORT_NAME
 import com.domker.app.doctor.data.SORT_SIZE
 import com.domker.app.doctor.data.SORT_TIME
 import com.domker.app.doctor.databinding.FragmentAppListBinding
+import com.domker.app.doctor.main.AppViewModel
+import com.domker.app.doctor.store.LaunchSetting
 import com.domker.app.doctor.widget.BaseAppFragment
 
 /**
@@ -59,6 +62,11 @@ class AppListFragment : BaseAppFragment() {
     override fun onAppIncludeChanged(includeAll: Boolean) {
         super.onAppIncludeChanged(includeAll)
         appListViewModel.updateAppList(includeAll)
+    }
+
+    override fun onLoadLaunchSetting(launchSetting: LaunchSetting) {
+        super.onLoadLaunchSetting(launchSetting)
+        binding.viewpager.currentItem = launchSetting.launchMenuStyle
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
