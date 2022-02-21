@@ -2,17 +2,18 @@ package com.domker.app.doctor.main.list
 
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
 import com.domker.app.doctor.R
 import com.domker.app.doctor.data.SORT_NAME
 import com.domker.app.doctor.data.SORT_SIZE
 import com.domker.app.doctor.data.SORT_TIME
 import com.domker.app.doctor.databinding.FragmentAppListBinding
-import com.domker.app.doctor.main.AppViewModel
+import com.domker.app.doctor.store.AppSettings
 import com.domker.app.doctor.store.LaunchSetting
 import com.domker.app.doctor.widget.BaseAppFragment
+import kotlinx.coroutines.launch
 
 /**
  * 展示App列表的页面，多种不同风格的展示
@@ -40,6 +41,7 @@ class AppListFragment : BaseAppFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initDataChanged()
+        initMenu()
     }
 
     private fun initDataChanged() {
@@ -49,6 +51,16 @@ class AppListFragment : BaseAppFragment() {
         appListViewModel.updateAppList(appIncludeAll)
     }
 
+    private fun initMenu() {
+        mAdapter.getDataProcessor().initMenuItemSortMap(
+            mapOf(
+                Pair(R.id.menu_sort_time, SORT_TIME),
+                Pair(R.id.menu_sort_name, SORT_NAME),
+                Pair(R.id.menu_sort_size, SORT_SIZE)
+            )
+        )
+    }
+
     private fun initViews(binding: FragmentAppListBinding) {
         mAdapter = AppPageAdapter(requireContext())
         mAdapter.includeSystemApp = appIncludeAll
@@ -56,6 +68,17 @@ class AppListFragment : BaseAppFragment() {
             v.adapter = mAdapter
             v.orientation = ViewPager2.ORIENTATION_HORIZONTAL
             binding.circlePageIndicator.setViewPager(v)
+            v.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    // 异步存储当前的状态
+                    lifecycleScope.launch {
+                        AppSettings.setLaunchMenuStyle(requireContext(), position)
+                    }
+                }
+
+            })
         }
     }
 
@@ -78,22 +101,6 @@ class AppListFragment : BaseAppFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val p = mAdapter.getDataProcessor()
-        return when (item.itemId) {
-            R.id.menu_sort_time -> {
-                p.sortBy(SORT_TIME)
-                true
-            }
-            R.id.menu_sort_name -> {
-                p.sortBy(SORT_NAME)
-                true
-            }
-            R.id.menu_sort_size -> {
-                p.sortBy(SORT_SIZE)
-                true
-            }
-            else -> {
-                super.onOptionsItemSelected(item)
-            }
-        }
+        return p.sortByItemId(item.itemId)
     }
 }

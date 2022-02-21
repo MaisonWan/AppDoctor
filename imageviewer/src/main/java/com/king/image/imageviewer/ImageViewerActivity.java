@@ -42,7 +42,7 @@ public class ImageViewerActivity extends AppCompatActivity {
         init();
     }
 
-    private void init(){
+    private void init() {
         tvIndicator = findViewById(R.id.tvIndicator);
         ViewPager2 viewPager = findViewById(R.id.viewPager);
 
@@ -55,8 +55,8 @@ public class ImageViewerActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                if(isShowIndicator){
-                    updateIndicator(position,mSize);
+                if (isShowIndicator) {
+                    updateIndicator(position, mSize);
                 }
             }
 
@@ -66,7 +66,7 @@ public class ImageViewerActivity extends AppCompatActivity {
             }
         });
 
-        ViewCompat.setTransitionName(viewPager,SHARED_ELEMENT);
+        ViewCompat.setTransitionName(viewPager, SHARED_ELEMENT);
 
         mAdapter = new ImageViewerAdapter(mViewerSpec.listData);
         viewPager.setAdapter(mAdapter);
@@ -81,24 +81,24 @@ public class ImageViewerActivity extends AppCompatActivity {
 
         int position = mViewerSpec.position;
         mSize = mAdapter.getItemCount();
-        if(position>=0){
-            viewPager.setCurrentItem(position,false);
-            updateIndicator(position,mSize);
+        if (position >= 0) {
+            viewPager.setCurrentItem(position, false);
+            updateIndicator(position, mSize);
         }
 
         isShowIndicator = mViewerSpec.isShowIndicator && mSize > 0;
-        if(isShowIndicator){
+        if (isShowIndicator) {
             tvIndicator.setVisibility(View.VISIBLE);
         }
     }
 
-    private void updateIndicator(int position,int size){
-        tvIndicator.setText(String.format("%s/%s",Math.min(position + 1,size),size));
+    private void updateIndicator(int position, int size) {
+        tvIndicator.setText(String.format("%s/%s", Math.min(position + 1, size), size));
     }
 
     @Override
     protected void onDestroy() {
-        if(mViewerSpec != null ){
+        if (mViewerSpec != null) {
             mViewerSpec.imageLoader = null;
         }
         super.onDestroy();

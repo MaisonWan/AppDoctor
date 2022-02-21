@@ -14,6 +14,8 @@ class AppDataProcessor(dataResource: List<AppEntity>? = null) {
     private val mainData = mutableListOf<AppEntity>()
     private var sortedCallback: ((Int, Boolean) -> Unit)? = null
 
+    private val itemSortMap = mutableMapOf<Int, Int>()
+
     var sortType = SORT_NAME
     var sortDesc = false
 
@@ -31,6 +33,26 @@ class AppDataProcessor(dataResource: List<AppEntity>? = null) {
 
     operator fun get(index: Int): AppEntity {
         return mainData[index]
+    }
+
+    /**
+     * 初始化菜单ItemId和排序的映射关系
+     * @return 是否识别到排序
+     */
+    fun initMenuItemSortMap(map: Map<Int, Int>) {
+        itemSortMap.clear()
+        itemSortMap.putAll(map)
+    }
+
+    /**
+     * 通过ItemId直接识别排序的类型
+     * @return 是否未识别到，直接返回false
+     */
+    fun sortByItemId(itemId: Int): Boolean {
+        return itemSortMap[itemId]?.let {
+            sortBy(it)
+            true
+        } ?: false
     }
 
     /**
