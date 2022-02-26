@@ -12,6 +12,7 @@
         android:background="@color/white">
 
         <include
+            android:id="@+id/header"
             layout="@layout/app_lib_detail_header_layout"
             app:layout_scrollFlags="enterAlways|scroll" />
 

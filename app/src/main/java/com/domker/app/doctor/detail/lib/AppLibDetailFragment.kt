@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.domker.app.doctor.databinding.FragmentAppLibDetailBinding
+import com.domker.base.file.FileUtils
 
 const val PARAM_LIB_NAME = "lib_name"
 const val PARAM_LIB_PATH = "lib_path"
@@ -25,6 +26,13 @@ class AppLibDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // 获取传递的参数
+        arguments?.let {
+            libName = it.getString(PARAM_LIB_NAME)
+            libPath = it.getString(PARAM_LIB_PATH)
+            libFileSize = it.getLong(PARAM_LIB_FILE_SIZE)
+            libZipSize = it.getLong(PARAM_LIB_ZIP_SIZE)
+        }
     }
 
     override fun onCreateView(
@@ -38,6 +46,21 @@ class AppLibDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        showDetail()
+    }
+
+    /**
+     * 展示详细信息
+     */
+    private fun showDetail() {
+        libName?.let {
+            binding.header.textViewLibName.text = it
+        }
+        libPath?.let {
+            binding.header.textViewLibPath.text = it
+        }
+        binding.header.textViewContent.text = FileUtils.formatFileSize(libFileSize)
+        binding.header.textViewZip.text = FileUtils.formatFileSize(libZipSize)
 
     }
 }

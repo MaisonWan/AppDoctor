@@ -44,6 +44,7 @@ class AppLibFragment : Fragment() {
 
         // 监听异步获取的结果
         homeViewModel.getApkDetail().observe(viewLifecycleOwner) { map ->
+            // 按照固定顺序排序标题
             val titles = map.keys.sorted().toList()
             if (titles.isEmpty()) {
                 initEmptyView(root, viewpager, tabLayout)

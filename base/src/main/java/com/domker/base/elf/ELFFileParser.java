@@ -1157,17 +1157,12 @@ public class ELFFileParser {
         }
     }
 
-    public static void main(String args[]) {
-        if (args.length != 1) {
-            System.out.println("Usage: java ELFFileParser <elf file>");
-            System.exit(0);
-        }
-
+    public static void main(String filePath) {
         // Parse the file.
-        ELFFile elfFile = ELFFileParser.getParser().parse(args[0]);
+        ELFFile elfFile = ELFFileParser.getParser().parse(filePath);
 
         ELFHeader elfHeader = elfFile.getHeader();
-        System.out.println("ELF File: " + args[0]);
+        System.out.println("ELF File: " + filePath);
 
         System.out.println("ELF object size: " +
                 ((elfFile.getObjectSize() == 0) ? "Invalid Object Size" :
