@@ -34,12 +34,13 @@ class AppLibPageAdapter(
             val data = dataMap[titles[position]]!!
             val adapter = AppLibItemListAdapter(context, data)
             adapter.itemClick { libItemViewHolder, i ->
-                val bundle = Bundle()
-                val d = data[i]
-                bundle.putString(PARAM_LIB_NAME, d.fileName)
-                bundle.putString(PARAM_LIB_PATH, d.file.absolutePath)
-                bundle.putLong(PARAM_LIB_FILE_SIZE, d.uncompressedSize)
-                bundle.putLong(PARAM_LIB_ZIP_SIZE, d.compressedSize)
+                val bundle = Bundle().also { bundle ->
+                    val d = data[i]
+                    bundle.putString(PARAM_LIB_NAME, d.fileName)
+                    bundle.putString(PARAM_LIB_PATH, d.file.absolutePath)
+                    bundle.putLong(PARAM_LIB_FILE_SIZE, d.uncompressedSize)
+                    bundle.putLong(PARAM_LIB_ZIP_SIZE, d.compressedSize)
+                }
                 Navigation.findNavController(libItemViewHolder.view).navigate(R.id.navigation_lib_detail, bundle)
             }
 

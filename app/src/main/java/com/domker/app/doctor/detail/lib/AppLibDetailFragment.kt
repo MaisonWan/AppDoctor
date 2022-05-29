@@ -46,13 +46,13 @@ class AppLibDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        showDetail()
+        showBaseInfo()
     }
 
     /**
-     * 展示详细信息
+     * 展示基本信息
      */
-    private fun showDetail() {
+    private fun showBaseInfo() {
         libName?.let {
             binding.header.textViewLibName.text = it
         }
@@ -61,6 +61,7 @@ class AppLibDetailFragment : Fragment() {
         }
         binding.header.textViewContent.text = FileUtils.formatFileSize(libFileSize)
         binding.header.textViewZip.text = FileUtils.formatFileSize(libZipSize)
-
     }
+
+
 }
