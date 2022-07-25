@@ -14,14 +14,12 @@ abstract class BaseAppCompatActivity : AppCompatActivity() {
     /**
      * 初始化工具栏
      */
-    protected fun initToolbar() {
+    protected fun initToolbar(): Toolbar? {
         val toolbar: Toolbar? = findViewById(R.id.toolbar)
         toolbar?.let {
             setSupportActionBar(it)
-            it.navigationIcon = ContextCompat.getDrawable(this, R.drawable.ic_baseline_arrow_back_24)
-            it.setNavigationOnClickListener {
-                finish()
-            }
         }
+        return toolbar
     }
+
 }

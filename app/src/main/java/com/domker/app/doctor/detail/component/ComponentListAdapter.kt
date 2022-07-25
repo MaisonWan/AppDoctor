@@ -13,7 +13,7 @@ import com.domker.app.doctor.widget.BaseItemListAdapter
  * Created by wanlipeng on 2020/6/7 6:43 PM
  */
 class ComponentListAdapter(
-    context: Context,
+    private val context: Context,
     private val componentList: List<ComponentInfo>
 ) : BaseItemListAdapter<DetailItemViewHolder>(context) {
 
@@ -22,6 +22,11 @@ class ComponentListAdapter(
         return when (viewType) {
             ComponentInfo.TYPE_GROUP_TITLE -> {
                 val view: View = inflater.inflate(R.layout.detail_label_layout, parent, false)
+                DetailItemViewHolder(view)
+            }
+            ComponentInfo.TYPE_GROUP_TITLE_WITH_ICON -> {
+                // create view
+                val view: View = inflater.inflate(R.layout.item_subject_content_with_icons, parent, false)
                 DetailItemViewHolder(view)
             }
             else -> {
@@ -41,9 +46,17 @@ class ComponentListAdapter(
         holder.view.setOnClickListener {
             invokeItemClick(holder, position)
         }
+
+        when (p.layoutType) {
+            ComponentInfo.TYPE_GROUP_TITLE_WITH_ICON ->  {
+                if (p.exported) {
+                    holder.addFlagIcon(context, R.drawable.ic_outline_exit_to_app_24_blue)
+                }
+            }
+        }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return componentList[position].type
+        return componentList[position].layoutType
     }
 }

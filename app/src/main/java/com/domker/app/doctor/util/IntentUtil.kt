@@ -1,5 +1,6 @@
 package com.domker.app.doctor.util
 
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -16,6 +17,15 @@ object IntentUtil {
      */
     fun createLaunchIntent(context: Context, packageName: String): Intent {
         return context.packageManager.getLaunchIntentForPackage(packageName)!!
+    }
+
+    /**
+     * 创建其它应用的页面启动intent
+     */
+    fun createLaunchActivityIntent(packageName: String, clazzName: String): Intent {
+        return Intent().also {
+            it.component = ComponentName(packageName, clazzName)
+        }
     }
 
     /**

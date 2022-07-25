@@ -11,6 +11,7 @@ import com.domker.app.doctor.db.AppSignature
 import com.domker.app.doctor.db.parseFrom
 import com.domker.app.doctor.detail.component.ComponentInfo
 import com.domker.app.doctor.detail.component.ComponentInfo.Companion.TYPE_ACTIVITY
+import com.domker.app.doctor.detail.component.ComponentInfo.Companion.TYPE_GROUP_TITLE_WITH_ICON
 import com.domker.app.doctor.detail.component.ComponentInfo.Companion.TYPE_PROVIDER
 import com.domker.app.doctor.detail.component.ComponentInfo.Companion.TYPE_RECEIVER
 import com.domker.app.doctor.detail.component.ComponentInfo.Companion.TYPE_SERVICE
@@ -173,6 +174,7 @@ class AppChecker(private val context: Context) {
                 .activities?.forEach {
                     val componentInfo = ComponentInfo()
                     componentInfo.type = TYPE_ACTIVITY
+                    componentInfo.layoutType = TYPE_GROUP_TITLE_WITH_ICON
                     list.add(componentInfo.parseFrom(it))
                 }
         } catch (e: Exception) {

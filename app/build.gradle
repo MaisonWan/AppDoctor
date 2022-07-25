@@ -49,7 +49,7 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
-        useIR = true
+//        useIR = true
     }
 
     kotlinOptions {
@@ -78,8 +78,8 @@ kapt {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.10"
-    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.0"
+    implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
@@ -97,14 +97,14 @@ dependencies {
     implementation "androidx.datastore:datastore-preferences-core:1.0.0"
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.1'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.4.2'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.4.2'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.0'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.0'
 
-    implementation 'com.google.android.material:material:1.6.0'
-    implementation 'com.airbnb.android:lottie:4.2.2'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'com.airbnb.android:lottie:5.2.0'
 
     implementation 'com.alibaba:arouter-api:1.5.2'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'

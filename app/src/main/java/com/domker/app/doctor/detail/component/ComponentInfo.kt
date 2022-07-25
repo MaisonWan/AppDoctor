@@ -19,6 +19,7 @@ class ComponentInfo : Parcelable {
     companion object {
         const val TYPE_NONE: Int = 0x0
         const val TYPE_GROUP_TITLE: Int = 0x1
+        const val TYPE_GROUP_TITLE_WITH_ICON: Int = 0x2
 
         const val TYPE_ACTIVITY = 0x10
         const val TYPE_SERVICE = 0x11
@@ -28,6 +29,7 @@ class ComponentInfo : Parcelable {
     }
 
     var type: Int = TYPE_NONE
+    var layoutType: Int = TYPE_NONE
     var name: String? = null
     var shortName: String? = null
     var targetActivity: String? = null

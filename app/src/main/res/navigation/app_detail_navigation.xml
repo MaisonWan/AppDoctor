@@ -70,7 +70,9 @@
         tools:layout="@layout/fragment_app_lib">
         <action
             android:id="@+id/action_navigation_lib_to_appLibDetailFragment"
-            app:destination="@id/navigation_lib_detail" />
+            app:destination="@id/navigation_lib_detail"
+            app:popUpTo="@id/navigation_lib"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/navigation_lib_detail"

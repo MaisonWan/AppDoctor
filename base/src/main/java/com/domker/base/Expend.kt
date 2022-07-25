@@ -2,8 +2,10 @@ package com.domker.base
 
 import android.content.Context
 import android.content.Intent
+import android.widget.Toast
 import androidx.annotation.DrawableRes
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
 
@@ -43,4 +45,13 @@ fun Intent.startActivity(context: Context) {
  */
 fun <K, V> MutableList<Pair<K, V>>.addPair(key: K, value: V) {
     this.add(Pair(key, value))
+}
+
+
+fun Fragment.toast(content: String?) {
+    Toast.makeText(this.requireContext(), content, Toast.LENGTH_SHORT).show()
+}
+
+fun Fragment.toastLong(content: String?) {
+    Toast.makeText(this.requireContext(), content, Toast.LENGTH_LONG).show()
 }
