@@ -10,7 +10,7 @@ import java.text.DecimalFormat
  * 文件相关操作
  * Created by wanlipeng on 2020/6/11 10:44 AM
  */
-object FileUtils {
+object AppFileUtils {
 
     /**
      * 获取文件尺寸

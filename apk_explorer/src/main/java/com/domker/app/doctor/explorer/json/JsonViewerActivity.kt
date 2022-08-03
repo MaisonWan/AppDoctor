@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.domker.app.doctor.explorer.databinding.ActivityJsonViewerBinding
-import com.domker.base.file.FileUtils
+import com.domker.base.file.AppFileUtils
 import java.io.File
 
 
@@ -49,7 +49,7 @@ class JsonViewerActivity : AppCompatActivity() {
         jsonFilePath?.apply {
             // 显示文件名到标题
             title = File(jsonFilePath).name
-            val content = FileUtils.readFile(jsonFilePath)
+            val content = AppFileUtils.readFile(jsonFilePath)
             try {
                 binding.jsonRecyclerView.bindJson(content)
             } catch (e: IllegalArgumentException) {

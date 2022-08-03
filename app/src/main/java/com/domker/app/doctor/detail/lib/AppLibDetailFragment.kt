@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.domker.app.doctor.databinding.FragmentAppLibDetailBinding
-import com.domker.base.file.FileUtils
+import com.domker.base.file.AppFileUtils
 
 const val PARAM_LIB_NAME = "lib_name"
 const val PARAM_LIB_PATH = "lib_path"
@@ -59,8 +59,8 @@ class AppLibDetailFragment : Fragment() {
         libPath?.let {
             binding.header.textViewLibPath.text = it
         }
-        binding.header.textViewContent.text = FileUtils.formatFileSize(libFileSize)
-        binding.header.textViewZip.text = FileUtils.formatFileSize(libZipSize)
+        binding.header.textViewContent.text = AppFileUtils.formatFileSize(libFileSize)
+        binding.header.textViewZip.text = AppFileUtils.formatFileSize(libZipSize)
     }
 
 

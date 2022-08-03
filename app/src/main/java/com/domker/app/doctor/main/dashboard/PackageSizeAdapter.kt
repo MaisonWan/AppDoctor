@@ -12,7 +12,7 @@ import com.domker.app.doctor.data.AppDataProcessor
 import com.domker.app.doctor.data.DataProcessor
 import com.domker.app.doctor.main.dashboard.PackageSizeAdapter.PackageSizeViewHolder
 import com.domker.app.doctor.util.DataFormat
-import com.domker.base.file.FileUtils
+import com.domker.base.file.AppFileUtils
 import kotlinx.coroutines.flow.combineTransform
 import kotlinx.coroutines.launch
 
@@ -59,7 +59,7 @@ class PackageSizeAdapter(private val dashboardContext: DashboardContext) :
         val appEntity = dataProcessor[position]
         holder.icon?.setImageDrawable(appEntity.iconDrawable)
         holder.appName?.text = "${appEntity.appName}(${appEntity.versionName})"
-        holder.packageSize?.text = FileUtils.formatFileSize(appEntity.sourceApkSize!!)
+        holder.packageSize?.text = AppFileUtils.formatFileSize(appEntity.sourceApkSize!!)
         holder.systemApp?.visibility = if (appEntity.isSystemApp) View.VISIBLE else View.INVISIBLE
         holder.installTime?.text = DataFormat.getDataFromTimestamp(appEntity.updateTime)
     }

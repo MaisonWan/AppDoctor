@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.domker.app.doctor.R
 import com.domker.app.doctor.widget.BaseItemListAdapter
-import com.domker.base.file.FileUtils
+import com.domker.base.file.AppFileUtils
 import com.domker.base.file.ZipFileItem
 
 /**
@@ -27,8 +27,8 @@ class AppLibItemListAdapter(
     override fun onBindViewHolder(holder: LibItemViewHolder, position: Int) {
         val c = zipFileList[position]
         holder.textViewSubject.text = c.fileName
-        holder.textViewFile.text = FileUtils.formatFileSize(c.uncompressedSize)
-        holder.textViewZip.text = FileUtils.formatFileSize(c.compressedSize)
+        holder.textViewFile.text = AppFileUtils.formatFileSize(c.uncompressedSize)
+        holder.textViewZip.text = AppFileUtils.formatFileSize(c.compressedSize)
 
         holder.icon.visibility = View.VISIBLE
         holder.view.setOnClickListener {

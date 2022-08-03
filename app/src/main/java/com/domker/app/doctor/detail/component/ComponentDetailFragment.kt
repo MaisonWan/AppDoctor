@@ -2,6 +2,7 @@ package com.domker.app.doctor.detail.component
 
 import android.os.Bundle
 import android.view.*
+import androidx.activity.ComponentActivity
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -19,17 +20,12 @@ import com.google.android.material.snackbar.Snackbar
  *
  * Created by wanlipeng on 2020/6/10 5:43 PM
  */
-class ComponentDetailFragment : Fragment() {
+class ComponentDetailFragment : Fragment(), MenuProvider {
     // ViewModel
     private lateinit var componentDetailViewModel: ComponentDetailViewModel
     private lateinit var mListAdapter: AppDetailListAdapter
     private lateinit var binding: FragmentDetailComponentInfoBinding
     private var data: ComponentInfo? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,6 +47,7 @@ class ComponentDetailFragment : Fragment() {
         }
         // 设置监听器
         initObserver()
+        initMenu()
     }
 
     private fun initView(c: ComponentInfo) {
@@ -79,19 +76,8 @@ class ComponentDetailFragment : Fragment() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        menu.clear()
-        inflater.inflate(R.menu.detail_component_activity_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.menu_start_app) {
-            // 启动程序
-            launchApp(requireView())
-            return true
-        }
-        return super.onOptionsItemSelected(item)
+    private fun initMenu() {
+        (activity as ComponentActivity).addMenuProvider(this, viewLifecycleOwner)
     }
 
     private fun launchApp(view: View) {
@@ -112,6 +98,21 @@ class ComponentDetailFragment : Fragment() {
             startActivity(IntentUtil.createLaunchActivityIntent(c.packageName!!, c.name!!))
         } catch (e: SecurityException) {
             toastLong(e.message)
+        }
+    }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.detail_component_activity_menu, menu)
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+        return when (menuItem.itemId) {
+            R.id.menu_start_app -> {
+                // 启动程序
+                launchApp(requireView())
+                true
+            }
+            else -> false
         }
     }
 }

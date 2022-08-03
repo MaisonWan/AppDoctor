@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.drawable.Drawable
 import com.domker.app.doctor.CheckerApplication
 import com.domker.app.doctor.db.AppEntity
-import com.domker.base.file.FileUtils
+import com.domker.base.file.AppFileUtils
 
 /**
  * 单例方法，集合checker的一些操作
@@ -136,7 +136,7 @@ class AppCheckFactory private constructor(private val context: Context) {
     private fun updateSize(list: MutableList<AppEntity>) {
         list.forEachIndexed { index, appEntity ->
             checker.getAppEntity(appEntity.packageName)?.apply {
-                list[index].sourceApkSize = FileUtils.size(this.sourceDir!!)
+                list[index].sourceApkSize = AppFileUtils.size(this.sourceDir!!)
             }
         }
     }

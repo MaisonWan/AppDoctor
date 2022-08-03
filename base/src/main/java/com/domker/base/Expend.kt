@@ -8,6 +8,8 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView
+import java.io.InputStream
+import java.io.OutputStream
 
 /**
  *
@@ -54,4 +56,22 @@ fun Fragment.toast(content: String?) {
 
 fun Fragment.toastLong(content: String?) {
     Toast.makeText(this.requireContext(), content, Toast.LENGTH_LONG).show()
+}
+
+inline fun InputStream.copyTo(
+    out: OutputStream,
+    bufferSize: Int = DEFAULT_BUFFER_SIZE,
+    progress: (Long) -> Unit
+): Long {
+    var bytesCopied: Long = 0
+    val buffer = ByteArray(bufferSize)
+    var bytes = read(buffer)
+    while (bytes >= 0) {
+        out.write(buffer, 0, bytes)
+        bytesCopied += bytes
+        bytes = read(buffer)
+
+        progress(bytesCopied)
+    }
+    return bytesCopied
 }

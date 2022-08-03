@@ -11,7 +11,7 @@ import com.domker.app.doctor.entiy.appItemOf
 import com.domker.app.doctor.util.ApkViewer
 import com.domker.app.doctor.util.DataFormat
 import com.domker.base.SystemVersion
-import com.domker.base.file.FileUtils
+import com.domker.base.file.AppFileUtils
 import com.domker.base.file.ZipFileItem
 import com.domker.base.thread.AppExecutors
 import com.domker.base.toChinese
@@ -67,7 +67,7 @@ class HomeViewModel : ViewModel() {
         detailList.add(appItemOf("最近更新时间", DataFormat.getDataFromTimestamp(appEntity.updateTime)))
         detailList.add(appItemOf("Application名称", appEntity.applicationName!!))
         detailList.add(AppItemInfo("源文件路径", appEntity.sourceDir!!, type = DETAIL_TYPE_PACKAGE))
-        detailList.add(appItemOf("源文件大小", FileUtils.formatFileSize(appEntity.sourceApkSize!!)))
+        detailList.add(appItemOf("源文件大小", AppFileUtils.formatFileSize(appEntity.sourceApkSize!!)))
         detailList.add(appItemOf("Native库路径", appEntity.nativeLibraryDir))
         detailList.add(appItemOf("备份代理类", appEntity.backupAgentName))
         detailList.add(appItemOf("主要CPU架构", appEntity.primaryCpuAbi))

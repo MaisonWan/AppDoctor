@@ -10,7 +10,7 @@ import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import com.domker.base.RefInvoke
-import com.domker.base.file.FileUtils
+import com.domker.base.file.AppFileUtils
 import org.jetbrains.annotations.NotNull
 
 /**
@@ -120,7 +120,7 @@ fun AppEntity.parseFrom(
             this.applicationName = applicationInfo.className
         }
         this.sourceDir = applicationInfo.sourceDir
-        this.sourceApkSize = FileUtils.size(this.sourceDir!!)
+        this.sourceApkSize = AppFileUtils.size(this.sourceDir!!)
         this.nativeLibraryDir = applicationInfo.nativeLibraryDir
         this.processName = applicationInfo.processName
         this.dataDir = applicationInfo.dataDir

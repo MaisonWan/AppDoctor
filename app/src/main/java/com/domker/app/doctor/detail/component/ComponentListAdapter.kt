@@ -47,6 +47,7 @@ class ComponentListAdapter(
             invokeItemClick(holder, position)
         }
 
+        // 根据类型绑定不同指示的图标
         when (p.layoutType) {
             ComponentInfo.TYPE_GROUP_TITLE_WITH_ICON ->  {
                 if (p.exported) {

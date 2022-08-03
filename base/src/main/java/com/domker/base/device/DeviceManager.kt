@@ -14,7 +14,6 @@ import android.text.format.Formatter
 import android.util.DisplayMetrics
 import android.view.WindowManager
 import androidx.annotation.RequiresApi
-import androidx.core.content.PermissionChecker
 import com.domker.base.SystemVersion
 import com.domker.base.addPair
 import java.io.BufferedReader
@@ -33,7 +32,8 @@ private const val NOT_AVAILABLE = "not available"
  * @date 2013-12-16 上午11:34:12
  */
 class DeviceManager(private val context: Context) {
-    private val mTelephonyManager = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+    private val mTelephonyManager =
+        context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
 
     /**
      * 获取关于本机的信息
@@ -61,14 +61,7 @@ class DeviceManager(private val context: Context) {
      */
     fun checkPermission(): Boolean {
         getPermissions().forEach {
-            val hash = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                context.checkSelfPermission(it) == PackageManager.PERMISSION_GRANTED
-            } else {
-                PermissionChecker.checkSelfPermission(context, it) == PermissionChecker.PERMISSION_GRANTED
-            }
-            if (!hash) {
-                return false
-            }
+            return context.checkSelfPermission(it) == PackageManager.PERMISSION_GRANTED
         }
         return true
     }
@@ -105,7 +98,8 @@ class DeviceManager(private val context: Context) {
 
     val macAddress: String
         get() {
-            val wifi = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+            val wifi =
+                context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
             val info = wifi.connectionInfo
             return if (info != null && info.macAddress != null) {
                 info.macAddress
@@ -205,13 +199,22 @@ class DeviceManager(private val context: Context) {
         list.addPair("Total Memory", totalMemory)
         list.addPair("Avail Memory", availMemory)
         appMaxHeapSize.apply {
-            list.addPair("Max Heap Size", "${this}KB(${Formatter.formatFileSize(context, this * 1024)})")
+            list.addPair(
+                "Max Heap Size",
+                "${this}KB(${Formatter.formatFileSize(context, this * 1024)})"
+            )
         }
         appFreeHeapSize.apply {
-            list.addPair("Free Heap Size", "${this}KB(${Formatter.formatFileSize(context, this * 1024)})")
+            list.addPair(
+                "Free Heap Size",
+                "${this}KB(${Formatter.formatFileSize(context, this * 1024)})"
+            )
         }
         appTotalHeapSize.apply {
-            list.addPair("Total Heap Size", "${this}KB(${Formatter.formatFileSize(context, this * 1024)})")
+            list.addPair(
+                "Total Heap Size",
+                "${this}KB(${Formatter.formatFileSize(context, this * 1024)})"
+            )
         }
         return list
     }
