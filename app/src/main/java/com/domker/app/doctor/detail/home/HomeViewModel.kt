@@ -1,102 +1,165 @@
 package com.domker.app.doctor.detail.home
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.domker.app.doctor.data.AppChecker
+import android.content.pm.ActivityInfo
+import android.view.View
+import android.widget.ProgressBar
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.*
+import com.alibaba.android.arouter.launcher.ARouter
+import com.domker.app.doctor.R
+import com.domker.app.doctor.databinding.FragmentDetailMainBinding
 import com.domker.app.doctor.db.AppEntity
-import com.domker.app.doctor.detail.container.DETAIL_TYPE_PACKAGE
-import com.domker.app.doctor.detail.container.DETAIL_TYPE_SIGNATURE
-import com.domker.app.doctor.entiy.AppItemInfo
-import com.domker.app.doctor.entiy.appItemOf
-import com.domker.app.doctor.util.ApkViewer
-import com.domker.app.doctor.util.DataFormat
-import com.domker.base.SystemVersion
+import com.domker.app.doctor.util.IntentUtil
+import com.domker.app.doctor.util.PathUtils
+import com.domker.app.doctor.util.Router
 import com.domker.base.file.AppFileUtils
-import com.domker.base.file.ZipFileItem
-import com.domker.base.thread.AppExecutors
-import com.domker.base.toChinese
+import com.king.image.imageviewer.ImageViewer
+import com.king.image.imageviewer.loader.GlideImageLoader
+import kotlinx.coroutines.launch
+import java.io.File
 
 /**
- * App详情的首页的ViewModel
+ * 创建ViewModel
+ * Created by wanlipeng on 2022/8/2 15:50
  */
 class HomeViewModel : ViewModel() {
+    private var progressData = MutableLiveData<Int>()
+    private val status = MutableLiveData<ProgressStatus>()
 
-    private val liveData = MutableLiveData<HomeDetail>()
-
-    // 安装包里面的LiveData
-    private val apkLiveData = MutableLiveData<Map<String, List<ZipFileItem>>>()
-
-    fun getAppInfo(): MutableLiveData<HomeDetail> = liveData
-
-    /**
-     * 获取apk里面的信息，需要详细分析apk安装包，比较耗时
-     */
-    fun getApkDetail(): MutableLiveData<Map<String, List<ZipFileItem>>> = apkLiveData
+    var fragment: Fragment? = null
+    private var appPackageName: String? = null
+    private var apkSourcePath: String? = null
+    private var exportFileName: String? = null
 
     /**
-     * 更新数据
+     * 导出App文件
      */
-    fun updateData(appChecker: AppChecker, appPackageName: String) {
-        AppExecutors.executor.execute {
-            // 异步获取app的信息
-            appChecker.getAppEntity(appPackageName)?.also { entity ->
-                // 获取apk签名
-                entity.signatures = appChecker.getAppSignatures(appPackageName)
-                val homeDetail = HomeDetail(entity, warpAppEntity(entity))
-                liveData.postValue(homeDetail)
+    fun exportApp() {
+        if (apkSourcePath == null) {
+            return
+        }
+        val sourceFile = File(apkSourcePath!!)
+        val destFilePath =
+            File(PathUtils.exportAppPath(), exportFileName ?: "${System.currentTimeMillis()}.apk")
 
-                // 分析apk安装包内部详细信息
-                parserApkInfo(entity)
+        viewModelScope.launch {
+            val total = AppFileUtils.size(sourceFile.absolutePath)
+            var current = 0
+            AppExporter(fragment!!.requireContext()).exportFile(sourceFile, destFilePath).collect {
+                if (it is ProgressStatus.Progress) {
+                    val p = (it.progress * 100L / total).toInt()
+                    // 避免同一个数字重复发
+                    if (current != p) {
+                        current = p
+                        progressData.value = current
+                    }
+                } else {
+                    status.postValue(it)
+                }
             }
         }
     }
 
     /**
-     * 系统拿到的原始数据，转化为我们需要关注的具体数据行
+     * 设置监听下载的进度条
      */
-    private fun warpAppEntity(appEntity: AppEntity): List<AppItemInfo> {
-        val detailList = mutableListOf<AppItemInfo>()
-        detailList.add(appItemOf("版本名", appEntity.versionName))
-        detailList.add(appItemOf("版本号", appEntity.versionCode.toString()))
-        val t = SystemVersion.getVersion(appEntity.targetSdkVersion)
-        detailList.add(appItemOf("目标版本号", SystemVersion.getShowLabel(t)))
-        val v = SystemVersion.getVersion(appEntity.minSdkVersion)
-        detailList.add(appItemOf("最低支持系统版本", SystemVersion.getShowLabel(v)))
-        detailList.add(appItemOf("系统应用", appEntity.isSystemApp.toChinese()))
-        detailList.add(appItemOf("首次安装时间", DataFormat.getAppInstallTime(appEntity.installTime)))
-        detailList.add(appItemOf("最近更新时间", DataFormat.getDataFromTimestamp(appEntity.updateTime)))
-        detailList.add(appItemOf("Application名称", appEntity.applicationName!!))
-        detailList.add(AppItemInfo("源文件路径", appEntity.sourceDir!!, type = DETAIL_TYPE_PACKAGE))
-        detailList.add(appItemOf("源文件大小", AppFileUtils.formatFileSize(appEntity.sourceApkSize!!)))
-        detailList.add(appItemOf("Native库路径", appEntity.nativeLibraryDir))
-        detailList.add(appItemOf("备份代理类", appEntity.backupAgentName))
-        detailList.add(appItemOf("主要CPU架构", appEntity.primaryCpuAbi))
-        detailList.add(appItemOf("Data路径", appEntity.dataDir))
-        detailList.add(appItemOf("保护Data路径", appEntity.deviceProtectedDataDir))
-        detailList.add(appItemOf("主进程名", appEntity.processName))
-        // 默认展示第一个
-        appEntity.signatures?.first { appSignature ->
-            detailList.add(appItemOf("SHA256签名", appSignature.sha256Signature).also {
-                it.type = DETAIL_TYPE_SIGNATURE
-                it.signatures = appEntity.signatures
-            })
+    fun observerExport(lifecycleOwner: LifecycleOwner, progressBar: ProgressBar) {
+        status.observe(lifecycleOwner) {
+            when (it) {
+                is ProgressStatus.Start -> {
+                    progressBar.visibility = View.VISIBLE
+                    progressBar.max = 100
+                }
+                is ProgressStatus.Done -> {
+                    progressBar.visibility = View.INVISIBLE
+                    toast("安装文件导出到${it.file.absolutePath}")
+                }
+                is ProgressStatus.Error -> {
+                    progressBar.visibility = View.INVISIBLE
+                    toast("导出发现异常 ${it.throwable}")
+                }
+                else -> {}
+            }
         }
-
-        detailList.add(appItemOf("User ID", appEntity.uid.toString()))
-        detailList.add(appItemOf("Flag", appEntity.flag))
-        // 关联
-        detailList.forEach {
-            it.appEntity = appEntity
-        }
-        return detailList
-    }
-
-    private fun parserApkInfo(appEntity: AppEntity) {
-        appEntity.sourceDir?.apply {
-            val viewer = ApkViewer(this)
-            apkLiveData.postValue(viewer.getLibFiles())
+        progressData.observe(lifecycleOwner) {
+            progressBar.progress = it
         }
     }
 
-    data class HomeDetail(val appEntity: AppEntity, val itemList: List<AppItemInfo>)
+    private fun toast(content: String) {
+        Toast.makeText(fragment!!.requireContext(), content, Toast.LENGTH_LONG).show()
+    }
+
+    /**
+     * 绑定详细信息
+     */
+    fun bindIntroduceDetail(entity: AppEntity, binding: FragmentDetailMainBinding) {
+        appPackageName = entity.packageName
+        apkSourcePath = entity.sourceDir
+        binding.appName.text = "${entity.appName} (${entity.versionName})"
+        binding.appPackage.text = entity.packageName
+        binding.appIcon.setImageDrawable(entity.iconDrawable)
+
+        // 导出apk文件的名字，包含名字和版本
+        exportFileName = "${entity.appName}_${entity.versionName}.apk"
+    }
+
+    /**
+     * 打开图标的操作
+     */
+    fun openIconView(a: AppEntity, v: View?) {
+        //图片查看器
+        // data 可以多张图片List或单张图片，支持的类型可以是{@link Uri}, {@code url}, {@code path},{@link File}, {@link DrawableRes resId}…等
+        ImageViewer.load(a.iconDrawable!!) //要加载的图片数据，单张或多张
+            //                        .selection(position) //当前选中位置
+            //                        .indicator(true) //是否显示指示器，默认不显示
+            .imageLoader(GlideImageLoader()) //加载器，*必须配置，目前内置的有GlideImageLoader或PicassoImageLoader，也可以自己实现
+            //                      .imageLoader(new PicassoImageLoader())
+            .theme(R.style.ImageViewerTheme) //设置主题风格，默认：R.style.ImageViewerTheme
+            .orientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) //设置屏幕方向,默认：ActivityInfo.SCREEN_ORIENTATION_BEHIND
+            .start(fragment!!, v)
+    }
+
+    /**
+     * 打开app设置
+     */
+    fun openAppSetting() {
+        appPackageName?.let {
+            fragment!!.startActivity(IntentUtil.createOpenSettingIntent(it))
+        }
+    }
+
+    /**
+     * 弹出卸载程序
+     */
+    fun uninstallApp() {
+        appPackageName?.let {
+            fragment!!.startActivity(IntentUtil.createUninstallAppIntent(it))
+        }
+    }
+
+    /**
+     * 启动App
+     */
+    fun launchApp() {
+        appPackageName?.apply {
+            IntentUtil.createLaunchIntent(fragment!!.requireContext(), this).also {
+                fragment!!.startActivity(it)
+            }
+        }
+    }
+
+    /**
+     * 打开自定义的Apk文件浏览器
+     */
+    fun openPackageExplorer() {
+        apkSourcePath?.apply {
+            ARouter.getInstance()
+                .build(Router.EXPLORER_ACTIVITY)
+                .withString("apk_source_path", this)
+                .withString("package_name", appPackageName)
+                .navigation()
+        }
+    }
 }

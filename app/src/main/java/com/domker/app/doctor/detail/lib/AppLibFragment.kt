@@ -11,7 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.viewpager2.widget.ViewPager2
 import com.domker.app.doctor.R
 import com.domker.app.doctor.databinding.FragmentAppLibBinding
-import com.domker.app.doctor.detail.home.HomeViewModel
+import com.domker.app.doctor.detail.AppDetailViewModel
 import com.domker.base.file.ZipFileItem
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
@@ -21,7 +21,7 @@ import com.google.android.material.tabs.TabLayoutMediator
  */
 class AppLibFragment : Fragment() {
     private lateinit var binding: FragmentAppLibBinding
-    private val homeViewModel: HomeViewModel by activityViewModels()
+    private val detailViewModel: AppDetailViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,7 +43,7 @@ class AppLibFragment : Fragment() {
         val viewpager: ViewPager2 = root.findViewById(R.id.viewpager)
 
         // 监听异步获取的结果
-        homeViewModel.getApkDetail().observe(viewLifecycleOwner) { map ->
+        detailViewModel.getApkDetail().observe(viewLifecycleOwner) { map ->
             // 按照固定顺序排序标题
             val titles = map.keys.sorted().toList()
             if (titles.isEmpty()) {

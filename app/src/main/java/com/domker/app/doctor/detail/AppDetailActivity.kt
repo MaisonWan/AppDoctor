@@ -12,7 +12,6 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.domker.app.doctor.R
 import com.domker.app.doctor.data.AppChecker
 import com.domker.app.doctor.detail.component.ComponentViewModel
-import com.domker.app.doctor.detail.home.HomeViewModel
 import com.domker.app.doctor.util.IntentUtil
 import com.domker.app.doctor.util.Router
 import com.domker.app.doctor.widget.BaseAppCompatActivity
@@ -27,7 +26,7 @@ class AppDetailActivity : BaseAppCompatActivity() {
 
     // 组件的ViewModel
     private lateinit var componentViewModel: ComponentViewModel
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var detailViewModel: AppDetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +36,7 @@ class AppDetailActivity : BaseAppCompatActivity() {
         appChecker = AppChecker(this)
         appPackageName = intent.getStringExtra(IntentUtil.INTENT_KEY_PACKAGE)!!
 
-        homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        detailViewModel = ViewModelProvider(this)[AppDetailViewModel::class.java]
         componentViewModel = ViewModelProvider(this)[ComponentViewModel::class.java]
 
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
@@ -76,7 +75,7 @@ class AppDetailActivity : BaseAppCompatActivity() {
      * 提前初始化数据，这样Fragment展示的时候，数据已经Ready
      */
     private fun updateAppInfo() {
-        homeViewModel.updateData(appChecker, appPackageName)
+        detailViewModel.updateData(appChecker, appPackageName)
         componentViewModel.updateData(appChecker, appPackageName)
     }
 
