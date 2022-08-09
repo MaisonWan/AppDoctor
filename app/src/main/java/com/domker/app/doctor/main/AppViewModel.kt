@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import com.domker.app.doctor.store.AppSettings
 import com.domker.app.doctor.store.LaunchSetting
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 /**
  * 全局状态监控，包括全局是否包含所有应用，包括系统应用的状态变化
@@ -25,9 +26,12 @@ class AppViewModel : ViewModel() {
     /**
      * 加载配置
      */
-    suspend fun loadLaunchSettings(context: Context) {
-        AppSettings.getLaunchSetting(context).collect {
-            launchSetting.postValue(it)
+    fun loadLaunchSettings(context: Context) {
+        viewModelScope.launch {
+            println(Thread.currentThread().name)
+            AppSettings.getLaunchSetting(context).collect {
+                launchSetting.postValue(it)
+            }
         }
     }
 

@@ -3,6 +3,7 @@ package com.domker.app.doctor.main.list
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,10 +28,12 @@ import com.domker.base.thread.AppExecutors
  * Created by wanlipeng on 1/29/21 11:52 AM
  */
 class AppPageAdapter(
-    private val context: Context,
+    private val fragment: Fragment
 ) :
     RecyclerView.Adapter<AppPageAdapter.PageViewHolder>(),
     DataProcessor {
+    private val context: Context = fragment.requireContext()
+
     /**
      * 目前支持的类型和分页
      */
@@ -50,11 +53,12 @@ class AppPageAdapter(
         }
     }
 
-    class PageViewHolder(val binding: PagerAppListItemBinding) : RecyclerView.ViewHolder(binding.root)
+    class PageViewHolder(val binding: PagerAppListItemBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PageViewHolder {
         val begin = System.currentTimeMillis()
-        val binding: PagerAppListItemBinding = PagerAppListItemBinding.inflate(inflater, parent, false)
+        val binding = PagerAppListItemBinding.inflate(inflater, parent, false)
         val end = System.currentTimeMillis()
         println("onCreateViewHolder type=$viewType time=${end - begin}")
         return PageViewHolder(binding)
@@ -68,6 +72,7 @@ class AppPageAdapter(
 
     override fun onBindViewHolder(holder: PageViewHolder, position: Int) {
         bindPager(position, holder.binding.recyclerView, getItemViewType(position))
+        fragment.registerForContextMenu(holder.binding.recyclerView)
         notifyData(position)
     }
 

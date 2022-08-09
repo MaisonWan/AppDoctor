@@ -53,6 +53,6 @@ class SensorFragment : Fragment() {
         binding.recyclerView.adapter = SensorListAdapter(requireContext(), sensorList.sortedBy { it.type })
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerView.addDividerItemDecoration(requireContext(), R.drawable.inset_recyclerview_divider)
-        binding.recyclerView.adapter?.notifyDataSetChanged()
+        binding.recyclerView.adapter?.notifyItemRangeChanged(0, sensorList.size)
     }
 }

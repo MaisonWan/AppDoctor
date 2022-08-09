@@ -3,7 +3,6 @@ package com.domker.app.doctor
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -27,7 +26,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var appViewModel: AppViewModel
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var toolbar: Toolbar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,16 +51,16 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navView.setupWithNavController(navController)
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
-            println(destination.label)
-            println(destination.id)
-        }
+//        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+//            println(destination.label)
+//            println(destination.id)
+//        }
     }
 
     private fun initToolbar() {
-        toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        toolbar.setNavigationOnClickListener {
+        binding.appBar.toolbar.also {
+            setSupportActionBar(it)
+        }.setNavigationOnClickListener {
             binding.drawerLayout.openDrawer(GravityCompat.START)
         }
     }
@@ -72,10 +70,7 @@ class MainActivity : AppCompatActivity() {
         val switchAppInclude = headerView.findViewById<SwitchCompat>(R.id.switchAppInclude)
 
         // 异步加载配置
-        lifecycleScope.launch {
-            println(Thread.currentThread().name)
-            appViewModel.loadLaunchSettings(this@MainActivity)
-        }
+        appViewModel.loadLaunchSettings(this@MainActivity)
 
         appViewModel.observeLoadSettingsOnce(this) {
             // 第一次初始化，切换按钮展示
@@ -83,11 +78,14 @@ class MainActivity : AppCompatActivity() {
         }
 
         switchAppInclude.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
-                buttonView.setText(R.string.nav_header_switch_all)
-            } else {
-                buttonView.setText(R.string.nav_header_switch_install)
+            with(buttonView) {
+                if (isChecked) {
+                    setText(R.string.nav_header_switch_all)
+                } else {
+                    setText(R.string.nav_header_switch_install)
+                }
             }
+
             lifecycleScope.launch {
                 AppSettings.setIncludeAllApp(this@MainActivity, isChecked)
             }

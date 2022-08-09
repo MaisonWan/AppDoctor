@@ -1,9 +1,5 @@
 package com.domker.app.doctor.detail.home
 
-import android.Manifest.permission.MANAGE_EXTERNAL_STORAGE
-import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-import android.content.Context
-import android.content.pm.PackageManager
 import com.domker.base.copyTo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -18,7 +14,7 @@ import java.io.FileOutputStream
  * 文件导出的操作
  * Created by wanlipeng on 2022/7/26 17:19
  */
-class AppExporter(private val context: Context) {
+object AppExporter {
 
     /**
      * 使用Flow的方式拷贝文件
@@ -49,25 +45,4 @@ class AppExporter(private val context: Context) {
             folder.mkdir()
         }
     }
-
-    /**
-     * 检测是否有写入的权限
-     */
-    fun checkPermission(): Boolean {
-        getPermissions().forEach {
-            if (context.checkSelfPermission(it) != PackageManager.PERMISSION_GRANTED) {
-                return false
-            }
-        }
-        return true
-    }
-
-    fun getPermissions(): Array<String> {
-        return arrayOf(MANAGE_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE)
-    }
-
-    /**
-     * 权限请求的代码
-     */
-    fun getPermissionRequestCode(): Int = 1010
 }

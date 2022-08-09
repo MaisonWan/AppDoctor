@@ -20,7 +20,7 @@ class SensorWatcher(context: Context) {
     /**
      * 返回所有传感器列表
      */
-    fun getAllSensor() = sensorManager.getSensorList(Sensor.TYPE_ALL)
+    fun getAllSensor(): MutableList<Sensor> = sensorManager.getSensorList(Sensor.TYPE_ALL)
 
     fun register(sensorType: Int) {
         if (!sensorMap.containsKey(sensorType)) {

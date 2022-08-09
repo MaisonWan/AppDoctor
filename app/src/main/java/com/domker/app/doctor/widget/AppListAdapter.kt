@@ -4,8 +4,6 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.domker.app.doctor.R
 import com.domker.app.doctor.data.AppCheckFactory
@@ -20,7 +18,7 @@ const val LAYOUT_TYPE_GRID = 1
  * Created by wanlipeng on 2018/2/6.
  */
 class AppListAdapter(private val context: Context, private val gridType: Int) :
-    RecyclerView.Adapter<AppListAdapter.AppInfoViewHolder>() {
+    RecyclerView.Adapter<AppInfoViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var mListener: ((view: View, packageName: String) -> Unit)? = null
@@ -33,7 +31,7 @@ class AppListAdapter(private val context: Context, private val gridType: Int) :
             R.layout.app_item_grid_layout
         }
         val view: View = inflater.inflate(layoutResId, parent, false)
-        return AppInfoViewHolder(view)
+        return AppInfoViewHolder(context, view)
     }
 
     override fun getItemCount(): Int = mAppList?.size ?: 0
@@ -41,6 +39,7 @@ class AppListAdapter(private val context: Context, private val gridType: Int) :
     override fun onBindViewHolder(holder: AppInfoViewHolder, position: Int) {
         val item = mAppList?.get(position)
         item?.let {
+            holder.currentAppEntity = it
             if (item.iconDrawable == null) {
                 item.iconDrawable = AppCheckFactory.instance.getAppIcon(item.packageName)
             }
@@ -84,26 +83,8 @@ class AppListAdapter(private val context: Context, private val gridType: Int) :
         return mAppList?.get(position)
     }
 
-    /**
-     * 显示App信息的ViewHolder
-     */
-    class AppInfoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var icon: ImageView? = null
-        var appName: TextView? = null
-        var appVersion: TextView? = null
-        var packageName: TextView? = null
-        var systemFlag: TextView? = null
-
-        init {
-            icon = view.findViewById(R.id.imageViewIcon)
-            appName = view.findViewById(R.id.textViewAppName)
-            appVersion = view.findViewById(R.id.textViewAppVersion)
-            packageName = view.findViewById(R.id.textViewPackageName)
-            systemFlag = view.findViewById(R.id.imageViewSystemFlag)
-        }
-    }
-
     override fun getItemViewType(position: Int): Int {
         return gridType
     }
+
 }

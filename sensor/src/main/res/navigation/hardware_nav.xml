@@ -9,7 +9,11 @@
         android:id="@+id/navigation_sensor"
         android:name="com.domker.app.doctor.hardware.sensor.SensorFragment"
         android:label="@string/sensor"
-        tools:layout="@layout/fragment_sensor" />
+        tools:layout="@layout/fragment_sensor" >
+        <action
+            android:id="@+id/action_navigation_sensor_to_navigation_sensor_detail"
+            app:destination="@id/navigation_sensor_detail" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_supervisor"

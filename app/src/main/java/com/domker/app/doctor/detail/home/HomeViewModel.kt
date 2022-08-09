@@ -5,7 +5,10 @@ import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.*
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.alibaba.android.arouter.launcher.ARouter
 import com.domker.app.doctor.R
 import com.domker.app.doctor.databinding.FragmentDetailMainBinding
@@ -46,7 +49,7 @@ class HomeViewModel : ViewModel() {
         viewModelScope.launch {
             val total = AppFileUtils.size(sourceFile.absolutePath)
             var current = 0
-            AppExporter(fragment!!.requireContext()).exportFile(sourceFile, destFilePath).collect {
+            AppExporter.exportFile(sourceFile, destFilePath).collect {
                 if (it is ProgressStatus.Progress) {
                     val p = (it.progress * 100L / total).toInt()
                     // 避免同一个数字重复发

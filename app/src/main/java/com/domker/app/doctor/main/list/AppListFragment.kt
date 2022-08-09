@@ -2,6 +2,8 @@ package com.domker.app.doctor.main.list
 
 import android.os.Bundle
 import android.view.*
+import androidx.activity.ComponentActivity
+import androidx.core.view.MenuProvider
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
@@ -10,23 +12,27 @@ import com.domker.app.doctor.data.SORT_NAME
 import com.domker.app.doctor.data.SORT_SIZE
 import com.domker.app.doctor.data.SORT_TIME
 import com.domker.app.doctor.databinding.FragmentAppListBinding
+import com.domker.app.doctor.detail.home.HomeViewModel
 import com.domker.app.doctor.store.AppSettings
 import com.domker.app.doctor.store.LaunchSetting
+import com.domker.app.doctor.util.IntentUtil
 import com.domker.app.doctor.widget.BaseAppFragment
 import kotlinx.coroutines.launch
 
 /**
  * 展示App列表的页面，多种不同风格的展示
  */
-class AppListFragment : BaseAppFragment() {
+class AppListFragment : BaseAppFragment(), MenuProvider {
     private lateinit var binding: FragmentAppListBinding
     private lateinit var mAdapter: AppPageAdapter
     private lateinit var appListViewModel: AppListViewModel
+    private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
+        (activity as ComponentActivity).addMenuProvider(this)
         appListViewModel = ViewModelProvider(this)[AppListViewModel::class.java]
+        homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -52,6 +58,7 @@ class AppListFragment : BaseAppFragment() {
     }
 
     private fun initMenu() {
+        registerForContextMenu(binding.viewpager)
         mAdapter.getDataProcessor().initMenuItemSortMap(
             mapOf(
                 Pair(R.id.menu_sort_time, SORT_TIME),
@@ -62,7 +69,7 @@ class AppListFragment : BaseAppFragment() {
     }
 
     private fun initViews(binding: FragmentAppListBinding) {
-        mAdapter = AppPageAdapter(requireContext())
+        mAdapter = AppPageAdapter(this)
         mAdapter.includeSystemApp = appIncludeAll
         binding.viewpager.also { v ->
             v.adapter = mAdapter
@@ -92,15 +99,13 @@ class AppListFragment : BaseAppFragment() {
         binding.viewpager.currentItem = launchSetting.launchMenuStyle
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        // 清除Activity的菜单
-        menu.clear()
-        inflater.inflate(R.menu.main_menu, menu)
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.main_menu, menu)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         val p = mAdapter.getDataProcessor()
-        return p.sortByItemId(item.itemId)
+        return p.sortByItemId(menuItem.itemId)
     }
+
 }

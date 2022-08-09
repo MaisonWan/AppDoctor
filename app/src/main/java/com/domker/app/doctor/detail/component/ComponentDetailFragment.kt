@@ -72,7 +72,7 @@ class ComponentDetailFragment : Fragment(), MenuProvider {
             binding.appPackage.text = detail.name
 
             mListAdapter.setDetailList(detail.itemList)
-            mListAdapter.notifyDataSetChanged()
+            mListAdapter.notifyItemRangeChanged(0, detail.itemList.size)
         }
     }
 
