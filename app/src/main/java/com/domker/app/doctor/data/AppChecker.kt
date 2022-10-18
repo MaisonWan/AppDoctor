@@ -102,6 +102,7 @@ class AppChecker(private val context: Context) {
                 s.md5Signature = certToString(MessageDigest.getInstance("MD5"), byteArray, false)
                 result.add(s)
             }
+            println("getAppSignatures count = ${result.size}")
             return result.toTypedArray()
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()

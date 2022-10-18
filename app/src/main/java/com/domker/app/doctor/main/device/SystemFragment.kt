@@ -28,7 +28,7 @@ class SystemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.viewpager.adapter = SystemPagerAdapter(parentFragmentManager, lifecycle)
+        binding.viewpager.adapter = SystemPagerAdapter(childFragmentManager, lifecycle)
         TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, i ->
             tab.setText(TAB_TITLE[i])
         }.attach()

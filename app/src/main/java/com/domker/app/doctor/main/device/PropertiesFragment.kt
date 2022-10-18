@@ -46,7 +46,7 @@ class PropertiesFragment : Fragment() {
         binding.recyclerViewInfo.adapter = adapter
         binding.recyclerViewInfo.layoutManager = LinearLayoutManager(context)
         binding.recyclerViewInfo.addDividerItemDecoration(requireContext(), R.drawable.inset_recyclerview_divider)
-        adapter.notifyDataSetChanged()
+        adapter.notifyItemRangeChanged(0, data.size)
 
         val downData = data.map { it.first }
         val downAdapter = PropertyAutoCompleteAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, downData)
@@ -69,7 +69,7 @@ class PropertiesFragment : Fragment() {
     private fun search() {
         val keyWords = binding.autoCompleteTextView.text.toString()
         adapter.search(keyWords)
-        adapter.notifyDataSetChanged()
+        adapter.notifyItemRangeChanged(0, data.size)
     }
     
 }

@@ -20,7 +20,6 @@ class AppSignature {
     var packageName: String = ""
 
     @ColumnInfo(name = "origin_signature")
-    @NotNull
     var originSignature: ByteArray? = null
 
     @ColumnInfo(name = "md5_signature")

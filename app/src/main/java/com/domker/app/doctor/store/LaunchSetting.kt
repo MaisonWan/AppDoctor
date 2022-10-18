@@ -8,12 +8,12 @@ package com.domker.app.doctor.store
 /**
  * 启动展示界面List风格
  */
-const val MENU_STYLE_LIST = 0
+const val APP_LIST_STYLE_LIST = "list"
 
 /**
  * 启动阶段界面表格风格
  */
-const val MENU_STYLE_GRID = 1
+const val APP_LIST_STYLE_GRID = "grid"
 
 /**
  * 启动阶段的Setting
@@ -25,7 +25,12 @@ class LaunchSetting {
     var includeAllApp = false
 
     /**
-     * 启动阶段的样式
+     * 启动界面的Index
      */
-    var launchMenuStyle = MENU_STYLE_LIST
+    var launchPageIndex = 0
+
+    /**
+     * App列表的样式
+     */
+    var appListStyle = APP_LIST_STYLE_LIST
 }

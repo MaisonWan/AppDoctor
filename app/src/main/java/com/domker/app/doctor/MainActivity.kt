@@ -1,11 +1,13 @@
 package com.domker.app.doctor
 
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -15,6 +17,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.domker.app.doctor.databinding.ActivityMainDrawerBinding
 import com.domker.app.doctor.main.AppViewModel
+import com.domker.app.doctor.settings.SettingsViewModel
 import com.domker.app.doctor.store.AppSettings
 import com.domker.app.doctor.util.Router
 import kotlinx.coroutines.launch
@@ -24,6 +27,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainDrawerBinding
     private lateinit var appViewModel: AppViewModel
+    private lateinit var settingsViewModel: SettingsViewModel
 
     private lateinit var appBarConfiguration: AppBarConfiguration
 
@@ -32,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainDrawerBinding.inflate(layoutInflater)
         setContentView(binding.root)
         appViewModel = ViewModelProvider(this)[AppViewModel::class.java]
+        settingsViewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
 
         initToolbar()
         initHeaderView()
@@ -39,9 +44,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initNavigation() {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
+        val navController = getNavController()
 
         val ids = setOf(
             R.id.nav_app_list, R.id.nav_photo_info, R.id.nav_battery, R.id.nav_hardware,
@@ -51,17 +54,19 @@ class MainActivity : AppCompatActivity() {
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navView.setupWithNavController(navController)
-//        navController.addOnDestinationChangedListener { controller, destination, arguments ->
-//            println(destination.label)
-//            println(destination.id)
-//        }
     }
 
     private fun initToolbar() {
         binding.appBar.toolbar.also {
             setSupportActionBar(it)
         }.setNavigationOnClickListener {
-            binding.drawerLayout.openDrawer(GravityCompat.START)
+            // 在配置界面点击返回，直接执行返回操作
+            if (getNavController().currentDestination?.id == R.id.nav_settings) {
+                onBackPressed()
+            } else {
+                // 其它界面打开左侧边栏
+                binding.drawerLayout.openDrawer(GravityCompat.START)
+            }
         }
     }
 
@@ -75,6 +80,7 @@ class MainActivity : AppCompatActivity() {
         appViewModel.observeLoadSettingsOnce(this) {
             // 第一次初始化，切换按钮展示
             switchAppInclude.isChecked = it.includeAllApp
+            it.appListStyle
         }
 
         switchAppInclude.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -91,6 +97,20 @@ class MainActivity : AppCompatActivity() {
             }
             appViewModel.switchChanged(isChecked)
         }
+
+        // 打开配置
+        val settingButton = headerView.findViewById<ImageView>(R.id.imageViewSettings)
+        settingButton.setOnClickListener {
+            val navController = getNavController()
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+            navController.navigate(R.id.nav_settings)
+        }
+    }
+
+    private fun getNavController(): NavController {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        return navHostFragment.navController
     }
 
     override fun onSupportNavigateUp(): Boolean {

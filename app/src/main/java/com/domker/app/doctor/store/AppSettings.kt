@@ -2,16 +2,18 @@ package com.domker.app.doctor.store
 
 import android.content.Context
 import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.core.booleanPreferencesKey
-import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
+/**
+ * app配置sp文件的名字
+ */
+const val APP_SETTINGS_SP_NAME = "app_settings"
+
 // 最前面的初始化，挂在到Context上
-val Context.settingsDataStore: DataStore<Preferences> by preferencesDataStore(name = "app_settings")
+val Context.settingsDataStore: DataStore<Preferences> by preferencesDataStore(name = APP_SETTINGS_SP_NAME)
 
 /**
  *
@@ -24,9 +26,14 @@ object AppSettings {
     private val includeAllAppKey = booleanPreferencesKey("include_all_app")
 
     /**
-     * 启动阶段展示菜单
+     * App首页默认启动的样式
      */
-    private val launchMenuStyleKey = intPreferencesKey("launch_menu_style")
+    private val appListStyleKey = stringPreferencesKey("app_list_mode")
+
+    /**
+     * 启动阶段Landing页面索引
+     */
+    private val launchPageIndexKey = intPreferencesKey("launch_index")
 
     /**
      * 是否包含所有的app
@@ -35,7 +42,8 @@ object AppSettings {
         return context.settingsDataStore.data.map { p ->
             LaunchSetting().also { setting ->
                 setting.includeAllApp = p[includeAllAppKey] ?: false
-                setting.launchMenuStyle = p[launchMenuStyleKey] ?: MENU_STYLE_LIST
+                setting.appListStyle = p[appListStyleKey] ?: APP_LIST_STYLE_LIST
+                setting.launchPageIndex = p[launchPageIndexKey] ?: 0
             }
         }
     }
@@ -52,9 +60,18 @@ object AppSettings {
     /**
      * 设置启动时候app界面的样式
      */
-    suspend fun setLaunchMenuStyle(context: Context, style: Int) {
+    suspend fun setAppListStyle(context: Context, mode: String) {
         context.settingsDataStore.edit {
-            it[launchMenuStyleKey] = style
+            it[appListStyleKey] = mode
+        }
+    }
+
+    /**
+     * 启动阶段Landing的页面索引
+     */
+    suspend fun setLaunchPageIndex(context: Context, index: Int) {
+        context.settingsDataStore.edit {
+            it[launchPageIndexKey] = index
         }
     }
 }

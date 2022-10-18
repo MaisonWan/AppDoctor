@@ -1,4 +1,4 @@
-package com.domker.app.doctor.widget
+package com.domker.app.doctor.main.list
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -13,7 +13,7 @@ const val LAYOUT_TYPE_LIST = 0
 const val LAYOUT_TYPE_GRID = 1
 
 /**
- * 程序列表的适配器
+ * 程序列表的适配器，主要展示每个应用图标和名称
  *
  * Created by wanlipeng on 2018/2/6.
  */
@@ -40,18 +40,22 @@ class AppListAdapter(private val context: Context, private val gridType: Int) :
         val item = mAppList?.get(position)
         item?.let {
             holder.currentAppEntity = it
+            // 重新读取一下应用图标
             if (item.iconDrawable == null) {
                 item.iconDrawable = AppCheckFactory.instance.getAppIcon(item.packageName)
             }
             item.iconDrawable?.apply {
                 holder.icon?.setImageDrawable(this)
             }
+
+            // 根据类型选展示的风格
             if (gridType == LAYOUT_TYPE_LIST) {
                 holder.appName?.text = "${item.appName} (${item.versionName})"
             } else {
                 holder.appVersion?.text = item.versionName
                 holder.appName?.text = item.appName
             }
+
             holder.packageName?.text = item.packageName
             holder.systemFlag?.visibility = if (item.isSystemApp) View.VISIBLE else View.GONE
             holder.itemView.setOnClickListener { v ->

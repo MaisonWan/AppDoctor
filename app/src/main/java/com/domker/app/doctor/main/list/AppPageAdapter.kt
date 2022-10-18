@@ -15,11 +15,9 @@ import com.domker.app.doctor.data.AppDataProcessor
 import com.domker.app.doctor.data.DataProcessor
 import com.domker.app.doctor.databinding.PagerAppListItemBinding
 import com.domker.app.doctor.db.AppEntity
+import com.domker.app.doctor.store.APP_LIST_STYLE_LIST
 import com.domker.app.doctor.util.Router
 import com.domker.app.doctor.widget.AppDiffCallBack
-import com.domker.app.doctor.widget.AppListAdapter
-import com.domker.app.doctor.widget.LAYOUT_TYPE_GRID
-import com.domker.app.doctor.widget.LAYOUT_TYPE_LIST
 import com.domker.base.addDividerItemDecoration
 import com.domker.base.thread.AppExecutors
 
@@ -38,7 +36,7 @@ class AppPageAdapter(
      * 目前支持的类型和分页
      */
     private val pages = arrayOf(LAYOUT_TYPE_LIST, LAYOUT_TYPE_GRID)
-
+    private var currentLayoutStyle = APP_LIST_STYLE_LIST
     private var adapters: Array<AppListAdapter?> = arrayOfNulls(pages.size)
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private val dataProcessor = AppDataProcessor()
@@ -67,7 +65,11 @@ class AppPageAdapter(
     override fun getItemCount(): Int = pages.size
 
     override fun getItemViewType(position: Int): Int {
-        return pages[position]
+        return if (currentLayoutStyle == APP_LIST_STYLE_LIST) {
+            LAYOUT_TYPE_LIST
+        } else {
+            LAYOUT_TYPE_GRID
+        }
     }
 
     override fun onBindViewHolder(holder: PageViewHolder, position: Int) {
@@ -88,6 +90,7 @@ class AppPageAdapter(
         }
         adapters[index] = AppListAdapter(context, layoutType)
         recyclerView.adapter = adapters[index]
+        // 点击每个程序icon的动作
         adapters[index]?.setOnItemClickListener { _, packageName ->
             ARouter.getInstance()
                 .build(Router.DETAIL_ACTIVITY)
@@ -108,6 +111,17 @@ class AppPageAdapter(
         // 更新一下最新信息到数据库
         AppExecutors.executor.execute {
             AppCheckFactory.instance.updateInfoToDatabase()
+        }
+    }
+
+    /**
+     * 更新页面的风格，List或者Grid的
+     */
+    fun updateAppListStyle(style: String) {
+        currentLayoutStyle = style
+        notifyItemRangeChanged(0, pages.size)
+        repeat(itemCount) {
+            adapters[it]?.notifyItemRangeChanged(0, adapters[it]?.itemCount ?: 0)
         }
     }
 

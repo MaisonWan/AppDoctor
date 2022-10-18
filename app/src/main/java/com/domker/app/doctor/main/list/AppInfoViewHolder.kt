@@ -1,4 +1,4 @@
-package com.domker.app.doctor.widget
+package com.domker.app.doctor.main.list
 
 import android.content.Context
 import android.view.ContextMenu
@@ -47,7 +47,6 @@ class AppInfoViewHolder(private val context: Context, view: View) :
         ).forEachIndexed { index, i ->
             menu.add(0, i, index, i).setOnMenuItemClickListener(this)
         }
-
     }
 
     override fun onMenuItemClick(item: MenuItem): Boolean {

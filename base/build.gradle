@@ -22,13 +22,15 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    namespace 'com.domker.base'
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.4.2'
-    implementation 'com.google.android.material:material:1.6.1'
-    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+    api 'androidx.core:core-ktx:1.9.0'
+    api 'androidx.appcompat:appcompat:1.5.1'
+    api 'com.google.android.material:material:1.6.1'
+    api 'androidx.viewpager2:viewpager2:1.0.0'
+    api 'androidx.fragment:fragment-ktx:1.5.3'
 
     api 'io.reactivex.rxjava3:rxjava:3.1.5'
     api 'io.reactivex.rxjava3:rxandroid:3.0.0'

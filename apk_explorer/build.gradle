@@ -22,6 +22,7 @@ android {
     viewBinding {
         enabled true
     }
+    namespace 'com.domker.app.doctor.explorer'
 }
 
 kapt {

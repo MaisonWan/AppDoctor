@@ -1,0 +1,34 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/general_header">
+
+        <SwitchPreferenceCompat
+            app:defaultValue="false"
+            app:icon="@drawable/ic_baseline_android_24"
+            app:key="include_system_app"
+            app:title="@string/include_system_app" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/skin_header">
+        <ListPreference
+            app:defaultValue="list"
+            app:entries="@array/app_list_entries"
+            app:entryValues="@array/app_list_values"
+            app:icon="@drawable/ic_baseline_view_list_24"
+            app:key="app_list_mode"
+            app:title="@string/app_list_mode"
+            app:useSimpleSummaryProvider="true" />
+
+        <ListPreference
+            app:defaultValue="system"
+            app:entries="@array/skin_entries"
+            app:entryValues="@array/skin_values"
+            app:icon="@drawable/ic_baseline_bedtime_24"
+            app:key="skin_mode"
+            app:title="@string/skin_dark_mode"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

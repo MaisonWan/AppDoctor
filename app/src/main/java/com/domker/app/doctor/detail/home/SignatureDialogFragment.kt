@@ -27,14 +27,15 @@ class SignatureDialogFragment : BottomSheetDialogFragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val md5 = arguments?.getString(SIGNATURE_MD5)
-        binding.textViewMd5.text = md5 ?: ""
+        val md5 = arguments?.getStringArray(SIGNATURE_MD5)
+        val sha1 = arguments?.getStringArray(SIGNATURE_SHA1)
+        val sha256 = arguments?.getStringArray(SIGNATURE_SHA256)
 
-        val sha1 = arguments?.getString(SIGNATURE_SHA1)
-        binding.textViewSHA1.text = sha1 ?: ""
+        binding.textViewMd5.text = md5?.get(0) ?: ""
 
-        val sha256 = arguments?.getString(SIGNATURE_SHA256)
-        binding.textViewSHA256.text = sha256 ?: ""
+        binding.textViewSHA1.text = sha1?.get(0) ?: ""
+
+        binding.textViewSHA256.text = sha256?.get(0) ?: ""
     }
 
 }

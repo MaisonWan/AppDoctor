@@ -49,7 +49,7 @@ class SystemAboutFragment : Fragment() {
             binding.recyclerView.adapter = it
             binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
             binding.recyclerView.addDividerItemDecoration(requireContext(), R.drawable.inset_recyclerview_divider)
-        }.notifyDataSetChanged()
+        }.notifyItemRangeChanged(0, state.size)
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
