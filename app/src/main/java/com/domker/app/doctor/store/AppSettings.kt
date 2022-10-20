@@ -48,6 +48,7 @@ object AppSettings {
         }
     }
 
+
     /**
      * 存储当前是否包含所有app的值到sp里面
      */
@@ -66,6 +67,15 @@ object AppSettings {
         }
     }
 
+    /**
+     * 获取当前存储的app列表的数据
+     */
+    fun getAppListStyle(context: Context): Flow<String> {
+        return context.settingsDataStore.data.map {
+            it[appListStyleKey] ?: APP_LIST_STYLE_LIST
+        }
+    }
+    
     /**
      * 启动阶段Landing的页面索引
      */

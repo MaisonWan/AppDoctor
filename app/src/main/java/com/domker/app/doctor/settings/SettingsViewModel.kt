@@ -1,9 +1,15 @@
 package com.domker.app.doctor.settings
 
-import androidx.lifecycle.LifecycleOwner
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.domker.app.doctor.store.AppSettings
 import com.domker.base.sp.SettingValue
+import kotlinx.coroutines.launch
+import kotlin.collections.component1
+import kotlin.collections.component2
+import kotlin.collections.set
 
 /**
  * 当设置里面发生了变化
@@ -41,10 +47,10 @@ class SettingsViewModel : ViewModel() {
     /**
      * 监控App列表样式变化
      */
-    fun observerAppListModeChanged(owner: LifecycleOwner, observer: (String) -> Unit) {
-        settingChange.observe(owner) {
-            if (it.key == KEY_APP_LIST_MODE) {
-                observer(it.toString())
+    fun getAppListStyleSync(context: Context, observer: (String) -> Unit) {
+        viewModelScope.launch {
+            AppSettings.getAppListStyle(context).collect {
+                observer(it)
             }
         }
     }

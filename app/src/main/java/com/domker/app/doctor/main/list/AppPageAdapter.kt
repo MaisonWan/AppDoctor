@@ -55,16 +55,14 @@ class AppPageAdapter(
         RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PageViewHolder {
-        val begin = System.currentTimeMillis()
         val binding = PagerAppListItemBinding.inflate(inflater, parent, false)
-        val end = System.currentTimeMillis()
-        println("onCreateViewHolder type=$viewType time=${end - begin}")
         return PageViewHolder(binding)
     }
 
     override fun getItemCount(): Int = pages.size
 
     override fun getItemViewType(position: Int): Int {
+        println("[${this}] getItemViewType position=$position currentLayoutStyle=$currentLayoutStyle")
         return if (currentLayoutStyle == APP_LIST_STYLE_LIST) {
             LAYOUT_TYPE_LIST
         } else {
@@ -117,12 +115,16 @@ class AppPageAdapter(
     /**
      * 更新页面的风格，List或者Grid的
      */
-    fun updateAppListStyle(style: String) {
+    fun setAppListStyle(style: String) {
+        currentLayoutStyle = style
+    }
+
+    /**
+     * 首次加载的时候，需要设定完毕之后重新布局
+     */
+    fun notifyAppListStyleChanged(style: String) {
         currentLayoutStyle = style
         notifyItemRangeChanged(0, pages.size)
-        repeat(itemCount) {
-            adapters[it]?.notifyItemRangeChanged(0, adapters[it]?.itemCount ?: 0)
-        }
     }
 
     private fun notifyData(pageIndex: Int) {

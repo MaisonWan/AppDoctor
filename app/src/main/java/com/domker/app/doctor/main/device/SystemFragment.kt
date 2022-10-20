@@ -28,6 +28,7 @@ class SystemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // 这里需要使用childFragmentManager，因为Fragment层叠使用，其它的FragmentManager会有冲突问题
         binding.viewpager.adapter = SystemPagerAdapter(childFragmentManager, lifecycle)
         TabLayoutMediator(binding.tabLayout, binding.viewpager) { tab, i ->
             tab.setText(TAB_TITLE[i])

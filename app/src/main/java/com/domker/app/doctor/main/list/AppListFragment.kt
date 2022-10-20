@@ -6,7 +6,6 @@ import androidx.activity.ComponentActivity
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.viewpager2.widget.ViewPager2
@@ -20,15 +19,12 @@ import com.domker.app.doctor.settings.SettingsViewModel
 import com.domker.app.doctor.store.AppSettings
 import com.domker.app.doctor.store.LaunchSetting
 import com.domker.app.doctor.widget.BaseAppFragment
-import com.domker.base.sp.SettingValue
 import kotlinx.coroutines.launch
 
 /**
  * 展示App列表的页面，多种不同风格的展示
  */
 class AppListFragment : BaseAppFragment(), MenuProvider {
-    private val settingChange = MutableLiveData<SettingValue<*>>()
-
     private lateinit var binding: FragmentAppListBinding
     private lateinit var mAdapter: AppPageAdapter
     private lateinit var appListViewModel: AppListViewModel
@@ -63,8 +59,9 @@ class AppListFragment : BaseAppFragment(), MenuProvider {
         }
         appListViewModel.updateAppList(appIncludeAll)
 
-        settingsViewModel.observerAppListModeChanged(viewLifecycleOwner) {
-            mAdapter.updateAppListStyle(it)
+        settingsViewModel.getAppListStyleSync(requireContext()) {
+            println("getAppListStyleSync $it")
+            mAdapter.setAppListStyle(it)
         }
     }
 
@@ -109,7 +106,8 @@ class AppListFragment : BaseAppFragment(), MenuProvider {
     override fun onLoadLaunchSetting(launchSetting: LaunchSetting) {
         super.onLoadLaunchSetting(launchSetting)
         binding.viewpager.currentItem = launchSetting.launchPageIndex
-        mAdapter.updateAppListStyle(launchSetting.appListStyle)
+        mAdapter.notifyAppListStyleChanged(launchSetting.appListStyle)
+        println("onLoadLaunchSetting ${launchSetting.appListStyle}")
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
