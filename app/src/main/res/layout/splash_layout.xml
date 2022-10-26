@@ -10,7 +10,7 @@
         android:id="@+id/animationView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:lottie_autoPlay="false"
+        app:lottie_autoPlay="true"
         app:lottie_fileName="Loading_1.json"
         app:lottie_loop="true" />
 </LinearLayout>

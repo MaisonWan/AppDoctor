@@ -14,7 +14,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.domker.doctor.fileprovider"
+            android:authorities="com.domker.app.doctor.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

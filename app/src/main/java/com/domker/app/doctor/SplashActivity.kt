@@ -28,6 +28,9 @@ class SplashActivity : AppCompatActivity() {
         binding = SplashLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.animationView.speed = 1f
+        binding.animationView.playAnimation()
+
         handlerThread = HandlerThread("initThread")
         handlerThread.start()
         mHandler = Handler(handlerThread.looper) { msg ->
@@ -46,7 +49,6 @@ class SplashActivity : AppCompatActivity() {
                 }
             }
         }
-        binding.animationView.speed = 1f
     }
 
     private fun animationEnd() {
@@ -57,12 +59,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun animationBegin() {
-        log("SplashActivityTag", "before updateAppList")
-        val checker = AppCheckFactory.instance
-        if (checker.fetchAppListFromDatabase().isEmpty()) {
-            checker.updateAppListFromSystem()
-        }
-        log("SplashActivityTag", "after updateAppList")
+        updateDatabase()
         mHandler.removeMessages(ACTION_ANIMATION_END)
         if (System.currentTimeMillis() - startTimeStamp > 500) {
             mHandler.sendEmptyMessage(ACTION_ANIMATION_END)
@@ -71,9 +68,17 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
+    private fun updateDatabase() {
+        log("before updateAppList")
+        val checker = AppCheckFactory.instance
+        if (checker.fetchAppListFromDatabase().isEmpty()) {
+            checker.updateAppListFromSystem()
+        }
+        log("after updateAppList")
+    }
+
     override fun onResume() {
         super.onResume()
-        binding.animationView.playAnimation()
         startTimeStamp = System.currentTimeMillis()
         mHandler.sendEmptyMessage(ACTION_ANIMATION_BEGIN)
         mHandler.sendEmptyMessageDelayed(ACTION_ANIMATION_END, 3000)

@@ -18,6 +18,7 @@ import com.domker.app.doctor.detail.home.HomeViewModel
 import com.domker.app.doctor.settings.SettingsViewModel
 import com.domker.app.doctor.store.AppSettings
 import com.domker.app.doctor.store.LaunchSetting
+import com.domker.app.doctor.util.log
 import com.domker.app.doctor.widget.BaseAppFragment
 import kotlinx.coroutines.launch
 
@@ -60,7 +61,7 @@ class AppListFragment : BaseAppFragment(), MenuProvider {
         appListViewModel.updateAppList(appIncludeAll)
 
         settingsViewModel.getAppListStyleSync(requireContext()) {
-            println("getAppListStyleSync $it")
+            log("getAppListStyleSync $it")
             mAdapter.setAppListStyle(it)
         }
     }
@@ -107,7 +108,7 @@ class AppListFragment : BaseAppFragment(), MenuProvider {
         super.onLoadLaunchSetting(launchSetting)
         binding.viewpager.currentItem = launchSetting.launchPageIndex
         mAdapter.notifyAppListStyleChanged(launchSetting.appListStyle)
-        println("onLoadLaunchSetting ${launchSetting.appListStyle}")
+        log("onLoadLaunchSetting ${launchSetting.appListStyle}")
     }
 
     override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {

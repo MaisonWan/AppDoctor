@@ -1,9 +1,13 @@
 package com.domker.app.doctor.detail.home
 
+import android.content.Context
+import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.net.Uri
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.Toast
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
@@ -21,6 +25,7 @@ import com.king.image.imageviewer.ImageViewer
 import com.king.image.imageviewer.loader.GlideImageLoader
 import kotlinx.coroutines.launch
 import java.io.File
+
 
 /**
  * 创建ViewModel
@@ -62,6 +67,35 @@ class HomeViewModel : ViewModel() {
                 }
             }
         }
+    }
+
+    /**
+     * 调用系统分享app
+     */
+    fun shareApp(context: Context) {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        val uri: Uri = FileProvider.getUriForFile(
+            context,
+            "${context.packageName}.provider",
+            File(apkSourcePath!!)
+        )
+        //传输图片或者文件 采用流的方式
+        intent.putExtra(Intent.EXTRA_STREAM, uri)
+        intent.type = "*/*" //分享文件
+        context.startActivity(Intent.createChooser(intent, "分享"))
+    }
+
+    /**
+     * 调用系统分享
+     */
+    private fun invokeSystemShare(context: Context) {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        //传输图片或者文件 采用流的方式
+        intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(File(apkSourcePath!!)))
+        intent.type = "*/*" //分享文件
+        context.startActivity(Intent.createChooser(intent, "分享"))
     }
 
     /**

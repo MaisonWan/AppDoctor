@@ -1,6 +1,9 @@
 package com.domker.app.doctor.detail.home
 
+import android.R.attr.path
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.activity.ComponentActivity
@@ -16,6 +19,8 @@ import com.domker.app.doctor.detail.AppDetailViewModel
 import com.domker.base.addDividerItemDecoration
 import com.domker.base.file.StoragePermissionUtil
 import com.google.android.material.snackbar.Snackbar
+import java.io.File
+
 
 /**
  * App详情信息里面的首页
@@ -113,6 +118,7 @@ class HomeFragment : Fragment(), MenuProvider {
             R.id.menu_setting_app -> homeViewModel.openAppSetting()
             R.id.menu_explorer_app -> homeViewModel.openPackageExplorer()
             R.id.menu_export_app -> exportApp()
+            R.id.menu_share_app -> homeViewModel.shareApp(requireContext())
         }
         return true
     }

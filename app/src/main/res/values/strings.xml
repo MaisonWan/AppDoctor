@@ -56,6 +56,7 @@
     <string name="menu_sort_time">按时间排序</string>
     <string name="menu_sort_name">按名字排序</string>
     <string name="menu_export_apk">导出安装包</string>
+    <string name="menu_share_apk">分享安装包</string>
     <string name="menu_explorer_apk">查看安装包</string>
     <string name="menu_launch_app">启动程序</string>
     <string name="menu_uninstall_app">卸载程序</string>
