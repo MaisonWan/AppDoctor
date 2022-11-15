@@ -27,12 +27,16 @@ fun String?.toChinese(): String {
 /**
  * 对RecyclerView扩展分割线
  */
-fun RecyclerView.addDividerItemDecoration(context: Context, @DrawableRes drawableId: Int) {
+fun RecyclerView.addDividerItemDecoration(
+    context: Context,
+    @DrawableRes drawableId: Int
+): RecyclerView.ItemDecoration {
     val itemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
     ResourcesCompat.getDrawable(resources, drawableId, context.theme)?.apply {
         itemDecoration.setDrawable(this)
     }
     this.addItemDecoration(itemDecoration)
+    return itemDecoration
 }
 
 /**

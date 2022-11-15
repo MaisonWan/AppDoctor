@@ -2,83 +2,81 @@ package com.domker.app.doctor.main.dashboard
 
 import android.os.Bundle
 import android.view.*
+import androidx.activity.ComponentActivity
+import androidx.core.view.MenuProvider
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewpager2.widget.ViewPager2
 import com.domker.app.doctor.R
-import com.domker.app.doctor.data.SORT_NAME
-import com.domker.app.doctor.data.SORT_SIZE
-import com.domker.app.doctor.data.SORT_TIME
-import com.domker.app.doctor.widget.BaseAppFragment
-import com.google.android.material.tabs.TabLayout
+import com.domker.app.doctor.databinding.FragmentMainDashboardBinding
+import com.domker.app.doctor.widget.ViewBindingFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
 /**
  * 数据看板
  */
-class DashboardFragment : BaseAppFragment() {
+class DashboardFragment : ViewBindingFragment<FragmentMainDashboardBinding>(), MenuProvider {
 
     private lateinit var sectionsPagerAdapter: DashboardPagerAdapter
     private lateinit var slideshowViewModel: DashboardViewModel
 
     private lateinit var dashboardContext: DashboardContext
 
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        slideshowViewModel =
-                ViewModelProvider(this).get(DashboardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_main_dashboard, container, false)
+    override fun onCreateViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentMainDashboardBinding {
+        slideshowViewModel = ViewModelProvider(this)[DashboardViewModel::class.java]
         dashboardContext = DashboardContext(this)
-        initViews(root)
-        return root
+        loadConfigOnViewCreated = true
+        return FragmentMainDashboardBinding.inflate(inflater, container, false)
     }
 
-    private fun initViews(rootView: View) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initViews()
+        initMenu()
+    }
+
+    private fun initViews() {
         val tabTitle = intArrayOf(R.string.item_package_size, R.string.item_install_time)
         sectionsPagerAdapter = DashboardPagerAdapter(dashboardContext, tabTitle)
-        val viewPager: ViewPager2 = rootView.findViewById(R.id.view_pager)
-        viewPager.adapter = sectionsPagerAdapter
 
-        val tabs: TabLayout = rootView.findViewById(R.id.tabs)
-        TabLayoutMediator(tabs, viewPager) { tab, position ->
+        binding.viewPager.adapter = sectionsPagerAdapter
+
+        TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             tab.setText(tabTitle[position])
         }.attach()
-        setHasOptionsMenu(true)
     }
 
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        menu.clear()
-        inflater.inflate(R.menu.dashboard_menu, menu)
+    private fun initMenu() {
+        (activity as ComponentActivity).addMenuProvider(this, viewLifecycleOwner)
     }
 
     override fun onAppIncludeChanged(includeAll: Boolean) {
         super.onAppIncludeChanged(includeAll)
         val list = dashboardContext.reloadAppList(includeAll)
-        sectionsPagerAdapter.getDataProcessor().resetData(list)
+        sectionsPagerAdapter.getDataProcessor().setData(list)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+        menuInflater.inflate(R.menu.dashboard_menu, menu)
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
         val p = sectionsPagerAdapter.getDataProcessor()
-        return when (item.itemId) {
+        return when (menuItem.itemId) {
             R.id.menu_sort_time -> {
-                p.sortBy(SORT_TIME)
+//                p.sortBy(SORT_TIME)
                 true
             }
             R.id.menu_sort_name -> {
-                p.sortBy(SORT_NAME)
+//                p.sortBy(SORT_NAME)
                 true
             }
             R.id.menu_sort_size -> {
-                p.sortBy(SORT_SIZE)
+//                p.sortBy(SORT_SIZE)
                 true
             }
-            else -> {
-                super.onOptionsItemSelected(item)
-            }
+            else -> false
         }
     }
 }

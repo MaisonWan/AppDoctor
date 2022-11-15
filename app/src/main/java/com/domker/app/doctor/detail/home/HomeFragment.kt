@@ -1,9 +1,5 @@
 package com.domker.app.doctor.detail.home
 
-import android.R.attr.path
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.*
 import androidx.activity.ComponentActivity
@@ -19,7 +15,6 @@ import com.domker.app.doctor.detail.AppDetailViewModel
 import com.domker.base.addDividerItemDecoration
 import com.domker.base.file.StoragePermissionUtil
 import com.google.android.material.snackbar.Snackbar
-import java.io.File
 
 
 /**
@@ -69,9 +64,8 @@ class HomeFragment : Fragment(), MenuProvider {
     }
 
     private fun initButtonListener() {
-        val context = requireContext()
         binding.buttonLayout.buttonStart.setOnClickListener {
-            launchApp(it, context)
+            launchApp(it)
         }
 
         binding.buttonLayout.buttonApkExplorer.setOnClickListener {
@@ -102,7 +96,7 @@ class HomeFragment : Fragment(), MenuProvider {
     /**
      * 启动App
      */
-    private fun launchApp(view: View, context: Context): Boolean {
+    private fun launchApp(view: View): Boolean {
         Snackbar.make(view, R.string.action_launch_app, Snackbar.LENGTH_LONG)
             .setAction(R.string.launch) {
                 homeViewModel.launchApp()
@@ -113,7 +107,7 @@ class HomeFragment : Fragment(), MenuProvider {
 
     private fun menuActions(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_start_app -> launchApp(requireView(), requireContext())
+            R.id.menu_start_app -> launchApp(requireView())
             R.id.menu_uninstall_app -> uninstallApp(requireView())
             R.id.menu_setting_app -> homeViewModel.openAppSetting()
             R.id.menu_explorer_app -> homeViewModel.openPackageExplorer()

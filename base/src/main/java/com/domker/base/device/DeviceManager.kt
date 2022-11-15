@@ -13,7 +13,6 @@ import android.telephony.TelephonyManager
 import android.text.format.Formatter
 import android.util.DisplayMetrics
 import android.view.WindowManager
-import androidx.annotation.RequiresApi
 import com.domker.base.SystemVersion
 import com.domker.base.addPair
 import java.io.BufferedReader
@@ -91,12 +90,13 @@ class DeviceManager(private val context: Context) {
         @SuppressLint("HardwareIds")
         get() = mTelephonyManager.deviceId ?: NOT_AVAILABLE
 
-    @RequiresApi(Build.VERSION_CODES.M)
+    @SuppressLint("HardwareIds")
     fun getIMEI(index: Int): String {
         return mTelephonyManager.getDeviceId(index) ?: NOT_AVAILABLE
     }
 
     val macAddress: String
+        @SuppressLint("MissingPermission")
         get() {
             val wifi =
                 context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
@@ -147,17 +147,12 @@ class DeviceManager(private val context: Context) {
         }
 
     private val cpuABI: String
-        get() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Arrays.toString(Build.SUPPORTED_ABIS)
-        } else {
-            Build.CPU_ABI
-        }
+        get() = Arrays.toString(Build.SUPPORTED_ABIS)
 
     /**
      * 得到屏幕分辨率
      *
-     * @param activity
-     * @return String
+     * @return Pair<Int, Int>
      */
     fun getScreenSize(): Pair<Int, Int> {
         val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
@@ -263,7 +258,7 @@ class DeviceManager(private val context: Context) {
 
                 initialMemory = arrayOfString.toLong() * 1024 // 获得系统总内存，单位是KB，乘以1024转换为Byte
                 localBufferedReader.close()
-            } catch (e: IOException) {
+            } catch (_: IOException) {
             }
             return Formatter.formatFileSize(context, initialMemory) // Byte转换为KB或者MB，内存大小规格化
         }

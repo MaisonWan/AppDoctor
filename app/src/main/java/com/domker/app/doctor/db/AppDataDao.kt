@@ -2,7 +2,6 @@ package com.domker.app.doctor.db
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import org.jetbrains.annotations.NotNull
 
 /**
  * App数据的操作类
@@ -21,20 +20,20 @@ interface AppDataDao {
     fun appDataByPackageName(packageName: String): LiveData<AppEntity>
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun updateAppData(@NotNull appEntity: AppEntity): Int
+    fun updateAppData(appEntity: AppEntity): Int
 
     @Update
-    fun updateAppData(@NotNull appEntityList: List<AppEntity>): Int
+    fun updateAppData(appEntityList: List<AppEntity>): Int
 
     @Delete
-    fun deleteAppData(@NotNull appEntity: AppEntity): Int
+    fun deleteAppData(appEntity: AppEntity): Int
 
     @Delete
-    fun deleteAppData(@NotNull appEntity: List<AppEntity>): Int
+    fun deleteAppData(appEntity: List<AppEntity>): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAppData(@NotNull appEntity: AppEntity)
+    fun insertAppData(appEntity: AppEntity)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAppData(@NotNull appEntityList: List<AppEntity>)
+    fun insertAppData(appEntityList: List<AppEntity>)
 }

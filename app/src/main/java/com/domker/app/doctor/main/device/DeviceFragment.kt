@@ -9,24 +9,21 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.domker.app.doctor.R
 import com.domker.app.doctor.databinding.FragmentMainDeviceBinding
-import com.domker.app.doctor.widget.BaseAppFragment
+import com.domker.app.doctor.widget.ViewBindingFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.google.android.material.navigation.NavigationBarView
 
 /**
  * 本机信息
  * Created by wanlipeng on 2021/5/11 4:54 下午
  */
-class DeviceFragment : BaseAppFragment() {
-    private lateinit var binding: FragmentMainDeviceBinding
+class DeviceFragment : ViewBindingFragment<FragmentMainDeviceBinding>() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentMainDeviceBinding.inflate(layoutInflater, container, false)
-        return binding.root
+    override fun onCreateViewBinding(
+        inflater: LayoutInflater,
+        container: ViewGroup?
+    ): FragmentMainDeviceBinding {
+        return FragmentMainDeviceBinding.inflate(layoutInflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

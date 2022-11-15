@@ -1,5 +1,6 @@
 package com.domker.app.doctor.settings
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -24,10 +25,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
-        initCallback()
+        initCallback(requireContext())
     }
 
-    private fun initCallback() {
+    private fun initCallback(context: Context) {
         preferenceManager.sharedPreferences?.registerOnSharedPreferenceChangeListener { sp, key ->
             val v = when (key) {
                 // Boolean类型的值
@@ -35,7 +36,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 KEY_SKIN_MODE -> sp.settingValueOf(key, VALUE_SKIN_MODE_DEFAULT)
                 KEY_APP_LIST_MODE -> sp.settingValueOf(key, VALUE_APP_LIST_MODE_DEFAULT).also { s ->
                     // 提前获取Context，避免协程异步获取不到
-                    val context = requireContext()
                     lifecycleScope.launch {
                         AppSettings.setAppListStyle(context, s.value)
                     }

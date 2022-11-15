@@ -90,6 +90,14 @@ class AppEntity {
 
     @Ignore
     var deviceProtectedDataDir: String? = null
+
+
+    companion object {
+        // 排序对比函数
+        val sortByName: ((AppEntity) -> Comparable<*>?) = { it.appName }
+        val sortBySize: ((AppEntity) -> Comparable<*>?) = { it.sourceApkSize }
+        val sortByTime: ((AppEntity) -> Comparable<*>?) = { it.installTime }
+    }
 }
 
 
@@ -142,7 +150,8 @@ fun AppEntity.parseFrom(
  * 判断是否是系统应用
  */
 private fun isSystemApp(flags: Int): Boolean {
-    val isSysApp = (flags and ApplicationInfo.FLAG_SYSTEM) == 1
-    val isSysUpdate = (flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) == 1
+    val isSysApp = (flags and ApplicationInfo.FLAG_SYSTEM) != 0
+    val isSysUpdate = (flags and ApplicationInfo.FLAG_UPDATED_SYSTEM_APP) != 0
     return isSysApp or isSysUpdate
 }
+

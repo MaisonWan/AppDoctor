@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.domker.app.doctor.R
 import com.domker.app.doctor.databinding.FragmentMainPhotoBinding
-import com.domker.app.doctor.widget.BaseAppFragment
+import com.domker.app.doctor.widget.ViewBindingFragment
 import com.domker.base.addDividerItemDecoration
 
 /**
@@ -19,9 +19,8 @@ import com.domker.base.addDividerItemDecoration
  *
  * Created by wanlipeng on 2021/5/12 5:36 下午
  */
-class PhotoAnalysisFragment : BaseAppFragment() {
+class PhotoAnalysisFragment : ViewBindingFragment<FragmentMainPhotoBinding>() {
     private lateinit var adapter: ExifListAdapter
-    private lateinit var binding: FragmentMainPhotoBinding
     private lateinit var exifViewModel: ExifViewModel
     private lateinit var launcher: ActivityResultLauncher<Intent>
 
@@ -33,15 +32,12 @@ class PhotoAnalysisFragment : BaseAppFragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(
+    override fun onCreateViewBinding(
         inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+        container: ViewGroup?
+    ): FragmentMainPhotoBinding {
         exifViewModel = ViewModelProvider(this)[ExifViewModel::class.java]
-
-        binding = FragmentMainPhotoBinding.inflate(inflater, container, false)
-        return binding.root
+        return FragmentMainPhotoBinding.inflate(inflater, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

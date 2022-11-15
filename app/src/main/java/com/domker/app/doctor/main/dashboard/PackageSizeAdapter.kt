@@ -8,10 +8,10 @@ import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.domker.app.doctor.R
-import com.domker.app.doctor.data.AppDataProcessor
-import com.domker.app.doctor.data.DataProcessor
+import com.domker.app.doctor.db.AppEntity
 import com.domker.app.doctor.main.dashboard.PackageSizeAdapter.PackageSizeViewHolder
 import com.domker.app.doctor.util.DataFormat
+import com.domker.app.doctor.view.DataSortAdapter
 import com.domker.base.file.AppFileUtils
 import kotlinx.coroutines.flow.combineTransform
 import kotlinx.coroutines.launch
@@ -21,22 +21,14 @@ import kotlinx.coroutines.launch
  * Created by wanlipeng on 2020/6/15 12:33 AM
  */
 class PackageSizeAdapter(private val dashboardContext: DashboardContext) :
-        RecyclerView.Adapter<PackageSizeViewHolder>(), DataProcessor {
+    DataSortAdapter<PackageSizeViewHolder, AppEntity>(dashboardContext.context) {
 
-    private val dataProcessor = AppDataProcessor(dashboardContext.appList)
     private val inflater = LayoutInflater.from(dashboardContext.context)
 
     init {
-        dataProcessor.setOnSortedCallback { type, desc ->
-            dashboardContext.fragment.lifecycleScope.launch {
-                dashboardContext.setting.writeSortType(type)
-                dashboardContext.setting.writeSortDescending(desc)
-            }
-            dashboardContext.fragment.lifecycleScope.launch {
-                notifyDataSetChanged()
-            }
-        }
+        setData(dashboardContext.appList)
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PackageSizeViewHolder {
         val root = inflater.inflate(R.layout.item_package_size, parent, false)
         return PackageSizeViewHolder(root)
@@ -46,22 +38,29 @@ class PackageSizeAdapter(private val dashboardContext: DashboardContext) :
         super.onViewAttachedToWindow(holder)
         val isDesc = dashboardContext.setting.readSortDescending()
         dashboardContext.setting.readSortType().combineTransform(isDesc) { type, desc ->
-            dataProcessor.sortBy(type, desc)
+//            dataProcessor.sortBy(type, desc)
             emit(Unit)
         }
     }
 
-    override fun getItemCount(): Int {
-        return dataProcessor.size()
-    }
-
     override fun onBindViewHolder(holder: PackageSizeViewHolder, position: Int) {
-        val appEntity = dataProcessor[position]
+        val appEntity = getItem(position)
         holder.icon?.setImageDrawable(appEntity.iconDrawable)
         holder.appName?.text = "${appEntity.appName}(${appEntity.versionName})"
         holder.packageSize?.text = AppFileUtils.formatFileSize(appEntity.sourceApkSize!!)
         holder.systemApp?.visibility = if (appEntity.isSystemApp) View.VISIBLE else View.INVISIBLE
         holder.installTime?.text = DataFormat.getDataFromTimestamp(appEntity.updateTime)
+    }
+
+    override fun onEndSort(data: List<AppEntity>, itemId: Int, desc: Boolean) {
+        super.onEndSort(data, itemId, desc)
+        dashboardContext.fragment.lifecycleScope.launch {
+            dashboardContext.setting.writeSortType(itemId)
+            dashboardContext.setting.writeSortDescending(desc)
+        }
+        dashboardContext.fragment.lifecycleScope.launch {
+            notifyAllDataChanged()
+        }
     }
 
     class PackageSizeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -72,5 +71,4 @@ class PackageSizeAdapter(private val dashboardContext: DashboardContext) :
         val installTime: TextView? = itemView.findViewById(R.id.textViewInstallTime)
     }
 
-    override fun getDataProcessor(): AppDataProcessor = dataProcessor
 }

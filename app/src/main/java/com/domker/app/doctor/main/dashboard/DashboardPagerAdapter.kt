@@ -6,8 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.domker.app.doctor.R
-import com.domker.app.doctor.data.AppDataProcessor
-import com.domker.app.doctor.data.DataProcessor
 import com.domker.base.addDividerItemDecoration
 
 
@@ -16,8 +14,7 @@ import com.domker.base.addDividerItemDecoration
  */
 class DashboardPagerAdapter(private val dashboardContext: DashboardContext,
                             private val tabTitleRes: IntArray) :
-        RecyclerView.Adapter<DashboardPagerAdapter.PageViewHolder>(),
-        DataProcessor {
+        RecyclerView.Adapter<DashboardPagerAdapter.PageViewHolder>() {
     private val context = dashboardContext.context
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var packageSizeAdapter = PackageSizeAdapter(dashboardContext)
@@ -47,7 +44,7 @@ class DashboardPagerAdapter(private val dashboardContext: DashboardContext,
             this.layoutManager = LinearLayoutManager(context)
             this.addDividerItemDecoration(context, R.drawable.inset_recyclerview_divider)
             this.setItemViewCacheSize(100)
-            packageSizeAdapter.notifyDataSetChanged()
+            packageSizeAdapter.notifyAllDataChanged()
         }
     }
 
@@ -55,5 +52,5 @@ class DashboardPagerAdapter(private val dashboardContext: DashboardContext,
         val recyclerView: RecyclerView? = view.findViewById(R.id.recyclerViewPackageSize)
     }
 
-    override fun getDataProcessor(): AppDataProcessor = packageSizeAdapter.getDataProcessor()
+    fun getDataProcessor() = packageSizeAdapter.getDataProcessor()
 }

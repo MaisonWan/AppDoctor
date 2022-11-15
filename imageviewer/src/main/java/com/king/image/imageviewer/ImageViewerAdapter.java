@@ -33,14 +33,11 @@ public class ImageViewerAdapter extends Adapter<ImageViewerAdapter.ImageHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ImageHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull ImageHolder holder, int position) {
         holder.displayImage(mDatas.get(position));
-        holder.photoView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mOnItemClickListener != null) {
-                    mOnItemClickListener.onClick(v, position);
-                }
+        holder.photoView.setOnClickListener(v -> {
+            if (mOnItemClickListener != null) {
+                mOnItemClickListener.onClick(v, position);
             }
         });
     }
