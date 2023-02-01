@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import com.domker.app.doctor.databinding.FragmentSystemLinkBinding
 import com.domker.app.doctor.widget.ViewBindingFragment
 
@@ -11,6 +12,7 @@ import com.domker.app.doctor.widget.ViewBindingFragment
  * 系统链接的界面
  */
 class SystemLinkFragment : ViewBindingFragment<FragmentSystemLinkBinding>() {
+    private val list = mutableListOf<SystemLink>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,6 +31,11 @@ class SystemLinkFragment : ViewBindingFragment<FragmentSystemLinkBinding>() {
     }
 
     private fun initViews() {
-//        binding.recyclerView.adapter =
+        val adapter = SystemLinkAdapter(requireContext())
+        binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager = GridLayoutManager(context, 4)
+
+        adapter.setData(SystemLinkData().getData())
     }
+
 }

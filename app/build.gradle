@@ -87,10 +87,11 @@ dependencies {
     implementation 'androidx.paging:paging-runtime-ktx:3.1.1'
     implementation 'androidx.paging:paging-common-ktx:3.1.1'
 
-    implementation 'androidx.room:room-runtime:2.4.3'
-    implementation 'androidx.room:room-ktx:2.4.3'
+    implementation 'androidx.room:room-runtime:2.5.0'
+    implementation 'androidx.room:room-ktx:2.5.0'
+    kapt 'androidx.room:room-compiler:2.5.0'
+
     implementation 'androidx.preference:preference-ktx:1.2.0'
-    kapt 'androidx.room:room-compiler:2.4.3'
 
     implementation "androidx.datastore:datastore-preferences:1.0.0"
     implementation "androidx.datastore:datastore-preferences-core:1.0.0"
@@ -102,7 +103,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
 
-    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'com.google.android.material:material:1.8.0'
     implementation 'com.airbnb.android:lottie:5.2.0'
 
     implementation 'com.alibaba:arouter-api:1.5.2'

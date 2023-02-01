@@ -14,24 +14,24 @@ import io.reactivex.rxjava3.schedulers.Schedulers
  */
 object RxHelper {
 
-    fun <T> observableIO2Main(): ObservableTransformer<T, T> {
+    fun <T : Any> observableIO2Main(): ObservableTransformer<T, T> {
         return ObservableTransformer { upstream ->
             upstream.subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
         }
     }
 
-    fun <T> flowableIO2Main(): FlowableTransformer<T, T> {
+    fun <T : Any> flowableIO2Main(): FlowableTransformer<T, T> {
         return FlowableTransformer { upstream ->
             upstream.subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
         }
     }
 
-    fun <T> singleIO2Main(): SingleTransformer<T, T> {
+    fun <T : Any> singleIO2Main(): SingleTransformer<T, T> {
         return SingleTransformer { upstream ->
             upstream.subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
         }
     }
 

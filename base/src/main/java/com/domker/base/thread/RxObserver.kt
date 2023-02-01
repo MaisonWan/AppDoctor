@@ -8,7 +8,7 @@ import io.reactivex.rxjava3.disposables.Disposable
  *
  * @param <T>
 </T> */
-abstract class RxObserver<T> : Observer<T> {
+abstract class RxObserver<T : Any> : Observer<T> {
     override fun onNext(t: T) {
         onSuccess(t)
     }

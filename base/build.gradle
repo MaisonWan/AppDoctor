@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id 'org.jetbrains.kotlin.android'
 }
 
 android {
@@ -27,10 +28,10 @@ android {
 
 dependencies {
     api 'androidx.core:core-ktx:1.9.0'
-    api 'androidx.appcompat:appcompat:1.5.1'
-    api 'com.google.android.material:material:1.7.0'
+    api 'androidx.appcompat:appcompat:1.6.0'
+    api 'com.google.android.material:material:1.8.0'
     api 'androidx.viewpager2:viewpager2:1.0.0'
-    api 'androidx.fragment:fragment-ktx:1.5.4'
+    api 'androidx.fragment:fragment-ktx:1.5.5'
 
     api 'io.reactivex.rxjava3:rxjava:3.1.5'
     api 'io.reactivex.rxjava3:rxandroid:3.0.0'
@@ -41,5 +42,6 @@ dependencies {
     api "androidx.datastore:datastore-core:1.0.0"
     api "androidx.datastore:datastore-preferences:1.0.0"
     api "androidx.datastore:datastore-preferences-core:1.0.0"
+    implementation 'androidx.core:core-ktx:+'
 }
 

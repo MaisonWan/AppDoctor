@@ -45,4 +45,11 @@ object IntentUtil {
             it.data = Uri.fromParts("package", packageName, null)
         }
     }
+
+    /**
+     * 打开系统设置的Intent
+     */
+    fun systemSettings(): Intent {
+        return Intent(Settings.ACTION_SETTINGS)
+    }
 }
