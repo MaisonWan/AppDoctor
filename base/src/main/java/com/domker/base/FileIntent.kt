@@ -28,7 +28,7 @@ object FileIntent {
     }
 
     private fun createFileIntent(context: Context, dataType: String, file: File): Intent {
-        val apkUri: Uri = FileProvider.getUriForFile(context, "com.domker.doctor.fileprovider", file)
+        val apkUri: Uri = FileProvider.getUriForFile(context, "com.domker.app.doctor.provider", file)
         val intent = Intent("android.intent.action.VIEW")
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

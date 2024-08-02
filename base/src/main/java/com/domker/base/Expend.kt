@@ -79,3 +79,7 @@ inline fun InputStream.copyTo(
     }
     return bytesCopied
 }
+
+fun <T : RecyclerView.ViewHolder?> RecyclerView.Adapter<T>.notifyAllDataChanged() {
+    this.notifyItemRangeChanged(0, this.itemCount)
+}

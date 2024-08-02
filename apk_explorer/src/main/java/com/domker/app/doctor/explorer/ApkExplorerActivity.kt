@@ -7,7 +7,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.domker.app.doctor.explorer.databinding.ActivityApkExplorerBinding
 import com.domker.app.doctor.explorer.main.ExplorerPagerAdapter
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 @Route(path = "/apk_explorer/activity")
@@ -23,21 +22,26 @@ class ApkExplorerActivity : AppCompatActivity() {
         binding = ActivityApkExplorerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        apkSourcePath = intent.getStringExtra("apk_source_path") ?: ""
-        appPackageName = intent.getStringExtra("package_name") ?: ""
+        intent.apply {
+            apkSourcePath = getStringExtra("apk_source_path") ?: ""
+            appPackageName = getStringExtra("package_name") ?: ""
+        }
 
+        initViews()
+
+        onBackKeyPressed()
+    }
+
+    private fun initViews() {
         binding.viewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         pageAdapter = ExplorerPagerAdapter(this, this, apkSourcePath, appPackageName, tabTitleRes) {
             binding.loading.hide()
         }
         binding.viewPager.adapter = pageAdapter
 
-        val tabLayout: TabLayout = binding.tabs
-        TabLayoutMediator(tabLayout, binding.viewPager) { tab, position ->
+        TabLayoutMediator(binding.tabs, binding.viewPager) { tab, position ->
             tab.setText(tabTitleRes[position])
         }.attach()
-
-        onBackKeyPressed()
     }
 
     /**

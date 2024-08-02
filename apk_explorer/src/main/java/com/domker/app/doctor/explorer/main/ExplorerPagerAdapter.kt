@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.domker.app.doctor.explorer.R
 import com.domker.base.addDividerItemDecoration
+import com.domker.base.notifyAllDataChanged
 import com.domker.base.readZipFileList
 import com.domker.base.thread.AppExecutors
 import java.io.File
@@ -70,11 +71,11 @@ class ExplorerPagerAdapter(private val context: Context,
         val adapter = ExplorerItemAdapter(context, apkSourcePath)
         explorerAdapter = adapter
         // 异步获取apk内部目录之后的结果
-        viewModel.appInfo.observe(owner, {
+        viewModel.appInfo.observe(owner) {
             adapter.loadItems(it)
-            adapter.notifyDataSetChanged()
+            adapter.notifyItemRangeChanged(0, it.size)
             onLoadCompleteListener()
-        })
+        }
         // 异步获取apk内部结构完全的数据
         AppExecutors.executor.execute {
             val apkFile = File(apkSourcePath)
@@ -124,7 +125,7 @@ class ExplorerPagerAdapter(private val context: Context,
             this.layoutManager = LinearLayoutManager(context)
             this.addDividerItemDecoration(context, R.drawable.inset_recyclerview_divider)
             this.setItemViewCacheSize(100)
-            a.notifyDataSetChanged()
+            a.notifyAllDataChanged()
         }
     }
 
