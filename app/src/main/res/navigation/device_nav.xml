@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/navigation_system"
-        android:name="com.domker.app.doctor.main.device.SystemFragment"
+        android:name="com.domker.doctor.main.device.SystemFragment"
         android:label="@string/title_system"
         tools:layout="@layout/fragment_device_system" />
     <fragment
         android:id="@+id/navigation_store"
-        android:name="com.domker.app.doctor.main.device.StoreFragment"
+        android:name="com.domker.doctor.main.device.StoreFragment"
         android:label="@string/title_store"
         tools:layout="@layout/fragment_device_store" />
     <fragment
         android:id="@+id/navigation_properties"
-        android:name="com.domker.app.doctor.main.device.PropertiesFragment"
+        android:name="com.domker.doctor.main.device.PropertiesFragment"
         android:label="@string/title_system_properties"
         tools:layout="@layout/fragment_device_properties" />
 

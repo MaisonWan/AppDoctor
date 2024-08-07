@@ -12,7 +12,7 @@
         tools:ignore="ScopedStorage" />
 
     <application
-        android:name=".CheckerApplication"
+        android:name="com.domker.doctor.CheckerApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -30,7 +30,7 @@
 
         </activity>
         <activity
-            android:name=".detail.AppDetailActivity"
+            android:name=".app.detail.AppDetailActivity"
             android:exported="false"
             android:label="@string/title_activity_app_analyze"
             android:theme="@style/AppTheme.NoActionBar" />

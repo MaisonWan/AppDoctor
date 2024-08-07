@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application>
-        <activity android:name=".json.JsonViewerActivity" />
+        <activity android:name="com.domker.doctor.explorer.json.JsonViewerActivity" />
         <activity
-            android:name="com.domker.app.doctor.explorer.resource.ResourceExplorerActivity"
+            android:name=".resource.ResourceExplorerActivity"
             android:label="@string/title_activity_resource_explorer"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -14,7 +14,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.domker.app.doctor.provider"
+            android:authorities="com.domker.doctor.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

@@ -2,6 +2,7 @@
 <resources>
     <string name="title_activity_battery">BatteryActivity</string>
     <string name="title_battery">Battery</string>
+    <string name="battery">电池</string>
     <string name="battery_charging">充电中</string>
     <string name="battery_charging_unknown">未知状态</string>
     <string name="battery_discharging">未充电</string>

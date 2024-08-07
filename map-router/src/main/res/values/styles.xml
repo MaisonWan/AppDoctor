@@ -1,6 +1,6 @@
 <resources>
 
-    <!-- Base application com.domker.app.doctor.battery.theme. -->
+    <!-- Base application com.domker.doctor.battery.theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
     </style>
 

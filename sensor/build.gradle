@@ -35,7 +35,7 @@ android {
     buildFeatures {
         viewBinding true
     }
-    namespace 'com.domker.app.doctor.hardware'
+    namespace 'com.domker.doctor.hardware'
 }
 
 dependencies {

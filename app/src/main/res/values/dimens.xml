@@ -16,4 +16,7 @@
     <dimen name="detail_button_height">35dp</dimen>
     <dimen name="list_item_spacing">16dp</dimen>
     <dimen name="list_item_spacing_half">8dp</dimen>
+
+    <dimen name="overview_text_main">14sp</dimen>
+    <dimen name="overview_text_secondary">11sp</dimen>
 </resources>

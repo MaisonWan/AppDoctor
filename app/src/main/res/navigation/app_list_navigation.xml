@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_app"
-        android:name="com.domker.app.doctor.main.applist.AppFragment"
+        android:name="com.domker.doctor.main.applist.AppFragment"
         android:label="fragment_app"
         tools:layout="@layout/pager_app_list_item" />
 
     <fragment
         android:id="@+id/navigation_system"
-        android:name="com.domker.app.doctor.main.applist.SystemLinkFragment"
+        android:name="com.domker.doctor.main.applist.SystemLinkFragment"
         android:label="fragment_app"
         tools:layout="@layout/fragment_system_link" />
 </navigation>

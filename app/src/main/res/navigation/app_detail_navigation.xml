@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_main"
-        android:name="com.domker.app.doctor.detail.home.HomeFragment"
+        android:name="com.domker.doctor.app.detail.home.HomeFragment"
         android:label="@string/title_main"
         tools:layout="@layout/fragment_detail_main">
         <action
@@ -29,7 +29,7 @@
 
     <fragment
         android:id="@+id/navigation_component"
-        android:name="com.domker.app.doctor.detail.component.ComponentFragment"
+        android:name="com.domker.doctor.app.detail.component.ComponentFragment"
         android:label="@string/title_component"
         tools:layout="@layout/fragment_detail_component">
         <action
@@ -39,19 +39,19 @@
 
     <fragment
         android:id="@+id/navigation_component_detail"
-        android:name="com.domker.app.doctor.detail.component.ComponentDetailFragment"
+        android:name="com.domker.doctor.app.detail.component.ComponentDetailFragment"
         android:label="@string/title_component_detail"
         tools:layout="@layout/fragment_detail_component_info" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.domker.app.doctor.detail.dashboard.DashboardFragment"
+        android:name="com.domker.doctor.app.detail.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_main_dashboard" />
 
     <fragment
         android:id="@+id/navigation_permission"
-        android:name="com.domker.app.doctor.detail.permission.PermissionFragment"
+        android:name="com.domker.doctor.app.detail.permission.PermissionFragment"
         android:label="@string/title_permission"
         tools:layout="@layout/fragment_detail_permission">
         <action
@@ -60,12 +60,12 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_permission_detail"
-        android:name="com.domker.app.doctor.detail.permission.PermissionDetailFragment"
+        android:name="com.domker.doctor.app.detail.permission.PermissionDetailFragment"
         android:label="@string/title_permission_detail"
         tools:layout="@layout/fragment_detail_permission_info" />
     <fragment
         android:id="@+id/navigation_lib"
-        android:name="com.domker.app.doctor.detail.lib.AppLibFragment"
+        android:name="com.domker.doctor.app.detail.lib.AppLibFragment"
         android:label="@string/title_lib"
         tools:layout="@layout/fragment_app_lib">
         <action
@@ -76,13 +76,13 @@
     </fragment>
     <fragment
         android:id="@+id/navigation_lib_detail"
-        android:name="com.domker.app.doctor.detail.lib.AppLibDetailFragment"
+        android:name="com.domker.doctor.app.detail.lib.AppLibDetailFragment"
         android:label="@string/title_lib_detail"
         tools:layout="@layout/fragment_app_lib_detail" />
 
     <dialog
         android:id="@+id/navigation_signature_dialog"
-        android:name="com.domker.app.doctor.detail.home.SignatureDialogFragment"
+        android:name="com.domker.doctor.app.detail.home.SignatureDialogFragment"
         android:label="fragment_signature_dialog"
         tools:layout="@layout/fragment_signature_dialog" />
 

@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.content.Context
 import android.content.pm.PackageManager
+import android.graphics.Point
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.Environment
@@ -12,14 +13,17 @@ import android.provider.Settings
 import android.telephony.TelephonyManager
 import android.text.format.Formatter
 import android.util.DisplayMetrics
+import android.view.Display
 import android.view.WindowManager
+import androidx.annotation.RequiresApi
 import com.domker.base.SystemVersion
 import com.domker.base.addPair
 import java.io.BufferedReader
 import java.io.FileReader
 import java.io.IOException
-import java.util.*
 import java.util.regex.Pattern
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 
 private const val NOT_AVAILABLE = "not available"
@@ -147,7 +151,7 @@ class DeviceManager(private val context: Context) {
         }
 
     private val cpuABI: String
-        get() = Arrays.toString(Build.SUPPORTED_ABIS)
+        get() = Build.SUPPORTED_ABIS.contentToString()
 
     /**
      * 得到屏幕分辨率
@@ -163,6 +167,32 @@ class DeviceManager(private val context: Context) {
             val dm = DisplayMetrics()
             wm.defaultDisplay.getRealMetrics(dm)
             Pair(dm.widthPixels, dm.heightPixels)
+        }
+    }
+
+    /**
+     * 得到屏幕的物理尺寸，由于该尺寸是在出厂时，厂商写死的，所以仅供参考
+     * 计算方法：获取到屏幕的分辨率:point.x和point.y，再取出屏幕的DPI（每英寸的像素数量），
+     * 计算长和宽有多少英寸，即：point.x / dm.xdpi，point.y / dm.ydpi，屏幕的长和宽算出来了，
+     * 再用勾股定理，计算出斜角边的长度，即屏幕尺寸。
+     * @return
+     */
+    fun getPhysicsScreenSize(): Double {
+        val manager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val point = Point()
+        manager.defaultDisplay.getRealSize(point)
+        val dm = context.resources.displayMetrics
+        val densityDpi = dm.densityDpi //得到屏幕的密度值，但是该密度值只能作为参考，因为他是固定的几个密度值。
+        val x = (point.x / dm.xdpi).pow(2).toDouble() //dm.xdpi是屏幕x方向的真实密度值，比上面的densityDpi真实。
+        val y = (point.y / dm.ydpi).pow(2).toDouble() //dm.xdpi是屏幕y方向的真实密度值，比上面的densityDpi真实。
+        return sqrt(x + y)
+    }
+
+    fun getRefreshRate(): Int {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            context.display?.refreshRate?.toInt() ?: 60
+        } else {
+            60
         }
     }
 

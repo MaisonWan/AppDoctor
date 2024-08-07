@@ -3,41 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@+id/nav_app_list">
+    app:startDestination="@+id/nav_overview">
 
     <fragment
+        android:id="@+id/nav_overview"
+        android:name="com.domker.doctor.overview.OverviewFragment"
+        android:label="@string/menu_overview"
+        tools:layout="@layout/fragment_overview_list" />
+    <fragment
         android:id="@+id/nav_app_list"
-        android:name="com.domker.app.doctor.overview.OverviewFragment"
+        android:name="com.domker.doctor.main.applist.AppListFragment"
         android:label="@string/menu_app_list"
         tools:layout="@layout/fragment_app_list" />
     <fragment
         android:id="@+id/nav_photo_info"
-        android:name="com.domker.app.doctor.main.photo.PhotoAnalysisFragment"
+        android:name="com.domker.doctor.main.photo.PhotoAnalysisFragment"
         android:label="@string/menu_photo_info"
         tools:layout="@layout/fragment_main_photo" />
     <fragment
         android:id="@+id/nav_dashboard"
-        android:name="com.domker.app.doctor.main.dashboard.DashboardFragment"
+        android:name="com.domker.doctor.main.dashboard.DashboardFragment"
         android:label="@string/menu_dashboard"
         tools:layout="@layout/fragment_slideshow" />
     <fragment
         android:id="@+id/nav_system_info"
-        android:name="com.domker.app.doctor.main.device.DeviceFragment"
+        android:name="com.domker.doctor.main.device.DeviceFragment"
         android:label="@string/menu_system_info"
         tools:layout="@layout/activity_device" />
     <fragment
         android:id="@+id/nav_battery"
-        android:name="com.domker.app.doctor.battery.BatteryFragment"
+        android:name="com.domker.doctor.battery.BatteryFragment"
         android:label="@string/menu_battery"
         tools:layout="@layout/battery_fragment_layout" />
     <fragment
         android:id="@+id/nav_hardware"
-        android:name="com.domker.app.doctor.hardware.HardwareFragment"
+        android:name="com.domker.doctor.hardware.HardwareFragment"
         android:label="@string/menu_hardware"
         tools:layout="@layout/fragment_hardware" />
     <fragment
         android:id="@+id/nav_settings"
-        android:name="com.domker.app.doctor.settings.SettingsFragment"
+        android:name="com.domker.doctor.settings.SettingsFragment"
         android:label="@string/apk_settings" />
 
 </navigation>

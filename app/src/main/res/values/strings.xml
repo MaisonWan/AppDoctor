@@ -13,6 +13,7 @@
     <string name="title_system">系统</string>
     <string name="title_store">存储</string>
     <string name="search">搜索</string>
+    <string name="screen">屏幕</string>
     <string name="title_properties">属性</string>
     <string name="title_system_properties">属性</string>
     <string name="title_main">简介</string>
@@ -61,6 +62,7 @@
     <string name="menu_uninstall_app">卸载程序</string>
     <string name="menu_setting_app">配置程序</string>
     <string name="menu_hardware">设备硬件</string>
+    <string name="menu_overview">预览</string>
 
     <string name="lib_empty_data">没有发现类库存在</string>
 

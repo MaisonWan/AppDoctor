@@ -9,8 +9,8 @@
 
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetClass="com.domker.app.doctor.MainActivity"
-            android:targetPackage="com.domker.app.doctor" />
+            android:targetClass="com.domker.doctor.MainActivity"
+            android:targetPackage="com.domker.doctor" />
         <extra
             android:name="page_name"
             android:value="image" />

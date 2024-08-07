@@ -17,7 +17,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.domker.app.doctor"
+        applicationId "com.domker.doctor"
         minSdkVersion MIN_SDK_VERSION
         targetSdkVersion TARGET_SDK_VERSION
         versionCode 1
@@ -68,7 +68,7 @@ android {
     buildFeatures {
         viewBinding true
     }
-    namespace 'com.domker.app.doctor'
+    namespace 'com.domker.doctor'
 }
 
 kapt {

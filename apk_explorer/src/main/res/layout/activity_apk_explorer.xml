@@ -5,7 +5,7 @@
     android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ApkExplorerActivity">
+    tools:context="com.domker.doctor.explorer.ApkExplorerActivity">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"

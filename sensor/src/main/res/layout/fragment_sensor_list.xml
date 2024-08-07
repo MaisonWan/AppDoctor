@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".sensor.SensorFragment">
+    tools:context="com.domker.doctor.hardware.sensor.SensorFragment">
 
     <TextView
         android:id="@+id/title"

@@ -26,7 +26,7 @@ android {
     viewBinding {
         enabled true
     }
-    namespace 'com.domker.app.doctor.battery'
+    namespace 'com.domker.doctor.battery'
 }
 
 dependencies {
