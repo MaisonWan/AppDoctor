@@ -1,6 +1,6 @@
 package com.domker.doctor.explorer.utils
 
-import com.domker.base.getExtensionName
+import com.domker.doctor.base.getExtensionName
 import com.domker.doctor.explorer.R
 import java.io.File
 import java.util.Locale

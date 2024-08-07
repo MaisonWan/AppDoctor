@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.domker.doctor.databinding.FragmentAppLibDetailBinding
-import com.domker.base.file.AppFileUtils
+import com.domker.doctor.base.file.AppFileUtils
 
 const val PARAM_LIB_NAME = "lib_name"
 const val PARAM_LIB_PATH = "lib_path"

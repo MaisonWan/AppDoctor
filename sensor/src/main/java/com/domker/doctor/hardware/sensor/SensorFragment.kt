@@ -8,9 +8,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.domker.doctor.hardware.R
 import com.domker.doctor.hardware.databinding.FragmentSensorListBinding
-import com.domker.base.addDividerItemDecoration
+import com.domker.doctor.base.addDividerItemDecoration
+import com.domker.doctor.hardware.R
 
 /**
  * 传感器相关的测试界面，主要展示多种传感器类型，并且在每个页面都有独立的展示和测试
@@ -54,7 +54,7 @@ class SensorFragment : Fragment() {
         binding.title.text = getString(R.string.sensor_size, sensorList.size)
         binding.recyclerView.adapter = SensorListAdapter(requireContext(), sensorList.sortedBy { it.type })
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
-        binding.recyclerView.addDividerItemDecoration(requireContext(), R.drawable.inset_recyclerview_divider)
+//        binding.recyclerView.addDividerItemDecoration(requireContext(), R.drawable.inset_recyclerview_divider)
         binding.recyclerView.adapter?.notifyItemRangeChanged(0, sensorList.size)
     }
 }

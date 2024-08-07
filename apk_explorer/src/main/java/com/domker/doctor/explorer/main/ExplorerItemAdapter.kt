@@ -14,9 +14,9 @@ import com.domker.doctor.explorer.ApkExplorer
 import com.domker.doctor.explorer.menu.ExplorerMenu
 import com.domker.doctor.explorer.utils.IconUtil
 import com.domker.doctor.explorer.utils.RouterUtil
-import com.domker.base.FileIntent
-import com.domker.base.file.ZipFileItem
-import com.domker.base.unzip
+import com.domker.doctor.base.FileIntent
+import com.domker.doctor.base.file.ZipFileItem
+import com.domker.doctor.base.unzip
 import com.domker.doctor.explorer.R
 import java.io.File
 

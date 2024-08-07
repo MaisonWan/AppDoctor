@@ -13,10 +13,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.domker.doctor.explorer.R
-import com.domker.base.addDividerItemDecoration
-import com.domker.base.notifyAllDataChanged
-import com.domker.base.readZipFileList
-import com.domker.base.thread.AppExecutors
+import com.domker.doctor.base.addDividerItemDecoration
+import com.domker.doctor.base.notifyAllDataChanged
+import com.domker.doctor.base.readZipFileList
+import com.domker.doctor.base.thread.AppExecutors
 import java.io.File
 
 /**

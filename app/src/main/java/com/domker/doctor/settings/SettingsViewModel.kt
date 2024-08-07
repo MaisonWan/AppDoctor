@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.domker.base.sp.SettingValue
+import com.domker.doctor.base.sp.SettingValue
 import com.domker.doctor.store.AppSettings
 import kotlinx.coroutines.launch
 import kotlin.collections.component1

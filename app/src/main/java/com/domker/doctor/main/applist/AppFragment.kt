@@ -20,7 +20,7 @@ import com.domker.doctor.store.LaunchSetting
 import com.domker.doctor.util.Router
 import com.domker.doctor.util.log
 import com.domker.doctor.widget.ViewBindingFragment
-import com.domker.base.addDividerItemDecoration
+import com.domker.doctor.base.addDividerItemDecoration
 
 /**
  * 展示App的页面

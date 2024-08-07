@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.alibaba.android.arouter.launcher.ARouter
-import com.domker.base.thread.AppExecutors
+import com.domker.doctor.base.thread.AppExecutors
 import com.domker.doctor.db.AppDatabase
 import com.domker.doctor.util.log
 import com.domker.doctor.view.TypeFacePool

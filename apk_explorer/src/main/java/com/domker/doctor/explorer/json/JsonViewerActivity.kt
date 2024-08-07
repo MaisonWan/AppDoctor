@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.OnItemTouchListener
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.domker.base.file.AppFileUtils
+import com.domker.doctor.base.file.AppFileUtils
 import com.domker.doctor.explorer.databinding.ActivityJsonViewerBinding
 import java.io.File
 

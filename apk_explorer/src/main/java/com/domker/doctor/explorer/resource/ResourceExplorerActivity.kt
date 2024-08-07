@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.domker.base.thread.AppExecutors
+import com.domker.doctor.base.thread.AppExecutors
 import com.domker.doctor.explorer.R
 import com.domker.doctor.explorer.databinding.ActivityResourceExplorerBinding
 import com.google.android.material.tabs.TabLayoutMediator

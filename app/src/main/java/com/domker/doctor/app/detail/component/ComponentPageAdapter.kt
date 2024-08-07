@@ -12,7 +12,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.domker.doctor.R
-import com.domker.base.addDividerItemDecoration
+import com.domker.doctor.base.addDividerItemDecoration
 
 /**
  * ViewPager的适配器

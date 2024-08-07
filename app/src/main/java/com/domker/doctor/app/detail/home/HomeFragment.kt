@@ -12,8 +12,8 @@ import com.domker.doctor.R
 import com.domker.doctor.databinding.FragmentDetailMainBinding
 import com.domker.doctor.app.detail.AppDetailListAdapter
 import com.domker.doctor.app.detail.AppDetailViewModel
-import com.domker.base.addDividerItemDecoration
-import com.domker.base.file.StoragePermissionUtil
+import com.domker.doctor.base.addDividerItemDecoration
+import com.domker.doctor.base.file.StoragePermissionUtil
 import com.google.android.material.snackbar.Snackbar
 
 

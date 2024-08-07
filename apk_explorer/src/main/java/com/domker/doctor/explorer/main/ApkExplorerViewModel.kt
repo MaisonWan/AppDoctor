@@ -2,7 +2,7 @@ package com.domker.doctor.explorer.main
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.domker.base.file.ZipFileItem
+import com.domker.doctor.base.file.ZipFileItem
 
 /**
  *

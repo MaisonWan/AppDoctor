@@ -4,7 +4,7 @@ import android.graphics.drawable.Drawable
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.domker.base.toChinese
+import com.domker.doctor.base.toChinese
 import com.domker.doctor.data.AppChecker
 import com.domker.doctor.data.AppCheckFactory
 import com.domker.doctor.entiy.AppItemInfo

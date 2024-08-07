@@ -12,8 +12,8 @@ import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.domker.base.addDividerItemDecoration
-import com.domker.base.toastLong
+import com.domker.doctor.base.addDividerItemDecoration
+import com.domker.doctor.base.toastLong
 import com.domker.doctor.R
 import com.domker.doctor.app.detail.AppDetailListAdapter
 import com.domker.doctor.databinding.FragmentDetailComponentInfoBinding

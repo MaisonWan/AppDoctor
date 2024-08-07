@@ -2,7 +2,7 @@ package com.domker.doctor.overview
 
 import android.content.Context
 import com.domker.doctor.R
-import com.domker.base.device.DeviceManager
+import com.domker.doctor.base.device.DeviceManager
 
 /**
  * 设备屏幕信息

@@ -1,8 +1,8 @@
 package com.domker.doctor.util
 
-import com.domker.base.file.ZipFileItem
-import com.domker.base.readZipFileItemList
-import com.domker.base.readZipFileList
+import com.domker.doctor.base.file.ZipFileItem
+import com.domker.doctor.base.readZipFileItemList
+import com.domker.doctor.base.readZipFileList
 import java.io.File
 
 /**

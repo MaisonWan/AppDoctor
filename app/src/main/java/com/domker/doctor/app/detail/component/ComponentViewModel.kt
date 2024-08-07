@@ -2,7 +2,7 @@ package com.domker.doctor.app.detail.component
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.domker.base.thread.AppExecutors
+import com.domker.doctor.base.thread.AppExecutors
 import com.domker.doctor.data.AppChecker
 
 /**

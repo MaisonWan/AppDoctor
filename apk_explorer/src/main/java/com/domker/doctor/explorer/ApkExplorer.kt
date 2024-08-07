@@ -1,7 +1,7 @@
 package com.domker.doctor.explorer
 
 import android.content.Context
-import com.domker.base.file.ZipFileItem
+import com.domker.doctor.base.file.ZipFileItem
 import com.domker.doctor.explorer.main.ExplorerItem
 import java.io.File
 

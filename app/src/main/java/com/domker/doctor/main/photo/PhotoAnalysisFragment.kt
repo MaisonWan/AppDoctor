@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.domker.doctor.R
 import com.domker.doctor.databinding.FragmentMainPhotoBinding
-import com.domker.base.addDividerItemDecoration
+import com.domker.doctor.base.addDividerItemDecoration
 import com.domker.doctor.widget.ViewBindingFragment
 
 /**
@@ -80,12 +80,14 @@ class PhotoAnalysisFragment : ViewBindingFragment<FragmentMainPhotoBinding>() {
         isInitPhotoView = true
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
         inflater.inflate(R.menu.main_photo, menu)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.add_photo) {
             openPhoto()

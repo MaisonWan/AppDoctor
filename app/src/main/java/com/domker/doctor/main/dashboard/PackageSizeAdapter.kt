@@ -12,7 +12,7 @@ import com.domker.doctor.db.AppEntity
 import com.domker.doctor.main.dashboard.PackageSizeAdapter.PackageSizeViewHolder
 import com.domker.doctor.util.DataFormat
 import com.domker.doctor.view.DataSortAdapter
-import com.domker.base.file.AppFileUtils
+import com.domker.doctor.base.file.AppFileUtils
 import kotlinx.coroutines.flow.combineTransform
 import kotlinx.coroutines.launch
 

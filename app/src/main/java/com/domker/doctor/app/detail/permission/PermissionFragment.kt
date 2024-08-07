@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.domker.base.addDividerItemDecoration
+import com.domker.doctor.base.addDividerItemDecoration
 import com.domker.doctor.R
 import com.domker.doctor.app.detail.component.ComponentViewModel
 import com.domker.doctor.databinding.FragmentDetailPermissionBinding

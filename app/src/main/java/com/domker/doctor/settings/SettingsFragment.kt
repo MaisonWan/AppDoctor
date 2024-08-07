@@ -6,7 +6,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceFragmentCompat
 import com.domker.doctor.R
-import com.domker.base.sp.settingValueOf
+import com.domker.doctor.base.sp.settingValueOf
 import com.domker.doctor.store.AppSettings
 import kotlinx.coroutines.launch
 
@@ -40,7 +40,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                         AppSettings.setAppListStyle(context, s.value)
                     }
                 }
-                else -> sp.settingValueOf(key, "")
+                else -> sp.settingValueOf(key ?: "", "")
             }
             println("[SettingsFragment] changed: $key ${v.value}")
             settingsViewModel.onChange(v)

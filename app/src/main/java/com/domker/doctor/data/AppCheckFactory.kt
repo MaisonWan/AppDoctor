@@ -2,7 +2,7 @@ package com.domker.doctor.data
 
 import android.content.Context
 import android.graphics.drawable.Drawable
-import com.domker.base.file.AppFileUtils
+import com.domker.doctor.base.file.AppFileUtils
 import com.domker.doctor.CheckerApplication
 import com.domker.doctor.db.AppEntity
 

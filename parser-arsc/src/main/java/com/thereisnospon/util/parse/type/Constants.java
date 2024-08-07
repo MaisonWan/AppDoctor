@@ -25,7 +25,7 @@ public interface Constants {
      */
     int ACONFIGURATION_ORIENTATION_LAND = 0x0002;
     /**
-     * @deprecated Not currently supported or used.
+     * Not currently supported or used.
      */
     int ACONFIGURATION_ORIENTATION_SQUARE = 0x0003;
 
@@ -40,7 +40,7 @@ public interface Constants {
      */
     int ACONFIGURATION_TOUCHSCREEN_NOTOUCH = 0x0001;
     /**
-     * @deprecated Not currently supported or used.
+     * Not currently supported or used.
      */
     int ACONFIGURATION_TOUCHSCREEN_STYLUS = 0x0002;
     /**

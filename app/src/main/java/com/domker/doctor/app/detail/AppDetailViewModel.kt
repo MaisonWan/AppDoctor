@@ -3,10 +3,10 @@ package com.domker.doctor.app.detail
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.domker.base.SystemVersion
-import com.domker.base.file.AppFileUtils
-import com.domker.base.file.ZipFileItem
-import com.domker.base.toChinese
+import com.domker.doctor.base.SystemVersion
+import com.domker.doctor.base.file.AppFileUtils
+import com.domker.doctor.base.file.ZipFileItem
+import com.domker.doctor.base.toChinese
 import com.domker.doctor.app.detail.container.DETAIL_TYPE_PACKAGE
 import com.domker.doctor.app.detail.container.DETAIL_TYPE_SIGNATURE
 import com.domker.doctor.data.AppChecker

@@ -1,6 +1,6 @@
 package com.domker.doctor.app.detail.home
 
-import com.domker.base.copyTo
+import com.domker.doctor.base.copyTo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch

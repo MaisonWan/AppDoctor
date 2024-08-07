@@ -24,7 +24,9 @@ class SensorWatcher(context: Context) {
 
     fun register(sensorType: Int) {
         if (!sensorMap.containsKey(sensorType)) {
-            sensorMap[sensorType] = sensorManager.getDefaultSensor(sensorType)
+            sensorManager.getDefaultSensor(sensorType)?.also {
+                sensorMap[sensorType] = it
+            }
         }
         val sensor = sensorMap[sensorType]
 

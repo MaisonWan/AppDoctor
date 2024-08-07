@@ -12,7 +12,7 @@ import android.view.View
 class RankView(context: Context) : View(context) {
     private val paint = Paint()
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
     }
 }

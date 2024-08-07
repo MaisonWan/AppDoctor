@@ -3,7 +3,7 @@ package com.domker.doctor.overview
 import android.content.Context
 import android.os.Build
 import android.widget.Toast
-import com.domker.base.device.DeviceManager
+import com.domker.doctor.base.device.DeviceManager
 import com.domker.doctor.R
 import com.domker.doctor.overview.OverviewRecyclerViewAdapter.ViewHolder
 import java.text.DecimalFormat

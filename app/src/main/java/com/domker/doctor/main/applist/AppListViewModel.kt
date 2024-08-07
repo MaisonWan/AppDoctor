@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.domker.doctor.data.AppCheckFactory
 import com.domker.doctor.db.AppEntity
-import com.domker.base.thread.AppExecutors
+import com.domker.doctor.base.thread.AppExecutors
 
 /**
  * App列表数据

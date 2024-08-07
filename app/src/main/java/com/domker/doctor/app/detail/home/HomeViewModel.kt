@@ -20,7 +20,7 @@ import com.domker.doctor.db.AppEntity
 import com.domker.doctor.util.IntentUtil
 import com.domker.doctor.util.PathUtils
 import com.domker.doctor.util.Router
-import com.domker.base.file.AppFileUtils
+import com.domker.doctor.base.file.AppFileUtils
 import com.king.image.imageviewer.ImageViewer
 import com.king.image.imageviewer.loader.GlideImageLoader
 import kotlinx.coroutines.launch

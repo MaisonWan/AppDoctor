@@ -10,8 +10,8 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.domker.doctor.R
-import com.domker.base.addDividerItemDecoration
-import com.domker.base.file.ZipFileItem
+import com.domker.doctor.base.addDividerItemDecoration
+import com.domker.doctor.base.file.ZipFileItem
 
 /**
  * App使用的Native库的分类，以及每个类型里面的数据都包含什么

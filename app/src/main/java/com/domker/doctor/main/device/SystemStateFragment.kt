@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.domker.base.addDividerItemDecoration
-import com.domker.base.device.DeviceManager
+import com.domker.doctor.base.addDividerItemDecoration
+import com.domker.doctor.base.device.DeviceManager
 import com.domker.doctor.R
 import com.domker.doctor.databinding.FragmentSystemStateBinding
 
@@ -63,6 +63,7 @@ class SystemStateFragment : Fragment() {
         }.notifyItemRangeChanged(0, state.size)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,

@@ -9,8 +9,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.domker.doctor.databinding.FragmentSystemAboutBinding
-import com.domker.base.addDividerItemDecoration
-import com.domker.base.device.DeviceManager
+import com.domker.doctor.base.addDividerItemDecoration
+import com.domker.doctor.base.device.DeviceManager
 import com.domker.doctor.R
 
 private const val REQUEST_PERMISSION = 101
@@ -52,6 +52,7 @@ class SystemAboutFragment : Fragment() {
         }.notifyItemRangeChanged(0, state.size)
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_PERMISSION) {

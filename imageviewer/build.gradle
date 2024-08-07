@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 31
+    compileSdk 34
     buildToolsVersion BUILD_TOOLS_VERSION
 
     defaultConfig {
@@ -21,17 +21,22 @@ android {
         }
     }
     namespace 'com.king.image.imageviewer'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
 }
 
 dependencies {
+    //noinspection [ByDesign1.5]LocalDependency
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    api 'androidx.viewpager2:viewpager2:1.0.0'
+    api 'androidx.viewpager2:viewpager2:1.1.0'
     api "com.github.chrisbanes:PhotoView:2.3.0"
-    implementation 'androidx.appcompat:appcompat:1.6.0'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
 
-    compileOnly 'com.github.bumptech.glide:glide:4.13.2'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
+    compileOnly 'com.github.bumptech.glide:glide:4.16.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
 
     compileOnly "com.squareup.picasso:picasso:2.71828"
 

@@ -12,7 +12,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.domker.doctor.R
 import com.domker.doctor.databinding.FragmentAppLibBinding
 import com.domker.doctor.app.detail.AppDetailViewModel
-import com.domker.base.file.ZipFileItem
+import com.domker.doctor.base.file.ZipFileItem
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 

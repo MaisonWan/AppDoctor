@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 
 android {
     resourcePrefix "jsonviewer"
-    compileSdkVersion 31
+    compileSdk 34
     buildToolsVersion BUILD_TOOLS_VERSION
 
     defaultConfig {
@@ -21,14 +21,18 @@ android {
             }
         }
     }
-    buildToolsVersion '30.0.3'
+    buildToolsVersion BUILD_TOOLS_VERSION
     namespace 'com.domker.jsonviewer'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
 
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation 'androidx.appcompat:appcompat:1.6.0'
-    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
 }

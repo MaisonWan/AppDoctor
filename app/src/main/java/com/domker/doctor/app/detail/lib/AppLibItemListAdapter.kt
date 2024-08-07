@@ -8,8 +8,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.domker.doctor.R
 import com.domker.doctor.widget.BaseItemListAdapter
-import com.domker.base.file.AppFileUtils
-import com.domker.base.file.ZipFileItem
+import com.domker.doctor.base.file.AppFileUtils
+import com.domker.doctor.base.file.ZipFileItem
 
 /**
  * App里面Lib类库里面使用的CPU类型，以及每个类型下面lab的列表

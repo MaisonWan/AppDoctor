@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.domker.doctor.R
 import com.domker.doctor.databinding.FragmentDevicePropertiesBinding
 import com.domker.doctor.util.DeviceScanner
-import com.domker.base.addDividerItemDecoration
+import com.domker.doctor.base.addDividerItemDecoration
 import java.util.*
 
 /**

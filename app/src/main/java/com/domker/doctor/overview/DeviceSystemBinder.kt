@@ -2,7 +2,7 @@ package com.domker.doctor.overview
 
 import android.os.Build
 import com.domker.doctor.R
-import com.domker.base.SystemVersion
+import com.domker.doctor.base.SystemVersion
 
 class DeviceSystemBinder : DeviceBinder {
     override fun bind(holder: OverviewRecyclerViewAdapter.ViewHolder, item: DeviceItem) {

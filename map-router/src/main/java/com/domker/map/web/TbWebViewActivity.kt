@@ -145,6 +145,7 @@ class TbWebViewActivity : Activity() {
                 }
             }
             mWebView!!.webViewClient = object : WebViewClient() {
+                @Deprecated("Deprecated in Java")
                 override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                     if (TextUtils.isEmpty(url)) {
                         return false

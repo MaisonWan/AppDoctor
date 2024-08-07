@@ -9,8 +9,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import com.domker.base.RefInvoke
-import com.domker.base.file.AppFileUtils
+import com.domker.doctor.base.RefInvoke
+import com.domker.doctor.base.file.AppFileUtils
 import org.jetbrains.annotations.NotNull
 
 /**
