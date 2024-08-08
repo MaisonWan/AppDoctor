@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.domker.doctor.R
-import com.domker.doctor.db.AppEntity
+import com.domker.doctor.data.db.AppEntity
 import com.domker.doctor.main.dashboard.PackageSizeAdapter.PackageSizeViewHolder
 import com.domker.doctor.util.DataFormat
 import com.domker.doctor.view.DataSortAdapter

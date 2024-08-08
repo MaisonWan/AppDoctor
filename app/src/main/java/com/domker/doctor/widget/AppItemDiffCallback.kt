@@ -1,7 +1,7 @@
 package com.domker.doctor.widget
 
 import androidx.recyclerview.widget.DiffUtil
-import com.domker.doctor.entiy.AppItemInfo
+import com.domker.doctor.app.entiy.AppItemInfo
 
 /**
  * DiffUtil回调

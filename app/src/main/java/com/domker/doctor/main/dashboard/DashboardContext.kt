@@ -8,8 +8,8 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.fragment.app.Fragment
-import com.domker.doctor.data.AppCheckFactory
-import com.domker.doctor.db.AppEntity
+import com.domker.doctor.app.data.AppCheckFactory
+import com.domker.doctor.data.db.AppEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

@@ -3,7 +3,7 @@ package com.domker.doctor.app.detail
 import android.content.Context
 import android.view.ViewGroup
 import com.domker.doctor.app.detail.container.DetailContainerManager
-import com.domker.doctor.entiy.AppItemInfo
+import com.domker.doctor.app.entiy.AppItemInfo
 import com.domker.doctor.widget.BaseItemListAdapter
 
 /**

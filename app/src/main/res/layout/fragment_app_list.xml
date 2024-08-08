@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".main.applist.AppListFragment">
+    tools:context=".app.applist.AppListFragment">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/device_nav_host_fragment"

@@ -7,7 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceFragmentCompat
 import com.domker.doctor.R
 import com.domker.doctor.base.sp.settingValueOf
-import com.domker.doctor.store.AppSettings
+import com.domker.doctor.data.store.AppSettings
 import kotlinx.coroutines.launch
 
 const val KEY_INCLUDE_SYSTEM_APP = "include_system_app"

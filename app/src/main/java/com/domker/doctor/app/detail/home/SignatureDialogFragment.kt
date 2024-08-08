@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.domker.doctor.data.SIGNATURE_MD5
-import com.domker.doctor.data.SIGNATURE_SHA1
-import com.domker.doctor.data.SIGNATURE_SHA256
+import com.domker.doctor.app.data.SIGNATURE_MD5
+import com.domker.doctor.app.data.SIGNATURE_SHA1
+import com.domker.doctor.app.data.SIGNATURE_SHA256
 import com.domker.doctor.databinding.FragmentSignatureDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 

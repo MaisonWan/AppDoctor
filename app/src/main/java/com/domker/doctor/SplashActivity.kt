@@ -6,7 +6,7 @@ import android.os.HandlerThread
 import androidx.appcompat.app.AppCompatActivity
 import com.alibaba.android.arouter.launcher.ARouter
 import com.domker.doctor.databinding.SplashLayoutBinding
-import com.domker.doctor.data.AppCheckFactory
+import com.domker.doctor.app.data.AppCheckFactory
 import com.domker.doctor.util.Router
 import com.domker.doctor.util.log
 

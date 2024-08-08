@@ -16,7 +16,7 @@ import androidx.lifecycle.viewModelScope
 import com.alibaba.android.arouter.launcher.ARouter
 import com.domker.doctor.R
 import com.domker.doctor.databinding.FragmentDetailMainBinding
-import com.domker.doctor.db.AppEntity
+import com.domker.doctor.data.db.AppEntity
 import com.domker.doctor.util.IntentUtil
 import com.domker.doctor.util.PathUtils
 import com.domker.doctor.util.Router

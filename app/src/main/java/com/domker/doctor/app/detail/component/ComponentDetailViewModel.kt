@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.domker.doctor.base.toChinese
-import com.domker.doctor.data.AppChecker
-import com.domker.doctor.data.AppCheckFactory
-import com.domker.doctor.entiy.AppItemInfo
+import com.domker.doctor.app.data.AppChecker
+import com.domker.doctor.app.data.AppCheckFactory
+import com.domker.doctor.app.entiy.AppItemInfo
 import com.domker.doctor.util.ManifestLabel
 import kotlinx.coroutines.launch
 

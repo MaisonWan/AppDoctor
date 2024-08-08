@@ -7,8 +7,8 @@ import android.widget.Button
 import com.alibaba.android.arouter.launcher.ARouter
 import com.domker.doctor.R
 import com.domker.doctor.app.detail.DetailItemViewHolder
-import com.domker.doctor.db.AppEntity
-import com.domker.doctor.entiy.AppItemInfo
+import com.domker.doctor.data.db.AppEntity
+import com.domker.doctor.app.entiy.AppItemInfo
 import com.domker.doctor.util.Router
 
 /**

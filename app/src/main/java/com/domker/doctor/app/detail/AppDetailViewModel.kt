@@ -9,10 +9,10 @@ import com.domker.doctor.base.file.ZipFileItem
 import com.domker.doctor.base.toChinese
 import com.domker.doctor.app.detail.container.DETAIL_TYPE_PACKAGE
 import com.domker.doctor.app.detail.container.DETAIL_TYPE_SIGNATURE
-import com.domker.doctor.data.AppChecker
-import com.domker.doctor.db.AppEntity
-import com.domker.doctor.entiy.AppItemInfo
-import com.domker.doctor.entiy.appItemOf
+import com.domker.doctor.app.data.AppChecker
+import com.domker.doctor.data.db.AppEntity
+import com.domker.doctor.app.entiy.AppItemInfo
+import com.domker.doctor.app.entiy.appItemOf
 import com.domker.doctor.util.ApkViewer
 import com.domker.doctor.util.DataFormat
 import kotlinx.coroutines.launch

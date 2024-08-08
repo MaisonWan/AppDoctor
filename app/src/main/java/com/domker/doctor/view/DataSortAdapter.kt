@@ -4,8 +4,8 @@ import android.content.Context
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import com.domker.doctor.data.DataSorter
-import com.domker.doctor.data.ListDataProcessor
+import com.domker.doctor.app.data.DataSorter
+import com.domker.doctor.app.data.ListDataProcessor
 
 /**
  * RecyclerView的适配器，可以使用数据排序，过滤等数据管理功能

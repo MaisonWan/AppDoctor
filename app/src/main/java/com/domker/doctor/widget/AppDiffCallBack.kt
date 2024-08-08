@@ -1,7 +1,7 @@
 package com.domker.doctor.widget
 
 import androidx.recyclerview.widget.DiffUtil
-import com.domker.doctor.db.AppEntity
+import com.domker.doctor.data.db.AppEntity
 
 /**
  * 差分更新的类

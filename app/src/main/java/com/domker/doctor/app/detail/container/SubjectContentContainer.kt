@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.domker.doctor.R
 import com.domker.doctor.app.detail.DetailItemViewHolder
-import com.domker.doctor.entiy.AppItemInfo
+import com.domker.doctor.app.entiy.AppItemInfo
 
 /**
  * 标题和内容的容器

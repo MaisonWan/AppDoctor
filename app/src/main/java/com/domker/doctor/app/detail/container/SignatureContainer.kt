@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import com.domker.doctor.R
 import com.domker.doctor.app.detail.DetailItemViewHolder
-import com.domker.doctor.data.SIGNATURE_MD5
-import com.domker.doctor.data.SIGNATURE_SHA1
-import com.domker.doctor.data.SIGNATURE_SHA256
-import com.domker.doctor.entiy.AppItemInfo
+import com.domker.doctor.app.data.SIGNATURE_MD5
+import com.domker.doctor.app.data.SIGNATURE_SHA1
+import com.domker.doctor.app.data.SIGNATURE_SHA256
+import com.domker.doctor.app.entiy.AppItemInfo
 
 /**
  * 展示签名的容器

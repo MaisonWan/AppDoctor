@@ -11,7 +11,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.domker.doctor.R
 import com.domker.doctor.app.detail.component.ComponentViewModel
-import com.domker.doctor.data.AppChecker
+import com.domker.doctor.app.data.AppChecker
 import com.domker.doctor.util.IntentUtil
 import com.domker.doctor.util.Router
 import com.domker.doctor.widget.BaseAppCompatActivity

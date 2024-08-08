@@ -29,6 +29,10 @@ class DeviceBatteryBinder(private val fragment: Fragment) : DeviceBinder {
             val state = fragment.getString(BatteryConvert.getBatteryState(battery))
             holder.secondaryTextView?.text = "容量：${vol}，温度：${temp}, $state"
         }
+
+        holder.itemView.setOnClickListener {
+
+        }
     }
 
 }

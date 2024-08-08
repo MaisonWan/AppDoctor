@@ -8,8 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.viewbinding.ViewBinding
-import com.domker.doctor.main.AppViewModel
-import com.domker.doctor.store.LaunchSetting
+import com.domker.doctor.app.AppViewModel
+import com.domker.doctor.data.store.LaunchSetting
 
 
 /**

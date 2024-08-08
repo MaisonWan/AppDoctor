@@ -2,7 +2,7 @@ package com.domker.doctor.app.detail.container
 
 import android.view.View
 import android.view.ViewGroup
-import com.domker.doctor.entiy.AppItemInfo
+import com.domker.doctor.app.entiy.AppItemInfo
 
 /**
  * 有标题和内容的Item

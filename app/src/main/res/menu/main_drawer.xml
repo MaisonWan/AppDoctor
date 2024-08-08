@@ -14,10 +14,6 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_app_list" />
         <item
-            android:id="@+id/nav_photo_info"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_photo_info" />
-        <item
             android:id="@+id/nav_battery"
             android:icon="@drawable/ic_baseline_battery_charging_full_24"
             android:title="@string/menu_battery" />
@@ -29,6 +25,10 @@
             android:id="@+id/nav_system_info"
             android:icon="@drawable/ic_notifications_black_24dp"
             android:title="@string/menu_system_info" />
+        <item
+            android:id="@+id/nav_tool"
+            android:icon="@drawable/baseline_auto_awesome_mosaic_24"
+            android:title="@string/menu_tool" />
         <item
             android:id="@+id/nav_dashboard"
             android:icon="@drawable/ic_dashboard_black_24dp"
