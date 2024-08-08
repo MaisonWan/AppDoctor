@@ -1,11 +1,13 @@
 package com.domker.doctor.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.domker.doctor.app.data.DataSorter
 import com.domker.doctor.app.data.ListDataProcessor
+import com.domker.doctor.util.log
 
 /**
  * RecyclerView的适配器，可以使用数据排序，过滤等数据管理功能
@@ -101,11 +103,12 @@ abstract class DataSortAdapter<VH : ViewHolder, T>(private val context: Context)
      */
     fun notifyAppList(appList: List<T>) {
         setData(appList)
-        notifyAllDataChanged()
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun notifyAllDataChanged() {
-        notifyItemRangeChanged(0, dataProcessor.size())
+        log("notifyAllDataChanged ${dataProcessor.size()}")
+        notifyDataSetChanged()
     }
 
     fun getItem(position: Int): T {

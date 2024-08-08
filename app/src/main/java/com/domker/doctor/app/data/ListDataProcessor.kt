@@ -5,6 +5,8 @@ package com.domker.doctor.app.data
  *
  */
 class ListDataProcessor<T> : DataProcessor<T> {
+    private val mutex = Object()
+
     // 存储数据
     private val listData = mutableListOf<T>()
 
@@ -14,7 +16,11 @@ class ListDataProcessor<T> : DataProcessor<T> {
     // 排序之后的回调
     private var sortedCallback: ((List<T>) -> Unit)? = null
 
-    override fun size() = listData.size
+    override fun size(): Int {
+        synchronized(mutex) {
+            return listData.size
+        }
+    }
 
     override fun data(): List<T> = listData
 
@@ -23,8 +29,10 @@ class ListDataProcessor<T> : DataProcessor<T> {
     }
 
     override fun setData(list: List<T>) {
-        listData.clear()
-        listData.addAll(list)
+        synchronized(mutex) {
+            listData.clear()
+            listData.addAll(list)
+        }
         sort()
     }
 

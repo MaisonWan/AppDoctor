@@ -14,9 +14,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
 
 /**
- * 展示App列表的页面，多种不同风格的展示
+ * 展示App列表容器页面，包含应用与跳转系统快捷方式
  */
-class AppListFragment : ViewBindingFragment<FragmentAppListBinding>() {
+class AppContainerFragment : ViewBindingFragment<FragmentAppListBinding>() {
 
     override fun onCreateViewBinding(
         inflater: LayoutInflater,

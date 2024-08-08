@@ -38,13 +38,14 @@ class AppFragment : ViewBindingFragment<PagerAppListItemBinding>() {
         addMenuProvider()
         appListViewModel = ViewModelProvider(this)[AppListViewModel::class.java]
         homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+        activity?.title = getString(R.string.title_app_list)
     }
 
     override fun onCreateViewBinding(
         inflater: LayoutInflater,
         container: ViewGroup?
     ): PagerAppListItemBinding {
-        loadConfigOnViewCreated = true
+        autoloadConfigOnViewCreated()
         return PagerAppListItemBinding.inflate(inflater, container, false)
     }
 
@@ -84,6 +85,7 @@ class AppFragment : ViewBindingFragment<PagerAppListItemBinding>() {
 
     private fun initDataChanged() {
         appListViewModel.getAppList().observe(viewLifecycleOwner) {
+            binding.recyclerView.recycledViewPool.clear()
             adapter.notifyAppList(it)
         }
 

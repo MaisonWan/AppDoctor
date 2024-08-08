@@ -69,8 +69,7 @@ class PhotoAnalysisFragment : ViewBindingFragment<FragmentMainPhotoBinding>() {
         if (isInitPhotoView) {
             return
         }
-        binding.recyclerViewExif.visibility = View.VISIBLE
-        binding.imageViewPreview.visibility = View.VISIBLE
+        binding.photoInfoContainer.visibility = View.VISIBLE
         binding.imageButtonAdd.visibility = View.GONE
 
         val recyclerViewAppInfo: RecyclerView = binding.recyclerViewExif

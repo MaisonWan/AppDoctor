@@ -64,15 +64,16 @@ class MainActivity : AppCompatActivity() {
     private fun initToolbar() {
         binding.appBar.toolbar.also {
             setSupportActionBar(it)
-        }.setNavigationOnClickListener {
-            // 在配置界面点击返回，直接执行返回操作
-            if (getNavController().currentDestination?.id == R.id.nav_settings) {
-                onBackPressed()
-            } else {
-                // 其它界面打开左侧边栏
-                binding.drawerLayout.openDrawer(GravityCompat.START)
-            }
         }
+//            .setNavigationOnClickListener {
+//            // 在配置界面点击返回，直接执行返回操作
+//            if (getNavController().currentDestination?.id == R.id.nav_settings) {
+//                onBackPressed()
+//            } else {
+//                // 其它界面打开左侧边栏
+//                binding.drawerLayout.openDrawer(GravityCompat.START)
+//            }
+//        }
     }
 
     private fun initHeaderView() {
@@ -98,6 +99,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             lifecycleScope.launch {
+                // 设置存储在sp里面
                 AppSettings.setIncludeAllApp(this@MainActivity, isChecked)
             }
             appViewModel.switchChanged(isChecked)

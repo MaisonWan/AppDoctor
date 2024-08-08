@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_overview_list" />
     <fragment
         android:id="@+id/nav_app_list"
-        android:name="com.domker.doctor.app.applist.AppListFragment"
+        android:name="com.domker.doctor.app.applist.AppContainerFragment"
         android:label="@string/menu_app_list"
         tools:layout="@layout/fragment_app_list" />
     <fragment
@@ -36,10 +36,15 @@
         android:label="@string/menu_hardware"
         tools:layout="@layout/fragment_hardware" />
     <fragment
+        android:id="@+id/nav_system_info"
+        android:name="com.domker.doctor.main.device.DeviceFragment"
+        android:label="@string/menu_system_info"
+        tools:layout="@layout/activity_device" />
+    <fragment
         android:id="@+id/nav_tool"
         android:name="com.domker.doctor.tool.ToolFragment"
         android:label="@string/menu_tool"
-        tools:layout="@layout/fragment_tool" >
+        tools:layout="@layout/fragment_tool">
         <action
             android:id="@+id/action_nav_tool_to_nav_photo_info"
             app:destination="@id/nav_photo_info" />
@@ -48,13 +53,6 @@
         android:id="@+id/nav_settings"
         android:name="com.domker.doctor.settings.SettingsFragment"
         android:label="@string/apk_settings" />
-    <navigation android:id="@+id/navigation"
-        app:startDestination="@id/nav_system_info">
-        <fragment
-            android:id="@+id/nav_system_info"
-            android:name="com.domker.doctor.main.device.DeviceFragment"
-            android:label="@string/menu_system_info"
-            tools:layout="@layout/activity_device" />
-    </navigation>
+
 
 </navigation>

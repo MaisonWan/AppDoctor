@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.domker.doctor.R
 import com.domker.doctor.databinding.FragmentSystemLinkBinding
 import com.domker.doctor.widget.ViewBindingFragment
 

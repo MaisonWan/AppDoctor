@@ -39,8 +39,8 @@ class AppViewModel : ViewModel() {
      */
     fun observeLoadSettingsOnce(lifecycleOwner: LifecycleOwner, func: (LaunchSetting) -> Unit) {
         val observer = object : Observer<LaunchSetting> {
-            override fun onChanged(t: LaunchSetting) {
-                func(t)
+            override fun onChanged(value: LaunchSetting) {
+                func(value)
                 launchSetting.removeObserver(this)
             }
         }
