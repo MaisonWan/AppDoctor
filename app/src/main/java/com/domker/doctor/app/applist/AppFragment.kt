@@ -2,7 +2,12 @@ package com.domker.doctor.app.applist
 
 import android.content.Context
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -10,17 +15,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.alibaba.android.arouter.launcher.ARouter
 import com.domker.doctor.R
-import com.domker.doctor.databinding.PagerAppListItemBinding
-import com.domker.doctor.data.db.AppEntity
 import com.domker.doctor.app.detail.home.HomeViewModel
-import com.domker.doctor.settings.SettingsViewModel
+import com.domker.doctor.base.addDividerItemDecoration
+import com.domker.doctor.data.db.AppEntity
 import com.domker.doctor.data.store.APP_LIST_STYLE_GRID
 import com.domker.doctor.data.store.APP_LIST_STYLE_LIST
 import com.domker.doctor.data.store.LaunchSetting
+import com.domker.doctor.databinding.PagerAppListItemBinding
+import com.domker.doctor.settings.SettingsViewModel
 import com.domker.doctor.util.Router
 import com.domker.doctor.util.log
 import com.domker.doctor.widget.ViewBindingFragment
-import com.domker.doctor.base.addDividerItemDecoration
 
 /**
  * 展示App的页面
@@ -73,7 +78,10 @@ class AppFragment : ViewBindingFragment<PagerAppListItemBinding>() {
         val recyclerView = binding.recyclerView
         if (style == APP_LIST_STYLE_LIST) {
             recyclerView.layoutManager = LinearLayoutManager(context)
-            decoration = recyclerView.addDividerItemDecoration(context, R.drawable.inset_recyclerview_divider)
+            decoration = recyclerView.addDividerItemDecoration(
+                context,
+                R.drawable.inset_recyclerview_divider
+            )
         } else if (style == APP_LIST_STYLE_GRID) {
             recyclerView.layoutManager = GridLayoutManager(context, 4)
             if (decoration != null) {
@@ -92,11 +100,14 @@ class AppFragment : ViewBindingFragment<PagerAppListItemBinding>() {
         // 从系统获取最新的数据
         appListViewModel.updateAppList(appIncludeAll)
 
-        settingsViewModel.getAppListStyleSync(requireContext()) {
-            log("getAppListStyleSync $it")
-            bindLayoutStyle(requireContext(), it)
-            adapter.notifyAppListStyleChanged(it)
+        context?.let { c ->
+            settingsViewModel.getAppListStyleSync(c) {
+                log("getAppListStyleSync $it")
+                bindLayoutStyle(c, it)
+                adapter.notifyAppListStyleChanged(it)
+            }
         }
+
     }
 
     private fun initMenu() {

@@ -65,7 +65,7 @@
     <string name="menu_uninstall_app">卸载程序</string>
     <string name="menu_setting_app">配置程序</string>
     <string name="menu_hardware">设备硬件</string>
-    <string name="menu_overview">预览</string>
+    <string name="menu_overview">系统预览</string>
     <string name="menu_tool">辅助工具</string>
 
     <string name="lib_empty_data">没有发现类库存在</string>

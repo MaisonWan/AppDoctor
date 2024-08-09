@@ -15,10 +15,10 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.domker.doctor.databinding.ActivityMainDrawerBinding
 import com.domker.doctor.app.AppViewModel
-import com.domker.doctor.settings.SettingsViewModel
 import com.domker.doctor.data.store.AppSettings
+import com.domker.doctor.databinding.ActivityMainDrawerBinding
+import com.domker.doctor.settings.SettingsViewModel
 import com.domker.doctor.util.Router
 import kotlinx.coroutines.launch
 
@@ -52,8 +52,7 @@ class MainActivity : AppCompatActivity() {
             R.id.nav_battery,
             R.id.nav_hardware,
             R.id.nav_system_info,
-            R.id.nav_tool,
-            R.id.nav_dashboard
+            R.id.nav_tool
         )
         appBarConfiguration = AppBarConfiguration(ids, binding.drawerLayout)
 

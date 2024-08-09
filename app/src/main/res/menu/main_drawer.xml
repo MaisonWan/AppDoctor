@@ -29,10 +29,5 @@
             android:id="@+id/nav_tool"
             android:icon="@drawable/baseline_auto_awesome_mosaic_24"
             android:title="@string/menu_tool" />
-        <item
-            android:id="@+id/nav_dashboard"
-            android:icon="@drawable/ic_dashboard_black_24dp"
-            android:title="@string/menu_dashboard" />
-
     </group>
 </menu>

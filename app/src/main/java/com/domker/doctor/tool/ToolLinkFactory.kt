@@ -20,8 +20,18 @@ class ToolLinkFactory {
      */
     fun getData(): List<ToolLink> {
         list.clear()
-        addItem("图片分析", R.drawable.ic_baseline_gpp_maybe_24, "", R.id.nav_photo_info)
-
+        addItem(
+            "图片分析",
+            R.drawable.ic_menu_gallery,
+            "指定一张图片，分析图片Exif信息",
+            R.id.nav_photo_info
+        )
+        addItem(
+            "数据统计",
+            R.drawable.ic_dashboard_black_24dp,
+            "统计系统相关数据",
+            R.id.nav_dashboard
+        )
         return list
     }
 }

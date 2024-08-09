@@ -24,21 +24,22 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="10dp"
         android:text="TextView"
         android:textSize="@dimen/overview_text_main"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewIcon"
         app:layout_constraintEnd_toStartOf="@+id/imageViewArrow"
         app:layout_constraintStart_toEndOf="@+id/imageViewIcon"
-        app:layout_constraintTop_toTopOf="@+id/imageViewIcon"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewDesc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="10dp"
         android:text="TextView"
         android:textSize="@dimen/overview_text_secondary"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/imageViewArrow"
         app:layout_constraintStart_toStartOf="@+id/textViewName"
         app:layout_constraintTop_toBottomOf="@+id/textViewName" />
